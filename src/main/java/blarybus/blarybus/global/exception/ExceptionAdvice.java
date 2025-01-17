@@ -1,7 +1,6 @@
 package blarybus.blarybus.global.exception;
 
-import com.pironeer.week2_1.global.dto.response.ErrorResponse;
-import com.pironeer.week2_1.global.dto.response.result.ExceptionResult;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -15,8 +14,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.pironeer.week2_1.global.exception.ErrorCode.PARAMETER_GRAMMAR_ERROR;
-import static com.pironeer.week2_1.global.exception.ErrorCode.PARAMETER_VALIDATION_ERROR;
+import static blarybus.blarybus.global.exception.ErrorCode.PARAMETER_GRAMMAR_ERROR;
+import static blarybus.blarybus.global.exception.ErrorCode.PARAMETER_VALIDATION_ERROR;
+
 
 @RequiredArgsConstructor
 @RestControllerAdvice
