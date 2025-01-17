@@ -38,12 +38,6 @@ public class MemberController {
         return SuccessResponse.ok(result);
     }
 
-    @PostMapping("/logout")
-    @Operation(summary = "로그아웃")
-    public SuccessResponse<SingleResult<JwtTokenSet>> logout(@Valid @RequestBody MemberLoginReq req) {
-        SingleResult<JwtTokenSet> result = memberService.login(req);
-        return SuccessResponse.ok(result);
-    }
 
 
 }
