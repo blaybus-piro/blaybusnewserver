@@ -4,6 +4,7 @@ import blarybus.blarybus.global.jwt.dto.JwtTokenSet;
 import blarybus.blarybus.global.response.SingleResult;
 import blarybus.blarybus.global.response.SuccessResponse;
 import blarybus.blarybus.member.domain.dto.MemberJoinReq;
+import blarybus.blarybus.member.domain.dto.MemberLoginReq;
 import blarybus.blarybus.member.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,4 +29,15 @@ public class MemberController {
         SingleResult<JwtTokenSet> result = memberService.join(req);
         return SuccessResponse.ok(result);
     }
+
+
+    @PostMapping("/login")
+    @Operation(summary = "로그인")
+    public SuccessResponse<SingleResult<JwtTokenSet>> login(@Valid @RequestBody MemberLoginReq req) {
+        SingleResult<JwtTokenSet> result = memberService.login(req);
+        return SuccessResponse.ok(result);
+    }
+
+
+
 }
