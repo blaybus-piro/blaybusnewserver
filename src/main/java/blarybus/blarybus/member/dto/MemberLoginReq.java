@@ -1,4 +1,4 @@
-package blarybus.blarybus.member.domain.dto;
+package blarybus.blarybus.member.dto;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;

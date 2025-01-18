@@ -1,12 +1,15 @@
 package blarybus.blarybus.member.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Transient;
+import blarybus.blarybus.board.domain.Board;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Slf4j
@@ -24,6 +27,9 @@ public class Member {
 
     private String name;
 
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Board> board = new ArrayList<>();
     @Builder
     public Member(String memberId, String password, String loginId, String name) {
         this.memberId = memberId;

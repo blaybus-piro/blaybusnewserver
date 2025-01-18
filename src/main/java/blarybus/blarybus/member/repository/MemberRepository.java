@@ -36,4 +36,9 @@ public class MemberRepository {
         }
     }
 
+    public Member findMemberId(String memberId) {
+        Member member = em.find(Member.class, memberId);
+        return member;
+    }
+
 }
