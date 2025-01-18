@@ -44,7 +44,11 @@ public enum ErrorCode {
     USER_ALREADY_EXIST(-300, "이미 회원가입된 유저입니다.", 400),
     USER_PASSWORD_NOTEQUAL(-300, "비밀번호가 일치하지 않습니다.", 400),
     USER_NOT_EXIST(-301, "존재하지 않는 유저입니다.", 406),
-    USER_WRONG_PASSWORD(-302, "비밀번호가 틀렸습니다.", 401);
+    USER_WRONG_PASSWORD(-302, "비밀번호가 틀렸습니다.", 401),
+
+
+    // Board
+    BOARD_NOT_EXIST(-301, "존재하지 않는 게시판입니다.", 406);
 
     private final int errorCode;
     private final String message;

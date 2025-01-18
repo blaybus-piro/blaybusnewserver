@@ -1,12 +1,14 @@
 package blarybus.blarybus.board.domain;
 
 import blarybus.blarybus.member.domain.Member;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 
@@ -14,6 +16,8 @@ import java.time.LocalDate;
 @Slf4j
 @Getter
 @Setter
+@EntityListeners(AuditingEntityListener.class) // 추가 필요
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Board {
 
     @Id
