@@ -1,0 +1,51 @@
+name: CI-CD-Demo
+
+on:
+  push:
+    branches: [ "main" ]  # main 브랜치에 push될 때만 동작하도록
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # (1) 코드 체크아웃
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      # (2) 도커 빌드
+      - name: Build Docker Image
+        run: |
+          docker build -t my-dockerhub-id/my-app:latest .
+
+      # (3) DockerHub 로그인
+      - name: DockerHub Login
+        run: |
+          echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+      # (4) 도커 이미지 푸시
+      - name: Push to DockerHub
+        run: |
+          docker push my-dockerhub-id/my-app:latest
+
+      # (5) SSH를 통해 서버에 접속하여 컨테이너 실행
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            # 만약 기존 컨테이너가 돌고 있다면 중단 후 제거
+            docker stop my-app || true
+            docker rm my-app || true
+
+            # 이미지 pull
+            docker pull my-dockerhub-id/my-app:latest
+
+            # 새 컨테이너 실행
+            docker run -d --name my-app -p 8080:8080 \
+              -e SPRING_DATASOURCE_URL='${{ secrets.SPRING_DATASOURCE_URL }}' \
+              -e SPRING_DATASOURCE_USERNAME='${{ secrets.SPRING_DATASOURCE_USERNAME }}' \
+              -e SPRING_DATASOURCE_PASSWORD='${{ secrets.SPRING_DATASOURCE_PASSWORD }}' \
+              my-dockerhub-id/my-app:latest
