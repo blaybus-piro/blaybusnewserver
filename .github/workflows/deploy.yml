@@ -2,48 +2,62 @@ name: CI-CD-Demo
 
 on:
   push:
-    branches: [ "main" ]  # main 브랜치에 push될 때만 동작하도록
+    branches: [ "main" ]
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # (1) 코드 체크아웃
+      # (1) 깃에서 코드 체크아웃
       - name: Check out repository
         uses: actions/checkout@v2
 
-      # (2) 도커 빌드
+      # (2) JDK 17 세팅 (Gradle 빌드용)
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: 17
+
+      # (3) gradlew 실행권한 부여 (Windows/Mac이 아닌 리눅스 환경 가정)
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      # (4) Gradle 빌드 (테스트 생략하려면 -x test)
+      - name: Build with Gradle
+        run: ./gradlew clean build
+
+      # (5) Docker 이미지 빌드
       - name: Build Docker Image
         run: |
           docker build -t my-dockerhub-id/my-app:latest .
 
-      # (3) DockerHub 로그인
+      # (6) Docker Hub 로그인
       - name: DockerHub Login
         run: |
           echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
-      # (4) 도커 이미지 푸시
+      # (7) Docker 이미지 푸시
       - name: Push to DockerHub
         run: |
           docker push my-dockerhub-id/my-app:latest
 
-      # (5) SSH를 통해 서버에 접속하여 컨테이너 실행
+      # (8) SSH를 통해 서버에 접속하여 컨테이너 실행
       - name: Deploy to Server
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USERNAME }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
+          host: ${{ secrets.SERVER_HOST }}            # 서버 도메인 or IP
+          username: ${{ secrets.SERVER_USERNAME }}     # 예: ubuntu
+          key: ${{ secrets.SERVER_SSH_KEY }}           # Private Key
           script: |
-            # 만약 기존 컨테이너가 돌고 있다면 중단 후 제거
+            # 기존 컨테이너가 돌아가면 중단/삭제
             docker stop my-app || true
             docker rm my-app || true
 
-            # 이미지 pull
+            # 새 이미지 pull
             docker pull my-dockerhub-id/my-app:latest
 
-            # 새 컨테이너 실행
+            # 컨테이너 실행
             docker run -d --name my-app -p 8080:8080 \
               -e SPRING_DATASOURCE_URL='${{ secrets.SPRING_DATASOURCE_URL }}' \
               -e SPRING_DATASOURCE_USERNAME='${{ secrets.SPRING_DATASOURCE_USERNAME }}' \
