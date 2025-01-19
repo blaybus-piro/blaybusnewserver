@@ -1,4 +1,4 @@
-name: CI-CD-Demo
+name: blarybus CD
 
 on:
   push:
@@ -69,4 +69,6 @@ jobs:
               -e SPRING_DATASOURCE_URL='${{ secrets.SPRING_DATASOURCE_URL }}' \
               -e SPRING_DATASOURCE_USERNAME='${{ secrets.SPRING_DATASOURCE_USERNAME }}' \
               -e SPRING_DATASOURCE_PASSWORD='${{ secrets.SPRING_DATASOURCE_PASSWORD }}' \
+              -e S3_ACCESSKEY='${{ secrets.S3_ACCESSKEY }}' \
+              -e S3_SECRETKEY='${{ secrets.S3_SECRETKEY }}' \
               chltmdgh522/blarybus:latest
