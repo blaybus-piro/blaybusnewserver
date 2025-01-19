@@ -48,7 +48,7 @@ public enum ErrorCode {
 
 
     // Board
-    BOARD_NOT_EXIST(-301, "존재하지 않는 게시판입니다.", 406);
+    BOARD_NOT_EXIST(-401, "존재하지 않는 게시판입니다.", 406);
 
     private final int errorCode;
     private final String message;
