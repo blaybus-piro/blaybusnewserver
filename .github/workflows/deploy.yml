@@ -17,7 +17,8 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v2
         with:
-          java-version: 17
+          distribution: 'temurin'  # ← 필수!
+          java-version: '17'
 
       # (3) gradlew 실행권한 부여 (Windows/Mac이 아닌 리눅스 환경 가정)
       - name: Grant execute permission for gradlew
