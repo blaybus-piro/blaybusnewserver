@@ -30,6 +30,8 @@ dependencies {
 	implementation 'io.github.cdimascio:java-dotenv:5.2.2'
 	implementation 'io.github.cdimascio:dotenv-java:2.2.0'
 
+	//s3
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 
 	//JWT
 	implementation 'io.jsonwebtoken:jjwt-api:0.12.5'

@@ -7,6 +7,7 @@ import blarybus.blarybus.board.dto.response.BoardResponse;
 import blarybus.blarybus.board.repository.BoardRepository;
 import blarybus.blarybus.global.exception.CustomException;
 import blarybus.blarybus.global.exception.ErrorCode;
+import blarybus.blarybus.global.file.FileStore;
 import blarybus.blarybus.global.response.ListResult;
 import blarybus.blarybus.global.response.ResponseService;
 import blarybus.blarybus.global.response.SingleResult;
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,14 +27,17 @@ import java.util.Optional;
 public class BoardService {
     private final BoardRepository boardRepository;
     private final MemberRepository memberRepository;
-
-    public SingleResult<Board> boardCreate(BoardCreateReq req, String memberId) {
+    private final FileStore fileStore;
+    public SingleResult<Board> boardCreate(BoardCreateReq req, String memberId) throws IOException {
 
         Member findMember = memberRepository.findMemberId(memberId);
+        String imageUrl = fileStore.storeFile(req.image());
         Board newBoard = Board.builder()
                 .title(req.title())
                 .content(req.content())
+                .imageUrl(imageUrl)
                 .member(findMember).build();
+
         Board board = boardRepository.save(newBoard);
 
 

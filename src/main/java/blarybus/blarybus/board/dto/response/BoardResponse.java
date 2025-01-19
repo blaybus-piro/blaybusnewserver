@@ -24,6 +24,10 @@ public record BoardResponse(
         @NotBlank
         @Schema(description = "게시물 내용", example = "내용입니다")
         String content,
+
+        @NotBlank
+        @Schema(description = "이미지 url", example = "chltmdgh.png")
+        String imageUrl,
         @NotNull
         @Schema(description = "게시물 생성 시간", example = "2024-10-10 10:10:00")
         LocalDate createdDate) {
@@ -32,6 +36,7 @@ public record BoardResponse(
                 .boardId(board.getBoardId())
                 .title(board.getTitle())
                 .content(board.getContent())
+                .imageUrl(board.getImageUrl())
                 .createdDate(board.getCreatedDate())
                 .member(board.getMember())
                 .build();
