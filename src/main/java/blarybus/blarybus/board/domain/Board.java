@@ -28,6 +28,8 @@ public class Board {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    private String imageUrl;
+
     private String title;
 
     private String content;
@@ -36,10 +38,13 @@ public class Board {
     private LocalDate createdDate;
 
     @Builder
-    public Board(Long boardId, Member member, String title, String content, LocalDate createdDate) {
+    public Board(Long boardId,Member member, String title,
+                 String imageUrl,
+                 String content, LocalDate createdDate) {
         this.boardId = boardId;
         this.member = member;
         this.title = title;
+        this.imageUrl=imageUrl;
         this.content = content;
         this.createdDate = createdDate;
     }

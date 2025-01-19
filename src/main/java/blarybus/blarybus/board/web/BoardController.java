@@ -16,6 +16,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,8 +33,11 @@ public class BoardController {
     @PostMapping
     @Operation(summary = "게시글 작성")
     public SuccessResponse<SingleResult<Board>> createBoard(@Valid
-                                                            @RequestBody BoardCreateReq req,
-                                                            @RequestAttribute("id") String memberId) {
+                                                                @RequestPart("title") String title,
+                                                            @RequestPart("content") String content,
+                                                            @RequestPart("image") MultipartFile image,
+                                                            @RequestAttribute("id") String memberId) throws IOException {
+        BoardCreateReq req=new BoardCreateReq(title,content,image);
         SingleResult<Board> result = boardService.boardCreate(req, memberId);
         return SuccessResponse.ok(result);
     }
