@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="256a4922-7bb7-44e9-814a-c44f7104dc42" name="Changes" comment="WorkFlow and Deploy Setting">
+      <change beforePath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/feature.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/refactor.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/report.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/deploy.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/BlarybusApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/board/domain/Board.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/board/dto/reqeust/BoardCreateReq.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/board/dto/reqeust/BoardUpdateReq.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/board/dto/response/BoardResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/board/repository/BoardRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/board/service/BoardService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/board/web/BoardController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/global/config/ConfigController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/global/config/EnvConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/global/config/OpenApiConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/global/config/PasswordConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/global/config/S3Config.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/global/config/WebConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/global/exception/CustomException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/global/exception/ErrorCode.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/global/exception/ErrorResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/global/exception/ExceptionAdvice.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/global/exception/ExceptionResult.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/global/file/FileStore.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/global/jwt/JwtAuthService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/global/jwt/JwtInterceptor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/global/jwt/JwtUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/global/jwt/dto/JwtTokenSet.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/global/response/ListResult.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/global/response/ResponseService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/global/response/ResponseState.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/global/response/SingleResult.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/global/response/SuccessResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/member/domain/Member.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/member/dto/MemberJoinReq.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/member/dto/MemberLoginReq.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/member/repository/MemberRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/member/service/MemberService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/blarybus/blarybus/member/web/MemberController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-dev.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-prod.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/home/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/blarybus/blarybus/BlarybusApplicationTests.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="blarybus" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;lian2945&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/blaybus-piro/BlayBus-Piro-Server&quot;,
+    &quot;accountId&quot;: &quot;cd35e28b-92a6-4f34-a819-79a3dc3f38db&quot;
+  },
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
+    },
+    &quot;owner&quot;: &quot;blaybus-piro&quot;,
+    &quot;repository&quot;: &quot;BlayBus-Piro-Server&quot;
+  }
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2soOvFPdRFhDiUt1LNPIRkYhuox" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Build BlayBus.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.C:/Users/wdong/Desktop/BlayBus.executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.BlarybusApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feat#17&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager">
+    <configuration name="BlarybusApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="blarybus.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="blarybus.blarybus.BlarybusApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.22562.218" />
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-IU-243.22562.218" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="project-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task id="LOCAL-00001" summary="Github Setting">
+      <option name="closed" value="true" />
+      <created>1739113134842</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1739113134842</updated>
+    </task>
+    <task id="LOCAL-00002" summary="WorkFlow and Deploy Setting">
+      <option name="closed" value="true" />
+      <created>1739115172627</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1739115172627</updated>
+    </task>
+    <task id="LOCAL-00003" summary="WorkFlow and Deploy Setting">
+      <option name="closed" value="true" />
+      <created>1739115339559</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1739115339559</updated>
+    </task>
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="256a4922-7bb7-44e9-814a-c44f7104dc42" name="Changes" comment="WorkFlow and Deploy Setting" />
+      <created>1739118689785</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1739118689785</updated>
+      <workItem from="1739118690843" duration="1587000" />
+      <workItem from="1739120299725" duration="1157000" />
+      <workItem from="1739153934753" duration="416000" />
+      <workItem from="1739154361687" duration="231000" />
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Github Setting" />
+    <MESSAGE value="WorkFlow and Deploy Setting" />
+    <option name="LAST_COMMIT_MESSAGE" value="WorkFlow and Deploy Setting" />
+  </component>
+</project>
