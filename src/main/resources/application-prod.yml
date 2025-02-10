@@ -4,7 +4,7 @@ spring:
 
   config:
     import:
-      - file:env/prod.env
+      - file:env/prod.env[.properties]
 
   datasource:
     url: ${MYSQL_URL}
@@ -19,6 +19,26 @@ spring:
       enabled: true
       max-request-size: 30MB
       max-file-size: 30MB
+
+  redis:
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
+    password: ${REDIS_PASSWORD}
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-name: ${OAUTH2_CLIENT_NAME}
+            client-id: ${OAUTH2_CLIENT_ID}
+            client-secret: ${OAUTH2_CLIENT_SECRET}
+            authorization-grant-type: ${OAUTH2_GRANT_TYPE}
+            client-authentication-method: ${OAUTH2_AUTH_METHOD}
+            redirect-uri: ${OAUTH2_REDIRECT_URL}
+            scope:
+              - profile
+              - email
 
 jwt:
   secret: ${JWT_SECRET}
@@ -36,3 +56,13 @@ cloud:
     credentials:
       accessKey: ${S3_ACCESS_KEY}
       secretKey: ${S3_REFRESH_KEY}
+
+logging:
+  level:
+    root: INFO
+    org:
+      springframework:
+        web: ERROR
+
+frontend:
+  url: http://localhost:3000
