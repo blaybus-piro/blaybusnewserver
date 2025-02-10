@@ -3,8 +3,6 @@ package blaybus.domain.oauth2.application.service;
 import blaybus.domain.oauth2.domain.BlaybusOAuth2User;
 import blaybus.domain.oauth2.presentation.dto.response.OAuth2Response;
 import blaybus.domain.oauth2.presentation.dto.response.impl.GoogleOAuth2Response;
-import blaybus.domain.oauth2.presentation.dto.response.impl.KakaoOAuth2Response;
-import blaybus.domain.oauth2.presentation.dto.response.impl.NaverOAuth2Response;
 import blaybus.domain.user.domain.entity.Role;
 import blaybus.domain.user.domain.entity.User;
 import blaybus.domain.user.domain.repository.UserRepository;
@@ -63,8 +61,6 @@ public class BlaybusOAuth2UserService extends DefaultOAuth2UserService {
 
         return switch (registrationId) {
             case "google" -> new GoogleOAuth2Response(oauth2User.getAttributes());
-            case "naver" -> new NaverOAuth2Response(oauth2User.getAttributes());
-            case "kakao" -> new KakaoOAuth2Response(oauth2User.getAttributes());
             default -> throw new OAuth2AuthenticationException("현재 고객님의 OAuth2 인증 서비스는 지원되지 않습니다.");
         };
     }
