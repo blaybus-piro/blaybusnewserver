@@ -4,8 +4,7 @@ spring:
 
   config:
     import:
-      - optional:file:env/dev.env
-      - optional:file:env/prod.env
+      - file:env/dev.env[.properties]
 
   datasource:
     url: ${MYSQL_URL}
