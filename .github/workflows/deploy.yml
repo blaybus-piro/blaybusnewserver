@@ -15,12 +15,13 @@ jobs:
         uses: actions/checkout@v2
 
       # (2) ENV 파일 생성
-      - name: Create env/prod.env file
+      - name: Create env files
         run: |
           mkdir -p env
-          echo "${{ secrets.ENV_VARS }}" | base64 --decode > env/prod.env
-
-      # (3) JDK 17 세팅
+          echo "${{ secrets.ENV_VARS }}" > env/prod.env
+          cp env/prod.env env/dev.env  # prod.env를 dev.env로 복사
+          
+          # (3) JDK 17 세팅
       - name: Set up JDK 17
         uses: actions/setup-java@v2
         with:
