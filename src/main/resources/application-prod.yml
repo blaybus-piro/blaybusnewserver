@@ -65,4 +65,4 @@ logging:
         web: ERROR
 
 frontend:
-  url: http://localhost:3000
+  url: ${FRONTEND_URL}
