@@ -6,11 +6,13 @@ import blaybus.domain.pay.presentation.dto.KakaoPayApproveResponse;
 import blaybus.domain.pay.presentation.dto.KakaoPayOrderResponse;
 import blaybus.domain.pay.presentation.dto.KakaoPayReadyResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BlaybusPayServiceImpl implements BlaybusPayService {
 
     private final KakaoPayClient kakaoPayClient;
@@ -30,6 +32,8 @@ public class BlaybusPayServiceImpl implements BlaybusPayService {
         String authorization = "KakaoAK " + adminKey;
         String contentType = "application/x-www-form-urlencoded;charset=utf-8";
 
+        log.info(adminKey);
+        log.info(cid);
         // 테스트용 파라미터 (실제 구현 시 조정이 필요함.... 이건 예시)
         String itemName = "디자이너와의 면담";
         int quantity = 1;

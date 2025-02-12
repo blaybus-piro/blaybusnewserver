@@ -17,12 +17,12 @@ public class BlaybusPayController {
 
     /**
      * [GET] 결제 준비
-     *  예시: /api/pay/ready?orderId=1231&amount=1000
+     *  예시: /api/pay/ready?orderId=1231&amount=1000 유저는 @Auth~~ 받으면 됨
      */
     @GetMapping("/ready")
     public ResponseEntity<KakaoPayReadyResponse> payReady(
             @RequestParam String orderId, // 백에서 해줘야될까??? 프에서 해줘야 될까??
-            @RequestParam String userId,
+            @RequestParam String userId, // 이거 바꿀거임!! @Auth~~
             @RequestParam int amount
     ) {
         KakaoPayReadyResponse response = blaybusPayService.payReady(orderId, userId, amount);
@@ -37,7 +37,7 @@ public class BlaybusPayController {
     @GetMapping("/approve")
     public ResponseEntity<KakaoPayApproveResponse> payApprove(
             @RequestParam String orderId,
-            @AuthenticationPrincipal String userId,
+            @RequestParam String userId,
             @RequestParam String tid,
             @RequestParam("pgToken") String pgToken
     ) {
