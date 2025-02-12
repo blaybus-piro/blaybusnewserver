@@ -15,10 +15,10 @@ jobs:
         uses: actions/checkout@v2
 
       # (2) ENV 파일 생성
-      - name: Create env/prod.env file
+      - name: Create env files
         run: |
           mkdir -p env
-          echo "${{ secrets.ENV_VARS }}" > env/dev.env
+          echo "${{ secrets.ENV_VARS }}" > env/prod.env
 
       # (3) JDK 17 세팅
       - name: Set up JDK 17
@@ -38,7 +38,7 @@ jobs:
       # (6) Docker 이미지 빌드
       - name: Build Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO_NAME }}:latest .
+          docker build -t ${{ secrets.DOCKERHUB_NICKNAME }}/${{ secrets.DOCKERHUB_REPO_NAME }}:latest .
 
       # (7) DockerHub 로그인
       - name: DockerHub Login
@@ -48,7 +48,7 @@ jobs:
       # (8) Docker 이미지 푸시
       - name: Push Docker Image
         run: |
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO_NAME }}:latest
+          docker push ${{ secrets.DOCKERHUB_NICKNAME }}/${{ secrets.DOCKERHUB_REPO_NAME }}:latest
 
       # (9) SSH로 서버 접속 후 컨테이너 실행
       - name: Deploy to Server
@@ -63,7 +63,7 @@ jobs:
             docker rm ${{ secrets.DOCKERHUB_REPO_NAME }} || true
 
             # 최신 이미지 pull
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO_NAME }}:latest
+            docker pull ${{ secrets.DOCKERHUB_NICKNAME }}/${{ secrets.DOCKERHUB_REPO_NAME }}:latest
 
             # 새 컨테이너 실행 (메모리/CPU, 재시작, ENV 등)
             docker run -d \
@@ -75,4 +75,4 @@ jobs:
               --memory="512m" \
               --memory-swap="1g" \
               --restart=always \
-              ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO_NAME }}:latest
+              ${{ secrets.DOCKERHUB_NICKNAME }}/${{ secrets.DOCKERHUB_REPO_NAME }}:latest
