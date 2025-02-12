@@ -10,7 +10,6 @@ import blaybus.global.jwt.domain.repository.JsonWebTokenRepository;
 import blaybus.global.jwt.util.JWTUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,11 +19,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
-import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.filter.CorsFilter;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Configuration
@@ -40,24 +37,9 @@ public class SecurityConfig {
     private final JsonWebTokenRepository jsonWebTokenRepository;
     private final List<String> excludedUrls = Arrays.asList("/api/reissue", "favicon.ico", "/api/healthcheck");
 
-    @Value("${frontend.url}")
-    private String frontendUrl;
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors((cors) -> cors
-                        .configurationSource(request -> {
-                            CorsConfiguration corsConfiguration = new CorsConfiguration();
-                            corsConfiguration.setAllowedOriginPatterns(Collections.singletonList(frontendUrl));
-                            corsConfiguration.setAllowedMethods(Collections.singletonList("*"));
-                            corsConfiguration.setAllowCredentials(true);
-                            corsConfiguration.setAllowedHeaders(Collections.singletonList("*"));
-                            corsConfiguration.setExposedHeaders(List.of("Authorization", "SET-COOKIE"));
-                            corsConfiguration.setMaxAge(3600L);
-
-                            return corsConfiguration;
-                        }))
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)

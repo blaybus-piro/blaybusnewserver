@@ -65,14 +65,5 @@ jobs:
             # 최신 이미지 pull
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO_NAME }}:latest
 
-            # 새 컨테이너 실행 (메모리/CPU, 재시작, ENV 등)
-            docker run -d \
-              --name ${{ secrets.DOCKERHUB_REPO_NAME }} \
-              -p 8080:8080 \
-              -e - name: Run Spring Boot Container with Production Profile
-              -e SPRING_PROFILES_ACTIVE=prod \
-              --cpus="1.0" \
-              --memory="512m" \
-              --memory-swap="1g" \
-              --restart=always \
-              ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO_NAME }}:latest
+            # Docker-Compose 실행
+            docker-compose up -d

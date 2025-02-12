@@ -8,6 +8,7 @@ import blaybus.global.jwt.util.JWTUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
@@ -15,6 +16,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -25,8 +27,11 @@ public class BlaybusSuccessHandler extends SimpleUrlAuthenticationSuccessHandler
     private final JWTUtil jwtUtil;
     private final JsonWebTokenRepository jsonWebTokenRepository;
 
+    @Value("${frontend.url}")
+    private String frontendURL;
+
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
 
         BlaybusOAuth2User user = (BlaybusOAuth2User) authentication.getPrincipal();
 
@@ -56,5 +61,7 @@ public class BlaybusSuccessHandler extends SimpleUrlAuthenticationSuccessHandler
 
         response.addHeader(HttpHeaders.SET_COOKIE, accessTokenCookie.toString());
         response.addHeader(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString());
+
+        response.sendRedirect(frontendURL);
     }
 }
