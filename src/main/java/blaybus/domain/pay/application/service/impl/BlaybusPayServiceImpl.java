@@ -30,16 +30,16 @@ public class BlaybusPayServiceImpl implements BlaybusPayService {
         String authorization = "KakaoAK " + adminKey;
         String contentType = "application/x-www-form-urlencoded;charset=utf-8";
 
-        // 테스트용 파라미터 (실제 구현 시 파라미터 조정 필요)
-        String itemName = "테스트 상품";
+        // 테스트용 파라미터 (실제 구현 시 조정이 필요함.... 이건 예시)
+        String itemName = "디자이너와의 면담";
         int quantity = 1;
         int vatAmount = 0;
         int taxFreeAmount = 0;
 
-        // 실제 운영 시, approvalUrl / cancelUrl / failUrl 을 환경에 맞게 설정
-        String approvalUrl = "https://example.com/kakaoPay/approve?orderId=" + orderId;
-        String cancelUrl   = "https://example.com/kakaoPay/cancel?orderId=" + orderId;
-        String failUrl     = "https://example.com/kakaoPay/fail?orderId=" + orderId;
+        // 실제 운영 서버로 변경해야됨
+        String approvalUrl = "http://localhost:8080/api/pay/approve?orderId=" + orderId;
+        String cancelUrl   = "http://localhost:8080/api/pay/cancel?orderId=" + orderId;
+        String failUrl     = "http://localhost:8080/api/pay/fail?orderId=" + orderId;
 
         // FeignClient 호출
         return kakaoPayClient.ready(

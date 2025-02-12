@@ -9,7 +9,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/reissue/pay")
+@RequestMapping("/api/pay")
 @RequiredArgsConstructor
 public class BlaybusPayController {
 
@@ -21,8 +21,8 @@ public class BlaybusPayController {
      */
     @GetMapping("/ready")
     public ResponseEntity<KakaoPayReadyResponse> payReady(
-            @RequestParam String orderId,
-            @AuthenticationPrincipal String userId,
+            @RequestParam String orderId, // 백에서 해줘야될까??? 프에서 해줘야 될까??
+            @RequestParam String userId,
             @RequestParam int amount
     ) {
         KakaoPayReadyResponse response = blaybusPayService.payReady(orderId, userId, amount);

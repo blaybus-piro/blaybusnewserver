@@ -7,7 +7,7 @@ spring:
 
   config:
     import:
-      - file:env/dev.env[.properties]
+      - optional:file:env/dev.env[.properties]
 
   datasource:
     url: ${MYSQL_URL}
@@ -58,7 +58,7 @@ cloud:
       static: ${S3_REGION}
     credentials:
       accessKey: ${S3_ACCESS_KEY}
-      secretKey: ${S3_REFRESH_KEY}
+      secretKey: ${S3_SECRET_KEY}
 
 kakao:
   pay:
@@ -73,4 +73,4 @@ logging:
         web: ERROR
 
 frontend:
-  url: http://localhost:3000
+  url: ${FRONTEND_URL}
