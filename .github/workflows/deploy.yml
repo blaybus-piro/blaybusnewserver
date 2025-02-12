@@ -18,7 +18,7 @@ jobs:
       - name: Create env/prod.env file
         run: |
           mkdir -p env
-          echo "${{ secrets.ENV_VARS }}" > env/prod.env
+          echo "${{ secrets.ENV_VARS }}" > env/dev.env
 
       # (3) JDK 17 세팅
       - name: Set up JDK 17
@@ -38,7 +38,7 @@ jobs:
       # (6) Docker 이미지 빌드
       - name: Build Docker Image
         run: |
-          docker build -t chltmdgh522/blarybus:latest .
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO_NAME }}:latest .
 
       # (7) DockerHub 로그인
       - name: DockerHub Login
@@ -48,7 +48,7 @@ jobs:
       # (8) Docker 이미지 푸시
       - name: Push Docker Image
         run: |
-          docker push chltmdgh522/blarybus:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO_NAME }}:latest
 
       # (9) SSH로 서버 접속 후 컨테이너 실행
       - name: Deploy to Server
@@ -59,18 +59,20 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             # 이미 돌아가는 컨테이너가 있다면 중단/제거
-            docker stop blarybus || true
-            docker rm blarybus || true
+            docker stop ${{ secrets.DOCKERHUB_REPO_NAME }} || true
+            docker rm ${{ secrets.DOCKERHUB_REPO_NAME }} || true
 
             # 최신 이미지 pull
-            docker pull chltmdgh522/blarybus:latest
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO_NAME }}:latest
 
             # 새 컨테이너 실행 (메모리/CPU, 재시작, ENV 등)
             docker run -d \
-              --name blarybus \
+              --name ${{ secrets.DOCKERHUB_REPO_NAME }} \
               -p 8080:8080 \
+              -e - name: Run Spring Boot Container with Production Profile
+              -e SPRING_PROFILES_ACTIVE=prod \
               --cpus="1.0" \
               --memory="512m" \
               --memory-swap="1g" \
               --restart=always \
-              chltmdgh522/blarybus:latest
+              ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO_NAME }}:latest
