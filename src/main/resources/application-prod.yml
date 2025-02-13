@@ -71,3 +71,6 @@ logging:
 
 frontend:
   url: ${FRONTEND_URL}
+
+server:
+  url: ${SERVER_URL}
