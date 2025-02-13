@@ -8,7 +8,7 @@ group = 'blaybus'
 version = '0.0.1-SNAPSHOT'
 
 ext {
-    set('springCloudVersion', "2024.0.0")
+    set('springCloudVersion', "2023.0.1")
 }
 
 java {
