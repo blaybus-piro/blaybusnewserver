@@ -57,6 +57,11 @@ cloud:
       accessKey: ${S3_ACCESS_KEY}
       secretKey: ${S3_REFRESH_KEY}
 
+kakao:
+  pay:
+    admin-key: ${PAY_SECRET_KEY}
+    cid: ${PAY_CLIENT}
+
 logging:
   level:
     root: INFO
@@ -66,3 +71,6 @@ logging:
 
 frontend:
   url: ${FRONTEND_URL}
+
+server:
+  url: ${SERVER_URL}
