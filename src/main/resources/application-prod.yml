@@ -3,7 +3,8 @@ spring:
     name: blaybus-prod
 
   config:
-    import: "optional:file:./env/prod.env[.properties]"
+    import:
+      - optional:file:env/prod.env[.properties]
 
   datasource:
     url: ${MYSQL_URL}
