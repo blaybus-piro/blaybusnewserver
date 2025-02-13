@@ -17,9 +17,10 @@ public class KakaoPayApproveResponse {
     private String partner_user_id;
     private String payment_method_type;
     private Amount amount;  // 결제 금액 정보
+    private String status; // 결제 완료 상태
     private String item_name;
     private int quantity;
     private Date created_at;
     private Date approved_at;
-    // 필요 시 필드 추가
+
 }

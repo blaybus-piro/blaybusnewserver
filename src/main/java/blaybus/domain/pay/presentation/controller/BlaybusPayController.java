@@ -29,13 +29,14 @@ public class BlaybusPayController {
      */
     @GetMapping("/ready")
     public ResponseEntity<KakaoPayReadyResponse> payReady(
-            @AuthenticationPrincipal String userId, // Oauth로부터 받기 근데 이부분이 필요할까 QR코드에서 인증하는대..
+           @AuthenticationPrincipal String userId, // Oauth로부터 받기 근데 이부분이 필요할까 QR코드에서 인증하는대..
             HttpSession session
     ) {
+
+
         if (userId == null) {
             throw new BlaybusAccessDeniedException();
         }
-
         // 주문 번호 랜덤 생성
         String orderId = UUID.randomUUID().toString();
         // 결제 금액
@@ -57,10 +58,11 @@ public class BlaybusPayController {
     public ResponseEntity<?> payApprove(
             @RequestParam String orderId,
             @RequestParam("pg_token") String pgToken,
-            @AuthenticationPrincipal String userId, // Oauth로부터 받기 근데 이부분이 필요할까 QR코드에서 인증하는대..
+           @AuthenticationPrincipal String userId, // Oauth로부터 받기 근데 이부분이 필요할까 QR코드에서 인증하는대..
             HttpSession session
     ) {
         try {
+
             // 세션에서 tid 값 불러오기
             String tid = (String) session.getAttribute("tid_" + orderId);
 

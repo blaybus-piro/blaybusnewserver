@@ -1,6 +1,7 @@
 package blaybus.domain.pay.application.service.impl;
 
 import blaybus.domain.pay.application.service.BlaybusPayService;
+import blaybus.domain.pay.infra.exception.BlaybusPayException;
 import blaybus.domain.pay.infra.feignclient.KakaoPayClient;
 import blaybus.domain.pay.presentation.dto.KakaoPayApproveResponse;
 import blaybus.domain.pay.presentation.dto.KakaoPayOrderResponse;
@@ -46,6 +47,7 @@ public class BlaybusPayServiceImpl implements BlaybusPayService {
         String cancelUrl = serverUrl + "/api/pay/approve?orderId=" + orderId;
         String failUrl = serverUrl + "/api/pay/approve?orderId=" + orderId;
 
+
         // FeignClient 호출
         return kakaoPayClient.ready(
                 authorization,
@@ -73,15 +75,27 @@ public class BlaybusPayServiceImpl implements BlaybusPayService {
         String authorization = "KakaoAK " + adminKey;
         String contentType = "application/x-www-form-urlencoded;charset=utf-8";
 
-        return kakaoPayClient.approve(
-                authorization,
-                contentType,
-                cid,
-                tid,
-                orderId,
-                userId,
-                pgToken
-        );
+        KakaoPayApproveResponse approve;
+        try {
+            // 결제 승인 요청
+            approve = kakaoPayClient.approve(
+                    authorization,
+                    contentType,
+                    cid,
+                    tid,
+                    orderId,
+                    userId,
+                    pgToken
+            );
+            approve.setStatus("SUCCESS");  // 결제 성공 시 status 설정
+        } catch (BlaybusPayException e) {
+            approve = new KakaoPayApproveResponse();
+            approve.setStatus("FAIL");
+            log.info("결제 승인 실패: {}", e.getMessage());
+        }
+
+        return approve;
+
     }
 
     /**
