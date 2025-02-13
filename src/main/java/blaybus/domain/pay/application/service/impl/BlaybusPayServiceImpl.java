@@ -18,7 +18,7 @@ public class BlaybusPayServiceImpl implements BlaybusPayService {
     private final KakaoPayClient kakaoPayClient;
 
     @Value("${kakao.pay.admin-key}")
-    private String adminKey;  // 카카오페이 관리자 키
+    private String adminKey;  // 카카오 관리자 키
 
     @Value("${kakao.pay.cid}")
     private String cid;       // 가맹점 CID 테스트
@@ -32,10 +32,8 @@ public class BlaybusPayServiceImpl implements BlaybusPayService {
         String authorization = "KakaoAK " + adminKey;
         String contentType = "application/x-www-form-urlencoded;charset=utf-8";
 
-        log.info(adminKey);
-        log.info(cid);
         // 테스트용 파라미터 (실제 구현 시 조정이 필요함.... 이건 예시)
-        String itemName = "디자이너와의 면담";
+        String itemName = "디자이너와의 컨설팅";
         int quantity = 1;
         int vatAmount = 0;
         int taxFreeAmount = 0;
@@ -43,7 +41,7 @@ public class BlaybusPayServiceImpl implements BlaybusPayService {
         // 실제 운영 서버로 변경해야됨 성공 리다이렉트 url
         String approvalUrl = "http://localhost:8080/api/pay/approve?orderId=" + orderId;
 
-        // 만들어야될까낭...
+        // 만들어야될까..
         String cancelUrl   = "http://localhost:8080/api/pay/cancel?orderId=" + orderId;
         String failUrl     = "http://localhost:8080/api/pay/fail?orderId=" + orderId;
 
