@@ -1,8 +1,35 @@
 package blaybus.domain.meeting.infra.client.dto.request;
 
-public record ConferenceRequest(
-        String summary,
-        EventDateTime start,
-        EventDateTime end,
-        ConferenceData conferenceData
-) {}
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class ConferenceRequest {
+    private String summary;
+    private EventDateTime start;
+    private EventDateTime end;
+    private ConferenceData conferenceData;
+
+    @Getter @Setter
+    public static class EventDateTime {
+        private String dateTime;
+        private String timeZone = "Asia/Seoul";
+    }
+
+    @Getter @Setter
+    public static class ConferenceData {
+        private CreateConferenceRequest createRequest;
+    }
+
+    @Getter @Setter
+    public static class CreateConferenceRequest {
+        private String requestId;
+        private ConferenceSolutionKey conferenceSolutionKey;
+    }
+
+    @Getter @Setter
+    public static class ConferenceSolutionKey {
+        private String type = "hangoutsMeet"; // API 호환성 유지
+    }
+}
