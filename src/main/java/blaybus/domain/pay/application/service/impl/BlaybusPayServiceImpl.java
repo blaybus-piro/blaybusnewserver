@@ -43,8 +43,6 @@ public class BlaybusPayServiceImpl implements BlaybusPayService {
 
         // env에서 serverUrl 불러옴!
         String approvalUrl = serverUrl + "/api/pay/approve?orderId=" + orderId;
-
-        // 만들어야될까..
         String cancelUrl = serverUrl + "/api/pay/approve?orderId=" + orderId;
         String failUrl = serverUrl + "/api/pay/approve?orderId=" + orderId;
 
