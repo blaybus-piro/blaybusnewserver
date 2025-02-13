@@ -1,4 +1,4 @@
-package blaybus.global.infra.presentation;
+package blaybus.global.infra.presentation.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-public class AuthenticationCheckController {
-    @GetMapping("/authcheck")
+public class HealthCheckController {
+    @GetMapping("/healthcheck")
     @ResponseStatus(HttpStatus.OK)
-    public void authcheck() {}
+    public void healthCheck() {}
 }
