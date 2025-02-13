@@ -1,6 +1,5 @@
 package blaybus.domain.pay.presentation.controller;
 
-import blaybus.domain.oauth2.application.exception.BlaybusAccessDeniedException;
 import blaybus.domain.pay.infra.exception.BlaybusPayException;
 import blaybus.domain.pay.application.service.BlaybusPayService;
 import blaybus.domain.pay.presentation.dto.*;
@@ -35,7 +34,7 @@ public class BlaybusPayController {
 
 
         if (userId == null) {
-            throw new BlaybusAccessDeniedException();
+            throw new IllegalStateException("유저 아이디가 존재하지 않습니다.");
         }
         // 주문 번호 랜덤 생성
         String orderId = UUID.randomUUID().toString();
