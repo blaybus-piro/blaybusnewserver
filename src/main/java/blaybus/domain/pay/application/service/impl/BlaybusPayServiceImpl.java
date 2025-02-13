@@ -23,9 +23,12 @@ public class BlaybusPayServiceImpl implements BlaybusPayService {
     @Value("${kakao.pay.cid}")
     private String cid;       // 가맹점 CID 테스트
 
+    @Value("${server.url}")
+    private String serverUrl;
+
     /**
      * 1) 결제 준비
-     *    - 결제 요청에 필요한 파라미터를 세팅하고, KakaoPayClient.ready() 호출
+     * - 결제 요청에 필요한 파라미터를 세팅하고, KakaoPayClient.ready() 호출
      */
     @Override
     public KakaoPayReadyResponse payReady(String orderId, String userId, int amount) {
@@ -38,12 +41,12 @@ public class BlaybusPayServiceImpl implements BlaybusPayService {
         int vatAmount = 0;
         int taxFreeAmount = 0;
 
-        // 실제 운영 서버로 변경해야됨 성공 리다이렉트 url
-        String approvalUrl = "http://localhost:8080/api/pay/approve?orderId=" + orderId;
+        // env에서 serverUrl 불러옴!
+        String approvalUrl = serverUrl + "/api/pay/approve?orderId=" + orderId;
 
         // 만들어야될까..
-        String cancelUrl   = "http://localhost:8080/api/pay/cancel?orderId=" + orderId;
-        String failUrl     = "http://localhost:8080/api/pay/fail?orderId=" + orderId;
+        String cancelUrl = serverUrl + "/api/pay/approve?orderId=" + orderId;
+        String failUrl = serverUrl + "/api/pay/approve?orderId=" + orderId;
 
         // FeignClient 호출
         return kakaoPayClient.ready(
@@ -65,7 +68,7 @@ public class BlaybusPayServiceImpl implements BlaybusPayService {
 
     /**
      * 2) 결제 승인
-     *    - 사용자 결제 완료 후 pg_token을 받아 최종 승인
+     * - 사용자 결제 완료 후 pg_token을 받아 최종 승인
      */
     @Override
     public KakaoPayApproveResponse payApprove(String orderId, String userId, String tid, String pgToken) {
@@ -85,7 +88,7 @@ public class BlaybusPayServiceImpl implements BlaybusPayService {
 
     /**
      * 3) 단건 조회
-     *    - tid로 결제 정보를 조회
+     * - tid로 결제 정보를 조회
      */
     @Override
     public KakaoPayOrderResponse getOrder(String tid) {
