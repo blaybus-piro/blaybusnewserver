@@ -21,7 +21,7 @@ public class BlaybusPayServiceImpl implements BlaybusPayService {
     private String adminKey;  // 카카오페이 관리자 키
 
     @Value("${kakao.pay.cid}")
-    private String cid;       // 가맹점 CID
+    private String cid;       // 가맹점 CID 테스트
 
     /**
      * 1) 결제 준비
@@ -40,8 +40,10 @@ public class BlaybusPayServiceImpl implements BlaybusPayService {
         int vatAmount = 0;
         int taxFreeAmount = 0;
 
-        // 실제 운영 서버로 변경해야됨
+        // 실제 운영 서버로 변경해야됨 성공 리다이렉트 url
         String approvalUrl = "http://localhost:8080/api/pay/approve?orderId=" + orderId;
+
+        // 만들어야될까낭...
         String cancelUrl   = "http://localhost:8080/api/pay/cancel?orderId=" + orderId;
         String failUrl     = "http://localhost:8080/api/pay/fail?orderId=" + orderId;
 
