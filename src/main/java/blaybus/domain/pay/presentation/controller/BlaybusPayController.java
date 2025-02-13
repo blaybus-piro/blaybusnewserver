@@ -36,10 +36,9 @@ public class BlaybusPayController {
         int amount = 2000000;
 
         KakaoPayReadyResponse response = blaybusPayService.payReady(orderId, userId, amount);
-        log.info(userId);
+
         session.setAttribute("tid_" + orderId, response.getTid());
-        String tid = (String) session.getAttribute("tid_" + orderId);
-        log.info(tid);
+
         return ResponseEntity.ok(response);
     }
 
