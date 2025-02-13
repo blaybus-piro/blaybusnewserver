@@ -25,21 +25,6 @@ spring:
     port: ${REDIS_PORT}
     password: ${REDIS_PASSWORD}
 
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            client-name: ${OAUTH2_CLIENT_NAME}
-            client-id: ${OAUTH2_CLIENT_ID}
-            client-secret: ${OAUTH2_CLIENT_SECRET}
-            authorization-grant-type: ${OAUTH2_GRANT_TYPE}
-            client-authentication-method: ${OAUTH2_AUTH_METHOD}
-            redirect-uri: ${OAUTH2_REDIRECT_URL}
-            scope:
-              - profile
-              - email
-
 jwt:
   secret: ${JWT_SECRET}
   access-expiration: ${JWT_ACCESS_EXPIRATION}
@@ -64,5 +49,14 @@ logging:
       springframework:
         web: ERROR
 
-frontend:
-  url: ${FRONTEND_URL}
+oauth2:
+  base-url: ${OAUTH2_BASE_URL}
+  client-name: ${OAUTH2_CLIENT_NAME}
+  client-id: ${OAUTH2_CLIENT_ID}
+  client-secret: ${OAUTH2_CLIENT_SECRET}
+  authorization-grant-type: ${OAUTH2_GRANT_TYPE}
+  client-authentication-method: ${OAUTH2_AUTH_METHOD}
+  redirect-uri: ${OAUTH2_REDIRECT_URL}
+  scope:
+    - profile
+    - email
