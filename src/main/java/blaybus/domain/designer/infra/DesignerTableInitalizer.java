@@ -39,14 +39,6 @@ public class DesignerTableInitalizer {
     @Transactional
     public void createDesignerTable() {
         entityManager.createNativeQuery("""
-            CREATE TABLE IF NOT EXISTS position (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                title VARCHAR(100) NOT NULL,
-                description VARCHAR(255) NOT NULL
-            )
-        """).executeUpdate();
-
-        entityManager.createNativeQuery("""
             CREATE TABLE IF NOT EXISTS designer (
                 id VARCHAR(255) PRIMARY KEY,
                 name VARCHAR(100) NOT NULL,
@@ -60,13 +52,5 @@ public class DesignerTableInitalizer {
             )
         """).executeUpdate();
 
-        entityManager.createNativeQuery("""
-            CREATE TABLE IF NOT EXISTS consulting (
-                id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                designer_id VARCHAR(255) NOT NULL,
-                details VARCHAR(255) NOT NULL,
-                CONSTRAINT fk_designer FOREIGN KEY (designer_id) REFERENCES designer(id)
-            )
-        """).executeUpdate();
     }
 }
