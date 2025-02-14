@@ -1,4 +1,4 @@
-package blaybus.domain.meeting.infra.client.dto.response;
+package blaybus.domain.meeting.infra.feignclient.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;

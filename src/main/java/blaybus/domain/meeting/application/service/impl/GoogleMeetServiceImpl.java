@@ -1,9 +1,9 @@
 package blaybus.domain.meeting.application.service.impl;
 
 import blaybus.domain.meeting.application.service.GoogleMeetService;
-import blaybus.domain.meeting.infra.client.GoogleMeetClient;
-import blaybus.domain.meeting.infra.client.dto.request.ConferenceRequest;
-import blaybus.domain.meeting.infra.client.dto.response.ConferenceResponse;
+import blaybus.domain.meeting.infra.feignclient.GoogleMeetClient;
+import blaybus.domain.meeting.infra.feignclient.dto.request.ConferenceRequest;
+import blaybus.domain.meeting.infra.feignclient.dto.response.ConferenceResponse;
 import blaybus.domain.meeting.presentation.dto.request.MeetingCreateRequest;
 import blaybus.domain.meeting.presentation.dto.response.MeetingResponse;
 import lombok.RequiredArgsConstructor;

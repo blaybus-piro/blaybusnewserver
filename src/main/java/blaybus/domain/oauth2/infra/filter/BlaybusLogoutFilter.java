@@ -2,6 +2,8 @@ package blaybus.domain.oauth2.infra.filter;
 
 import blaybus.domain.oauth2.infra.exception.InvalidRefreshTokenException;
 import blaybus.domain.oauth2.infra.exception.RefreshTokenNotExistException;
+import blaybus.global.jwt.domain.entity.JsonWebToken;
+import blaybus.global.jwt.domain.repository.GoogleJsonWebTokenRepository;
 import blaybus.global.jwt.domain.repository.JsonWebTokenRepository;
 import blaybus.global.jwt.util.JWTUtil;
 import jakarta.servlet.FilterChain;
@@ -22,6 +24,7 @@ public class BlaybusLogoutFilter extends GenericFilterBean {
 
     private final JWTUtil jwtUtil;
     private final JsonWebTokenRepository jsonWebTokenRepository;
+    private final GoogleJsonWebTokenRepository googleJsonWebTokenRepository;
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -45,10 +48,10 @@ public class BlaybusLogoutFilter extends GenericFilterBean {
     }
 
     private void LogoutProcess(String refreshToken, HttpServletResponse response) {
-        if(!jsonWebTokenRepository.existsById(refreshToken)) {
-            throw new RefreshTokenNotExistException();
-        }
-        jsonWebTokenRepository.deleteById(refreshToken);
+        JsonWebToken jsonWebToken = jsonWebTokenRepository.findById(refreshToken).orElseThrow(RefreshTokenNotExistException::new);
+
+        googleJsonWebTokenRepository.deleteById(jsonWebToken.getProviderId());
+        jsonWebTokenRepository.delete(jsonWebToken);
 
         response.addHeader("Authorization", "Bearer ");
 
