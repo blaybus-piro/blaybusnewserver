@@ -1,6 +1,6 @@
 package blaybus.domain.meeting.application.service.impl;
 
-import blaybus.domain.meeting.application.service.GoogleMeetService;
+import blaybus.domain.meeting.application.service.MeetingService;
 import blaybus.domain.meeting.infra.feignclient.GoogleMeetClient;
 import blaybus.domain.meeting.infra.feignclient.dto.request.ConferenceRequest;
 import blaybus.domain.meeting.infra.feignclient.dto.response.ConferenceResponse;
@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 
 @Service
 @RequiredArgsConstructor
-public class GoogleMeetServiceImpl implements GoogleMeetService {
+public class MeetingServiceImpl implements MeetingService {
     private final GoogleMeetClient googleMeetClient;
     private final DesignerRepository designerRepository;
 
@@ -45,7 +45,7 @@ public class GoogleMeetServiceImpl implements GoogleMeetService {
         );
     }
 
-    private ConferenceRequest createConferenceRequest(String title, LocalDateTime startTime) {
+    public ConferenceRequest createConferenceRequest(String title, LocalDateTime startTime) {
         ConferenceRequest conferenceRequest = new ConferenceRequest();
         conferenceRequest.setTitle(title);
 
@@ -57,3 +57,4 @@ public class GoogleMeetServiceImpl implements GoogleMeetService {
         return conferenceRequest;
     }
 }
+

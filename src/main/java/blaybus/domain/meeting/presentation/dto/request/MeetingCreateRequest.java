@@ -6,5 +6,4 @@ public record MeetingCreateRequest(
         String title,
         LocalDateTime startTime,
         LocalDateTime endTime
-) {
-}
+) {}
