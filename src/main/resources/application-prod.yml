@@ -63,6 +63,7 @@ oauth2:
   client-authentication-method: ${OAUTH2_AUTH_METHOD}
   redirect-uri: ${OAUTH2_REDIRECT_URL}
   scope:
+    - https://www.googleapis.com/auth/calendar
     - profile
     - email
 

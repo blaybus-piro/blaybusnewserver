@@ -23,7 +23,7 @@ public class LoginLinkServiceImpl implements LoginLinkService {
                 clientId +
                 "&redirect_uri=" +
                 redirectUri +
-                "&response_type=code&access_type=offline&scope=https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/userinfo.profile&prompt=consent";
+                "&response_type=code&access_type=offline&scope=https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/userinfo.profile+https://www.googleapis.com/auth/calendar&prompt=consent";
     }
 
 }
