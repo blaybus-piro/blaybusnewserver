@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Service
@@ -44,10 +45,13 @@ public class GoogleUserCreateServiceImpl implements GoogleUserCreateService {
 
         userRepository.save(user);
 
+        LocalDateTime now = LocalDateTime.now().plusSeconds(oAuth2TokenResponse.expiresIn());
+
         GoogleJsonWebToken googleJsonWebToken = GoogleJsonWebToken.builder()
                 .userId(user.getId())
                 .accessToken(oAuth2TokenResponse.accessToken())
                 .refreshToken(oAuth2TokenResponse.refreshToken())
+                .expiresIn(now)
                 .build();
 
         googleJsonWebTokenRepository.deleteById(user.getId());

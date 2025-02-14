@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.redis.core.RedisHash;
 
+import java.time.LocalDateTime;
+
 @RedisHash(value = "GoogleJsonWebToken")
 @Builder
 @Getter
@@ -15,4 +17,6 @@ public class GoogleJsonWebToken {
     private String accessToken;
 
     private String refreshToken;
+
+    private LocalDateTime expiresIn;
 }
