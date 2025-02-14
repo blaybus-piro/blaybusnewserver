@@ -1,6 +1,7 @@
 package blaybus.global.infra.exception;
 
 import blaybus.global.infra.exception.auth.BlaybusAuthException;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,5 +51,12 @@ public class GlobalExceptionHandler {
         log.error("RuntimeException: ", e);
         ErrorResponse errorResponse = ErrorResponse.of(500, "서버에서 예상치 못한 오류가 발생했습니다.", e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleEntityNotFoundException(EntityNotFoundException e) {
+        log.error("EntityNotFoundException: ", e);
+        ErrorResponse errorResponse = ErrorResponse.of(404, "리소스를 찾을 수 없습니다.", e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 }
