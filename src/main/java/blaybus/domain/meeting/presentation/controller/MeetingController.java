@@ -19,14 +19,13 @@ public class MeetingController {
     private final MeetingRepository meetingRepository;
 
     @PostMapping
-    public MeetingResponse createMeeting (
-        @RequestBody MeetingCreateRequest request) {
-        // 링크 생성
+    public MeetingResponse createMeeting(@RequestBody MeetingCreateRequest request) {
+        // 링크 생성 및 title 받기
         MeetingResponse meetingResponse = googleMeetService.createMeeting(request);
 
         Meeting meeting = Meeting.builder()
-                .title(request.title())
-                .meetUrl(meetingResponse.hangoutLink()) // 링크 url 저장
+                .title(meetingResponse.title())  // 서비스에서 생성된 title 사용
+                .meetUrl(meetingResponse.hangoutLink())
                 .startTime(request.startTime())
                 .endTime(request.endTime())
                 .build();

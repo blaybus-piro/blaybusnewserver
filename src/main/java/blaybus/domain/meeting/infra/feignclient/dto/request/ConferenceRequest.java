@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ConferenceRequest {
-    private String summary;
+    private String title;
     private EventDateTime start;
     private EventDateTime end;
     private ConferenceData conferenceData;
