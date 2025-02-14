@@ -1,4 +1,4 @@
-package blaybus.domain.meeting.presentation;
+package blaybus.domain.meeting.presentation.controller;
 
 import blaybus.domain.meeting.application.service.GoogleMeetService;
 import blaybus.domain.meeting.entity.Meeting;
@@ -21,11 +21,9 @@ public class MeetingController {
 
     @PostMapping
     public MeetingResponse createMeeting (
-        @RequestBody MeetingCreateRequest request,
-        OAuth2AuthenticationToken authentication
-    ) {
+        @RequestBody MeetingCreateRequest request) {
         // 링크 생성
-        MeetingResponse meetingResponse = googleMeetService.createMeeting(request, authentication);
+        MeetingResponse meetingResponse = googleMeetService.createMeeting(request);
 
         Meeting meeting = Meeting.builder()
                 .title(request.title())

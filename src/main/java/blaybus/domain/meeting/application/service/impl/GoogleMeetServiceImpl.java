@@ -7,7 +7,6 @@ import blaybus.domain.meeting.infra.client.dto.response.ConferenceResponse;
 import blaybus.domain.meeting.presentation.dto.request.MeetingCreateRequest;
 import blaybus.domain.meeting.presentation.dto.response.MeetingResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,11 +15,9 @@ public class GoogleMeetServiceImpl implements GoogleMeetService {
     private final GoogleMeetClient googleMeetClient;
 
     @Override
-    public MeetingResponse createMeeting(MeetingCreateRequest request, OAuth2AuthenticationToken authentication) {
+    public MeetingResponse createMeeting(MeetingCreateRequest request) {
         try {
-            String token = "Bearer " + authentication.getPrincipal().getAttribute("access_token");
             ConferenceResponse response = googleMeetClient.createMeeting(
-                    token,
                     createConferenceRequest(request)
             );
             return new MeetingResponse(response.getHangoutLink());

@@ -5,5 +5,5 @@ import blaybus.domain.meeting.presentation.dto.response.MeetingResponse;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 
 public interface GoogleMeetService {
-    MeetingResponse createMeeting(MeetingCreateRequest request, OAuth2AuthenticationToken authentication);
+    MeetingResponse createMeeting(MeetingCreateRequest request);
 }
