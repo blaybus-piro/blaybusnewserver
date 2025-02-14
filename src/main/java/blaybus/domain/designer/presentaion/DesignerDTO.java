@@ -20,6 +20,7 @@ public class DesignerDTO {
     private String address;
     private ExpertField expertField;
     private String introduce;
+    private int addressingId;
     private String portfolio;
 
     // Entity -> DTO 변환
@@ -31,6 +32,7 @@ public class DesignerDTO {
                 .address(designer.getAddress())
                 .expertField(designer.getExpertField())
                 .introduce(designer.getIntroduce())
+                .addressingId(designer.getAddressingId())
                 .portfolio(designer.getPortfolio())
                 .build();
     }
@@ -44,6 +46,7 @@ public class DesignerDTO {
                 address,
                 expertField,
                 introduce,
+                addressingId,
                 portfolio
         );
     }

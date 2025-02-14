@@ -31,6 +31,9 @@ public class Designer {
     @Column(nullable = false, length = 50)
     private String introduce;
 
+    @Column(nullable = false)
+    private int addressingId;
+
     @Column(nullable = false, length = 50)
     private String portfolio;
 
