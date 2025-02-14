@@ -1,7 +1,8 @@
-package blaybus.domain.designer.presentaion;
+package blaybus.domain.designer.presentation;
 
 import blaybus.domain.designer.domain.entity.Designer;
 import blaybus.domain.designer.domain.entity.Designer.ExpertField;
+
 import lombok.*;
 
 @Getter
@@ -20,7 +21,7 @@ public class DesignerDTO {
     private String address;
     private ExpertField expertField;
     private String introduce;
-    private int addressingId;
+    private int addressId;
     private String portfolio;
 
     // Entity -> DTO 변환
@@ -32,22 +33,8 @@ public class DesignerDTO {
                 .address(designer.getAddress())
                 .expertField(designer.getExpertField())
                 .introduce(designer.getIntroduce())
-                .addressingId(designer.getAddressingId())
+                .addressId(designer.getAddressId())
                 .portfolio(designer.getPortfolio())
                 .build();
-    }
-
-    // DTO -> Entity 변환
-    public Designer toEntity() {
-        return new Designer(
-                id,
-                name,
-                profile,
-                address,
-                expertField,
-                introduce,
-                addressingId,
-                portfolio
-        );
     }
 }
