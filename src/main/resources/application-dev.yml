@@ -77,3 +77,9 @@ frontend:
 
 server:
   url: ${SERVER_URL}
+
+google:
+  api:
+    service-account-key-path: "env/google.json"
+
+
