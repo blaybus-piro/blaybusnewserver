@@ -77,7 +77,7 @@ public class MeetingServiceImplTest {
         String userId = "test-user";
         String title = "test-title";
 
-        LocalDateTime startTime = LocalDateTime.now().plusMinutes(30);
+        LocalDateTime startTime = LocalDateTime.now().plusMinutes(5);
         LocalDateTime endTime = startTime.plusHours(1);
         MeetingCreateRequest request = new MeetingCreateRequest(title, startTime, endTime);
 
@@ -90,5 +90,6 @@ public class MeetingServiceImplTest {
 
         System.out.println(response.title());
         System.out.println(response.hangoutLink());
+        System.out.println("회의 종료 시간: " + request.endTime());
     }
 }
