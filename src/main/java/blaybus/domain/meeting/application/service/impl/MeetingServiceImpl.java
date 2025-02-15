@@ -97,7 +97,7 @@ public class MeetingServiceImpl implements MeetingService {
 
     private ConferenceRequest createConferenceRequest(String title, LocalDateTime startTime, LocalDateTime endTime) {
         ConferenceRequest conferenceRequest = new ConferenceRequest();
-        conferenceRequest.setTitle(title);
+        conferenceRequest.setSummary(title);
 
         // 시작 시간 설정
         ConferenceRequest.EventDateTime start = new ConferenceRequest.EventDateTime();

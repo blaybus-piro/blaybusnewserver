@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
         configuration = GoogleMeetFeignConfig.class
 )
 public interface GoogleMeetClient {
-    @PostMapping("/calendars/primary/events")
+    @PostMapping("/calendars/primary/events?conferenceDataVersion=1")
     ConferenceResponse createMeeting(
             @RequestHeader("Authorization") String accessToken,
             @RequestBody ConferenceRequest request);

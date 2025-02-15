@@ -3,6 +3,8 @@ package blaybus.domain.meeting.infra.feignclient.dto.response;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class ConferenceResponse {
@@ -15,7 +17,7 @@ public class ConferenceResponse {
         private String conferenceId;
         private ConferenceSolution conferenceSolution;
         private CreateConferenceRequest createRequest;
-        private EntryPoints entryPoints;
+        private List<EntryPoints> entryPoints;
     }
 
     @Getter @Setter

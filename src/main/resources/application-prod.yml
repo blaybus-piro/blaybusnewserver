@@ -65,6 +65,8 @@ oauth2:
   scope:
     - profile
     - email
+    - https://www.googleapis.com/auth/calendar
+    - https://www.googleapis.com/auth/calendar.events
 
 server:
   url: ${SERVER_URL}
