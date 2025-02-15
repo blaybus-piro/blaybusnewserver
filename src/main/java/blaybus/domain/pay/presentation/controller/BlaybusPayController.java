@@ -1,8 +1,13 @@
 package blaybus.domain.pay.presentation.controller;
 
+import blaybus.domain.pay.application.repository.BlaybusPayRepository;
+import blaybus.domain.pay.domain.BlaybusPayTid;
 import blaybus.domain.pay.infra.exception.BlaybusPayException;
 import blaybus.domain.pay.application.service.BlaybusPayService;
-import blaybus.domain.pay.presentation.dto.*;
+import blaybus.domain.pay.presentation.dto.ReadyRequest.ReadyRequestDTO;
+import blaybus.domain.pay.presentation.dto.kakao.KakaoPayApproveResponse;
+import blaybus.domain.pay.presentation.dto.kakao.KakaoPayOrderResponse;
+import blaybus.domain.pay.presentation.dto.kakao.KakaoPayReadyResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
@@ -12,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -21,6 +27,7 @@ import java.util.UUID;
 public class BlaybusPayController {
 
     private final BlaybusPayService blaybusPayService;
+    private final BlaybusPayRepository blaybusPayRepository;
 
     /**
      * [GET] 결제 준비
@@ -28,11 +35,10 @@ public class BlaybusPayController {
      */
     @PostMapping("/ready")
     public ResponseEntity<KakaoPayReadyResponse> payReady(
-            @RequestBody int amount,
-           @AuthenticationPrincipal String userId, // Oauth로부터 받기 근데 이부분이 필요할까 QR코드에서 인증하는대..
+            @RequestBody ReadyRequestDTO readyRequestDTO, // 여러개 있을때 @RequestBody로 객체로 받으삼!
+            @AuthenticationPrincipal String userId, // Oauth로부터 받기 근데 이부분이 필요할까 QR코드에서 인증하는대..
             HttpSession session
     ) {
-
 
         if (userId == null) {
             throw new IllegalStateException("유저 아이디가 존재하지 않습니다.");
@@ -40,9 +46,13 @@ public class BlaybusPayController {
         // 주문 번호 랜덤 생성
         String orderId = UUID.randomUUID().toString();
 
-        KakaoPayReadyResponse response = blaybusPayService.payReady(orderId, userId, amount);
+        KakaoPayReadyResponse response = blaybusPayService.payReady(orderId, userId, readyRequestDTO.getAmount());
 
-        session.setAttribute("tid_" + orderId, response.getTid());
+        BlaybusPayTid blaybusPayTid = BlaybusPayTid.builder()
+                .id(orderId)
+                .tid(response.getTid())
+                .build();
+        blaybusPayRepository.save(blaybusPayTid);
 
         return ResponseEntity.ok(response);
     }
@@ -56,21 +66,23 @@ public class BlaybusPayController {
     public ResponseEntity<?> payApprove(
             @RequestParam String orderId,
             @RequestParam("pg_token") String pgToken,
-           @AuthenticationPrincipal String userId, // Oauth로부터 받기 근데 이부분이 필요할까 QR코드에서 인증하는대..
+            @AuthenticationPrincipal String userId, // Oauth로부터 받기 근데 이부분이 필요할까 QR코드에서 인증하는대..
             HttpSession session
     ) {
         try {
 
-            // 세션에서 tid 값 불러오기
-            String tid = (String) session.getAttribute("tid_" + orderId);
 
-            if (tid == null) {
+            // 값 불러오기
+            Optional<BlaybusPayTid> findPayTid = blaybusPayRepository.findById(orderId);
+            BlaybusPayTid blaybusPayTid = findPayTid.get();
+            if (blaybusPayTid.getTid() == null) {
                 throw new BlaybusPayException(HttpStatus.PAYMENT_REQUIRED, "TID 값이 존재하지 않습니다.");
             }
 
-            KakaoPayApproveResponse response = blaybusPayService.payApprove(orderId, userId, tid, pgToken);
+            KakaoPayApproveResponse response = blaybusPayService.payApprove(orderId, userId, blaybusPayTid.getTid(), pgToken);
 
-            session.removeAttribute("tid_" + orderId);
+            // 값 삭제
+            blaybusPayRepository.delete(blaybusPayTid);
             return ResponseEntity.ok(response);
         } catch (BlaybusPayException e) {
             log.error("결제 오류 발생: {}", e.getMessage());

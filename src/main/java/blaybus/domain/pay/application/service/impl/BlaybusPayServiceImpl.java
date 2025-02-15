@@ -3,9 +3,9 @@ package blaybus.domain.pay.application.service.impl;
 import blaybus.domain.pay.application.service.BlaybusPayService;
 import blaybus.domain.pay.infra.exception.BlaybusPayException;
 import blaybus.domain.pay.infra.feignclient.KakaoPayClient;
-import blaybus.domain.pay.presentation.dto.KakaoPayApproveResponse;
-import blaybus.domain.pay.presentation.dto.KakaoPayOrderResponse;
-import blaybus.domain.pay.presentation.dto.KakaoPayReadyResponse;
+import blaybus.domain.pay.presentation.dto.kakao.KakaoPayApproveResponse;
+import blaybus.domain.pay.presentation.dto.kakao.KakaoPayOrderResponse;
+import blaybus.domain.pay.presentation.dto.kakao.KakaoPayReadyResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,6 +46,7 @@ public class BlaybusPayServiceImpl implements BlaybusPayService {
         String approvalUrl = serverUrl + "/api/pay/approve?orderId=" + orderId;
         String cancelUrl = serverUrl + "/api/pay/approve?orderId=" + orderId;
         String failUrl = serverUrl + "/api/pay/approve?orderId=" + orderId;
+
 
 
         // FeignClient 호출

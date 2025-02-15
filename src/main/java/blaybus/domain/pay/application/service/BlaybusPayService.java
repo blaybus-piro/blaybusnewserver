@@ -1,8 +1,8 @@
 package blaybus.domain.pay.application.service;
 
-import blaybus.domain.pay.presentation.dto.KakaoPayApproveResponse;
-import blaybus.domain.pay.presentation.dto.KakaoPayOrderResponse;
-import blaybus.domain.pay.presentation.dto.KakaoPayReadyResponse;
+import blaybus.domain.pay.presentation.dto.kakao.KakaoPayApproveResponse;
+import blaybus.domain.pay.presentation.dto.kakao.KakaoPayOrderResponse;
+import blaybus.domain.pay.presentation.dto.kakao.KakaoPayReadyResponse;
 
 public interface BlaybusPayService {
 

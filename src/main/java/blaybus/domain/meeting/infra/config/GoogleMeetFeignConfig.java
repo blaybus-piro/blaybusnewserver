@@ -9,8 +9,9 @@ public class GoogleMeetFeignConfig {
     @Bean
     public RequestInterceptor authorizationInterceptor() {
         return requestTemplate -> {
-            // OAuth2 토큰이 여기서 자동으로 추가됨
-            requestTemplate.header("Authorization", "Bearer" + "${oauth2.token}");
+            if (!requestTemplate.url().contains("/v1/payment/")) {
+                requestTemplate.header("Authorization", "Bearer " + "your-oauth-token");
+            }
         };
     }
 }

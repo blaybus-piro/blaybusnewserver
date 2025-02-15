@@ -57,6 +57,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/oauth2/login").permitAll()
                         .requestMatchers("/api/oauth2/callback").permitAll()
                         .requestMatchers("/api/reissue").permitAll()
+                        .requestMatchers("/v1/payment/**").permitAll()
+                        .requestMatchers("/api/pay/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement((session) ->  session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))

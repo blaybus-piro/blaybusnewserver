@@ -1,7 +1,7 @@
-package blaybus.domain.pay.presentation.dto;
+package blaybus.domain.pay.presentation.dto.kakao;
 
 
-import blaybus.domain.pay.presentation.dto.amount.Amount;
+import blaybus.domain.pay.presentation.dto.kakao.amount.Amount;
 import lombok.Getter;
 import lombok.Setter;
 
