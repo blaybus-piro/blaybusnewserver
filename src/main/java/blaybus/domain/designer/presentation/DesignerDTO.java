@@ -1,40 +1,37 @@
 package blaybus.domain.designer.presentation;
 
 import blaybus.domain.designer.domain.entity.Designer;
-import blaybus.domain.designer.domain.entity.Designer.ExpertField;
 
-import lombok.*;
+import java.util.List;
+import java.util.Set;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-
-// 예약 관련해서 연결할 가능성이 높으므로 record 사용 안함
-
-public class DesignerDTO {
-
-    private String id;
-    private String name;
-    private String profile;
-    private String address;
-    private ExpertField expertField;
-    private String introduce;
-    private int addressId;
-    private String portfolio;
-
-    // Entity -> DTO 변환
+public record DesignerDTO(
+        String id,
+        String name,
+        String profile,
+        Designer.Area area,
+        Designer.ExpertField expertField,
+        String introduce,
+        int addressId,
+        String portfolio,
+        List<Designer.Type> types, // Set -> List 변환 (가독성 향상)
+        int offlinePrice,
+        int onlinePrice
+)
+{
     public static DesignerDTO fromEntity(Designer designer) {
-        return DesignerDTO.builder()
-                .id(designer.getId())
-                .name(designer.getName())
-                .profile(designer.getProfile())
-                .address(designer.getAddress())
-                .expertField(designer.getExpertField())
-                .introduce(designer.getIntroduce())
-                .addressId(designer.getAddressId())
-                .portfolio(designer.getPortfolio())
-                .build();
+        return new DesignerDTO(
+                designer.getId(),
+                designer.getName(),
+                designer.getProfile(),
+                designer.getArea(),
+                designer.getExpertField(),
+                designer.getIntroduce(),
+                designer.getPosition().getId(),
+                designer.getPortfolio(),
+                List.copyOf(designer.getTypes()), // Set -> List 변환
+                designer.getOfflinePrice(),
+                designer.getOnlinePrice()
+        );
     }
 }

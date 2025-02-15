@@ -3,8 +3,11 @@ package blaybus.domain.consulting.domain.entity;
 import blaybus.domain.designer.domain.entity.Designer;
 import blaybus.domain.position.domain.entity.Position;
 import blaybus.domain.user.domain.entity.User;
+
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalTime;
 
 @Entity
 @Getter
@@ -16,7 +19,7 @@ public class Consulting {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -31,12 +34,15 @@ public class Consulting {
     @JoinColumn(name = "address_id", nullable = false)
     private Position position;
 
+    /*
 
-    @Column(name = "address_id", nullable = false)
-    private int addressId;
+    // Meeting 테이블을 참조하는 FK (nullable 가능)
+    // 아직 meeting의 경우 생성 안되므로 주석처리
+    @ManyToOne
+    @JoinColumn(name = "meet_id")
+    private Meeting meeting;
 
-    // meet link 없으면 null로
-    // meet id에 없으면 null 있으면 fk
+    */
     @Column(name = "meet_url")
     private String meetUrl;
 
@@ -44,9 +50,13 @@ public class Consulting {
     @Column(name = "type", nullable = false, length = 20)
     private ConsultingType type;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "time", nullable = false, length = 20)
-    private ConsultingTime time;
+    /*
+
+    // time 관련은 일단 유기
+    @Column(name = "time", nullable = false)
+    private LocalTime time;  // 30분 단위 시간 저장
+
+    */
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 20)
@@ -56,13 +66,15 @@ public class Consulting {
         ONLINE, OFFLINE
     }
 
-    public enum ConsultingTime {
-        // 30분 단위로 쪼개야함
-        // TODO
-    }
-
     public enum ConsultingStatus {
         FREE, SCHEDULED, CANCELED, COMPLETE
     }
 
+    /*
+
+    public String getMeetUrl() {
+        return (meeting != null) ? meeting.getMeetUrl() : null;
+    }
+
+    */
 }
