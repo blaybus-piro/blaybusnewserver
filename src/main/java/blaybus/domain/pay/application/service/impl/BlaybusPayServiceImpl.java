@@ -42,7 +42,7 @@ public class BlaybusPayServiceImpl implements BlaybusPayService {
      */
 
     public KakaoPayReadyResponse payLogic(String userId, ReadyRequestDTO reqDto) {
-        String orderId = randomOrderId();
+        String orderId = UUID.randomUUID().toString();
         KakaoPayReadyResponse response = payReady(orderId, userId, reqDto.amount());
         // tid 값 임시 저장
         BlaybusPayTid blaybusPayTid = BlaybusPayTid.builder()
@@ -145,15 +145,6 @@ public class BlaybusPayServiceImpl implements BlaybusPayService {
         return kakaoPayClient.getOrder(authorization, cid, tid);
     }
 
-
-    /**
-     * 4) 주문 번호 생성
-     * - 주문 번호 생성 payReady에서 해도 되지만 값을 저장할때 orderId를 몰라서 따로 메서드 만들어줘야됨
-     */
-    @Override
-    public String randomOrderId() {
-        return UUID.randomUUID().toString();
-    }
 
 
 

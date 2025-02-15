@@ -15,6 +15,5 @@ public interface BlaybusPayService {
 
     KakaoPayOrderResponse getOrder(String tid);
 
-    String randomOrderId();
 
 }

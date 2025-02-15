@@ -1,10 +1,7 @@
 package blaybus.domain.pay.presentation.dto.res.kakao;
 
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Date;
-
 
 public record KakaoPayReadyResponse(
         String tid,
