@@ -1,7 +1,7 @@
 package blaybus.domain.pay.presentation.controller;
 
-import blaybus.domain.pay.application.repository.BlaybusPayRepository;
-import blaybus.domain.pay.domain.BlaybusPayTid;
+import blaybus.domain.pay.domain.repository.BlaybusPayRepository;
+import blaybus.domain.pay.domain.entity.BlaybusPayTid;
 import blaybus.domain.pay.infra.exception.BlaybusPayException;
 import blaybus.domain.pay.application.service.BlaybusPayService;
 import blaybus.domain.pay.presentation.dto.ReadyRequest.ReadyRequestDTO;
@@ -52,7 +52,7 @@ public class BlaybusPayController {
                 .id(orderId)
                 .tid(response.getTid())
                 .build();
-        blaybusPayRepository.save(blaybusPayTid);
+        blaybusPayService.save(blaybusPayTid);
 
         return ResponseEntity.ok(response);
     }
@@ -70,19 +70,18 @@ public class BlaybusPayController {
             HttpSession session
     ) {
         try {
-
-
             // 값 불러오기
-            Optional<BlaybusPayTid> findPayTid = blaybusPayRepository.findById(orderId);
-            BlaybusPayTid blaybusPayTid = findPayTid.get();
-            if (blaybusPayTid.getTid() == null) {
+            BlaybusPayTid findTid = blaybusPayService.findById(orderId);
+
+            String tid = findTid.getTid();
+            if (tid == null) {
                 throw new BlaybusPayException(HttpStatus.PAYMENT_REQUIRED, "TID 값이 존재하지 않습니다.");
             }
 
-            KakaoPayApproveResponse response = blaybusPayService.payApprove(orderId, userId, blaybusPayTid.getTid(), pgToken);
+            KakaoPayApproveResponse response = blaybusPayService.payApprove(orderId, userId, tid, pgToken);
 
             // 값 삭제
-            blaybusPayRepository.delete(blaybusPayTid);
+            blaybusPayService.delete(findTid);
             return ResponseEntity.ok(response);
         } catch (BlaybusPayException e) {
             log.error("결제 오류 발생: {}", e.getMessage());

@@ -1,4 +1,4 @@
-package blaybus.domain.pay.domain;
+package blaybus.domain.pay.domain.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

@@ -1,6 +1,8 @@
 package blaybus.domain.pay.application.service.impl;
 
 import blaybus.domain.pay.application.service.BlaybusPayService;
+import blaybus.domain.pay.domain.entity.BlaybusPayTid;
+import blaybus.domain.pay.domain.repository.BlaybusPayRepository;
 import blaybus.domain.pay.infra.exception.BlaybusPayException;
 import blaybus.domain.pay.infra.feignclient.KakaoPayClient;
 import blaybus.domain.pay.presentation.dto.kakao.KakaoPayApproveResponse;
@@ -11,11 +13,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class BlaybusPayServiceImpl implements BlaybusPayService {
 
+    private final BlaybusPayRepository blaybusPayRepository;
     private final KakaoPayClient kakaoPayClient;
 
     @Value("${kakao.pay.admin-key}")
@@ -107,5 +112,21 @@ public class BlaybusPayServiceImpl implements BlaybusPayService {
     public KakaoPayOrderResponse getOrder(String tid) {
         String authorization = "KakaoAK " + adminKey;
         return kakaoPayClient.getOrder(authorization, cid, tid);
+    }
+
+    @Override
+    public void save(BlaybusPayTid blaybusPayTid) {
+        blaybusPayRepository.save(blaybusPayTid);
+    }
+
+    @Override
+    public BlaybusPayTid findById(String orderId) {
+        Optional<BlaybusPayTid> findPayTid = blaybusPayRepository.findById(orderId);
+        return findPayTid.get();
+    }
+
+    @Override
+    public void delete(BlaybusPayTid blaybusPayTid) {
+        blaybusPayRepository.delete(blaybusPayTid);
     }
 }
