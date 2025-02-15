@@ -27,7 +27,6 @@ import java.util.UUID;
 public class BlaybusPayController {
 
     private final BlaybusPayService blaybusPayService;
-    private final BlaybusPayRepository blaybusPayRepository;
 
     /**
      * [GET] 결제 준비
@@ -35,25 +34,12 @@ public class BlaybusPayController {
      */
     @PostMapping("/ready")
     public ResponseEntity<KakaoPayReadyResponse> payReady(
-            @RequestBody ReadyRequestDTO readyRequestDTO, // 여러개 있을때 @RequestBody로 객체로 받으삼!
-            @AuthenticationPrincipal String userId, // Oauth로부터 받기 근데 이부분이 필요할까 QR코드에서 인증하는대..
-            HttpSession session
+            @RequestBody ReadyRequestDTO readyRequestDTO,
+            @AuthenticationPrincipal String userId
     ) {
-
-        if (userId == null) {
-            throw new IllegalStateException("유저 아이디가 존재하지 않습니다.");
-        }
-        // 주문 번호 랜덤 생성
-        String orderId = UUID.randomUUID().toString();
-
-        KakaoPayReadyResponse response = blaybusPayService.payReady(orderId, userId, readyRequestDTO.getAmount());
-
-        BlaybusPayTid blaybusPayTid = BlaybusPayTid.builder()
-                .id(orderId)
-                .tid(response.getTid())
-                .build();
-        blaybusPayService.save(blaybusPayTid);
-
+        String orderId = blaybusPayService.randomOrderId();
+        KakaoPayReadyResponse response = blaybusPayService.payReady(userId, orderId, readyRequestDTO.getAmount());
+        blaybusPayService.save(response, orderId);
         return ResponseEntity.ok(response);
     }
 
@@ -66,31 +52,10 @@ public class BlaybusPayController {
     public ResponseEntity<?> payApprove(
             @RequestParam String orderId,
             @RequestParam("pg_token") String pgToken,
-            @AuthenticationPrincipal String userId, // Oauth로부터 받기 근데 이부분이 필요할까 QR코드에서 인증하는대..
-            HttpSession session
+            @AuthenticationPrincipal String userId
     ) {
-        try {
-            // 값 불러오기
-            BlaybusPayTid findTid = blaybusPayService.findById(orderId);
-
-            String tid = findTid.getTid();
-            if (tid == null) {
-                throw new BlaybusPayException(HttpStatus.PAYMENT_REQUIRED, "TID 값이 존재하지 않습니다.");
-            }
-
-            KakaoPayApproveResponse response = blaybusPayService.payApprove(orderId, userId, tid, pgToken);
-
-            // 값 삭제
-            blaybusPayService.delete(findTid);
-            return ResponseEntity.ok(response);
-        } catch (BlaybusPayException e) {
-            log.error("결제 오류 발생: {}", e.getMessage());
-            return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (Exception e) {
-            log.error("결제 승인 중 알 수 없는 오류 발생", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("결제 실패..");
-        }
-
+        KakaoPayApproveResponse response = blaybusPayService.payApprove(orderId, userId, pgToken);
+        return ResponseEntity.ok(response);
     }
 
     /**

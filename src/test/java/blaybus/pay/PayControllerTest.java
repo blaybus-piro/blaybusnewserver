@@ -33,15 +33,7 @@ public class PayControllerTest {
         String userId = "user5678";
         int amount = 1000;
 
-        KakaoPayReadyResponse mockResponse = new KakaoPayReadyResponse(
-                "tid12345",
-                "https://mock.kakao.com/payment/redirect",
-                "https://mock.kakao.com/payment/next_redirect_pc_url",
-                "https://mock.kakao.com/payment/next_redirect_mobile_url"
-        );
 
-        Mockito.when(blaybusPayService.payReady(any(), any(), any()))
-                .thenReturn(mockResponse);
 
         // When & Then
         mockMvc.perform(get("/api/pay/ready")

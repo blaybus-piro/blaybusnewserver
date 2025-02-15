@@ -4,6 +4,7 @@ import blaybus.domain.pay.application.service.BlaybusPayService;
 import blaybus.domain.pay.domain.entity.BlaybusPayTid;
 import blaybus.domain.pay.domain.repository.BlaybusPayRepository;
 import blaybus.domain.pay.infra.exception.BlaybusPayException;
+import blaybus.domain.pay.infra.exception.BlaybusPayTidException;
 import blaybus.domain.pay.infra.feignclient.KakaoPayClient;
 import blaybus.domain.pay.presentation.dto.kakao.KakaoPayApproveResponse;
 import blaybus.domain.pay.presentation.dto.kakao.KakaoPayOrderResponse;
@@ -11,9 +12,11 @@ import blaybus.domain.pay.presentation.dto.kakao.KakaoPayReadyResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -38,10 +41,16 @@ public class BlaybusPayServiceImpl implements BlaybusPayService {
      */
     @Override
     public KakaoPayReadyResponse payReady(String orderId, String userId, int amount) {
+
+        if (userId == null) {
+            throw new IllegalStateException("유저 아이디가 존재하지 않습니다.");
+        }
+
+
         String authorization = "KakaoAK " + adminKey;
         String contentType = "application/x-www-form-urlencoded;charset=utf-8";
 
-        // 테스트용 파라미터 (실제 구현 시 조정이 필요함.... 이건 예시)
+        // 파라미터
         String itemName = "디자이너와의 컨설팅";
         int quantity = 1;
         int vatAmount = 0;
@@ -51,8 +60,6 @@ public class BlaybusPayServiceImpl implements BlaybusPayService {
         String approvalUrl = serverUrl + "/api/pay/approve?orderId=" + orderId;
         String cancelUrl = serverUrl + "/api/pay/approve?orderId=" + orderId;
         String failUrl = serverUrl + "/api/pay/approve?orderId=" + orderId;
-
-
 
         // FeignClient 호출
         return kakaoPayClient.ready(
@@ -77,9 +84,18 @@ public class BlaybusPayServiceImpl implements BlaybusPayService {
      * - 사용자 결제 완료 후 pg_token을 받아 최종 승인
      */
     @Override
-    public KakaoPayApproveResponse payApprove(String orderId, String userId, String tid, String pgToken) {
+    public KakaoPayApproveResponse payApprove(String orderId, String userId, String pgToken) {
         String authorization = "KakaoAK " + adminKey;
         String contentType = "application/x-www-form-urlencoded;charset=utf-8";
+
+        Optional<BlaybusPayTid> findTid = blaybusPayRepository.findById(orderId);
+
+        BlaybusPayTid blaybusPayTid = findTid.get();
+
+        String tid = blaybusPayTid.getTid();
+        if (tid == null) {
+            throw new BlaybusPayTidException();
+        }
 
         KakaoPayApproveResponse approve;
         try {
@@ -97,9 +113,10 @@ public class BlaybusPayServiceImpl implements BlaybusPayService {
         } catch (BlaybusPayException e) {
             approve = new KakaoPayApproveResponse();
             approve.setStatus("FAIL");
-            log.info("결제 승인 실패: {}", e.getMessage());
         }
 
+        // tid 삭제
+        blaybusPayRepository.delete(blaybusPayTid);
         return approve;
 
     }
@@ -114,19 +131,28 @@ public class BlaybusPayServiceImpl implements BlaybusPayService {
         return kakaoPayClient.getOrder(authorization, cid, tid);
     }
 
+
+    /**
+     * 4) 주문 번호 생성
+     * - 주문 번호 생성 payReady에서 해도 되지만 값을 저장할때 orderId를 몰라서 따로 메서드 만들어줘야됨
+     */
     @Override
-    public void save(BlaybusPayTid blaybusPayTid) {
+    public String randomOrderId() {
+        return UUID.randomUUID().toString();
+    }
+
+    /**
+     * 5) tid 값 임시 저장
+     * - 성능이슈 없음
+     */
+    @Override
+    public void save(KakaoPayReadyResponse response, String orderId) {
+        BlaybusPayTid blaybusPayTid = BlaybusPayTid.builder()
+                .id(orderId)
+                .tid(response.getTid())
+                .build();
         blaybusPayRepository.save(blaybusPayTid);
     }
 
-    @Override
-    public BlaybusPayTid findById(String orderId) {
-        Optional<BlaybusPayTid> findPayTid = blaybusPayRepository.findById(orderId);
-        return findPayTid.get();
-    }
 
-    @Override
-    public void delete(BlaybusPayTid blaybusPayTid) {
-        blaybusPayRepository.delete(blaybusPayTid);
-    }
 }
