@@ -1,4 +1,4 @@
-package blaybus.domain.consulting.presentation;
+package blaybus.domain.consulting.presentation.DTO;
 
 import blaybus.domain.consulting.domain.entity.Consulting;
 
