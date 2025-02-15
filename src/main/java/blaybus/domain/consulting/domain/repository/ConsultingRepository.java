@@ -7,12 +7,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ConsultingRepository extends JpaRepository<Consulting, Long> {
+public interface ConsultingRepository extends JpaRepository<Consulting, Integer> {
 
     // 특정 유저의 상담 목록 조회
-    List<Consulting> findByUserId(String userId);
+    List<Consulting> findByUser_Id(String userId);
 
     // 특정 디자이너의 상담 목록 조회
-    List<Consulting> findByDesignerId(String designerId);
+    List<Consulting> findByDesigner_Id(String designerId);
 
 }
