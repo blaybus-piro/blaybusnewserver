@@ -6,6 +6,8 @@ import blaybus.domain.meeting.infra.feignclient.dto.request.ConferenceRequest;
 import blaybus.domain.meeting.infra.feignclient.dto.response.ConferenceResponse;
 import blaybus.domain.meeting.presentation.dto.request.MeetingCreateRequest;
 import blaybus.domain.meeting.presentation.dto.response.MeetingResponse;
+import blaybus.domain.oauth2.application.service.GoogleAccessTokenAndRefreshTokenService;
+import blaybus.domain.oauth2.presentation.dto.response.OAuth2TokenResponse;
 import blaybus.global.jwt.domain.entity.GoogleJsonWebToken;
 import blaybus.global.jwt.domain.repository.GoogleJsonWebTokenRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,6 +31,9 @@ public class MeetingServiceImplTest {
 
     @MockBean  // GoogleMeetClient를 모킹
     private GoogleMeetClient googleMeetClient;
+
+    @MockBean
+    private GoogleAccessTokenAndRefreshTokenService tokenService;
 
     @Autowired
     private MeetingService meetingService;
@@ -56,6 +61,14 @@ public class MeetingServiceImplTest {
                 anyString(),
                 any(ConferenceRequest.class)
         )).thenReturn(mockResponse);
+
+        // 토큰 갱신 Mock
+        OAuth2TokenResponse mockTokenResponse = new OAuth2TokenResponse(
+                "new-access-token",
+                "Bearer",
+                3600L
+        );
+        when(tokenService.refreshAccessToken(anyString())).thenReturn(mockTokenResponse);
     }
 
     @Test
@@ -64,7 +77,7 @@ public class MeetingServiceImplTest {
         String userId = "test-user";
         String title = "test-title";
 
-        LocalDateTime startTime = LocalDateTime.now();
+        LocalDateTime startTime = LocalDateTime.now().plusMinutes(30);
         LocalDateTime endTime = startTime.plusHours(1);
         MeetingCreateRequest request = new MeetingCreateRequest(title, startTime, endTime);
 

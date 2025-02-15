@@ -3,6 +3,7 @@ package blaybus.domain.meeting.presentation.controller;
 import blaybus.domain.meeting.application.service.MeetingService;
 import blaybus.domain.meeting.presentation.dto.request.MeetingCreateRequest;
 import blaybus.domain.meeting.presentation.dto.response.MeetingResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,7 +22,7 @@ public class MeetingController {
     @PostMapping
     public ResponseEntity<MeetingResponse> createMeeting(
             @AuthenticationPrincipal String userId,
-            @RequestBody MeetingCreateRequest request) {
+            @Valid @RequestBody MeetingCreateRequest request) {
         // 링크 생성 및 title 받기
         MeetingResponse meetingResponse = meetingService.createMeeting(userId, request);
 
