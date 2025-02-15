@@ -1,9 +1,8 @@
-package blaybus.domain.designer.presentation;
+package blaybus.domain.designer.presentation.DTO;
 
 import blaybus.domain.designer.domain.entity.Designer;
 
 import java.util.List;
-import java.util.Set;
 
 public record DesignerDTO(
         String id,
