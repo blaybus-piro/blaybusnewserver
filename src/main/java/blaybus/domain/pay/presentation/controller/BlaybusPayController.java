@@ -1,6 +1,5 @@
 package blaybus.domain.pay.presentation.controller;
 
-import blaybus.domain.oauth2.application.exception.BlaybusAccessDeniedException;
 import blaybus.domain.pay.infra.exception.BlaybusPayException;
 import blaybus.domain.pay.application.service.BlaybusPayService;
 import blaybus.domain.pay.presentation.dto.*;
@@ -27,20 +26,19 @@ public class BlaybusPayController {
      * [GET] 결제 준비
      * /api/pay/ready 유저는 @Auth~~ 받으면 됨
      */
-    @GetMapping("/ready")
+    @PostMapping("/ready")
     public ResponseEntity<KakaoPayReadyResponse> payReady(
+            @RequestBody int amount,
            @AuthenticationPrincipal String userId, // Oauth로부터 받기 근데 이부분이 필요할까 QR코드에서 인증하는대..
             HttpSession session
     ) {
 
 
         if (userId == null) {
-            throw new BlaybusAccessDeniedException();
+            throw new IllegalStateException("유저 아이디가 존재하지 않습니다.");
         }
         // 주문 번호 랜덤 생성
         String orderId = UUID.randomUUID().toString();
-        // 결제 금액
-        int amount = 20000;
 
         KakaoPayReadyResponse response = blaybusPayService.payReady(orderId, userId, amount);
 
