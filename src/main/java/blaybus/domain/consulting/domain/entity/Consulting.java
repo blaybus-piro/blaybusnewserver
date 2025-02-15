@@ -1,6 +1,7 @@
 package blaybus.domain.consulting.domain.entity;
 
 import blaybus.domain.designer.domain.entity.Designer;
+import blaybus.domain.position.domain.entity.Position;
 import blaybus.domain.user.domain.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,21 +27,16 @@ public class Consulting {
     private Designer designer;
 
     // Position 테이블을 참조하는 FK
-    // position의 id에 맞게 저장하고 필요시에 id를 정수로 탐색하게 하는 편이 빠를 거 같아서 이렇게 진행
-    // 이후 필요하면 Join 형태로 변경
-
-    /*
     @ManyToOne
     @JoinColumn(name = "address_id", nullable = false)
     private Position position;
-    */
 
-    // 그런데 왜 consulting에 addressId가 필요하지?
 
     @Column(name = "address_id", nullable = false)
     private int addressId;
 
     // meet link 없으면 null로
+    // meet id에 없으면 null 있으면 fk
     @Column(name = "meet_url")
     private String meetUrl;
 
@@ -57,7 +53,7 @@ public class Consulting {
     private ConsultingStatus status;
 
     public enum ConsultingType {
-        ONLINE, OFFLINE, BOTH
+        ONLINE, OFFLINE
     }
 
     public enum ConsultingTime {
