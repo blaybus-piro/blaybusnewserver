@@ -1,24 +1,16 @@
 package blaybus.domain.pay.presentation.controller;
 
-import blaybus.domain.pay.domain.repository.BlaybusPayRepository;
-import blaybus.domain.pay.domain.entity.BlaybusPayTid;
-import blaybus.domain.pay.infra.exception.BlaybusPayException;
 import blaybus.domain.pay.application.service.BlaybusPayService;
-import blaybus.domain.pay.presentation.dto.ReadyRequest.ReadyRequestDTO;
-import blaybus.domain.pay.presentation.dto.kakao.KakaoPayApproveResponse;
-import blaybus.domain.pay.presentation.dto.kakao.KakaoPayOrderResponse;
-import blaybus.domain.pay.presentation.dto.kakao.KakaoPayReadyResponse;
-import jakarta.servlet.http.HttpSession;
+import blaybus.domain.pay.presentation.dto.req.ReadyRequest.ReadyRequestDTO;
+import blaybus.domain.pay.presentation.dto.res.kakao.KakaoPayApproveResponse;
+import blaybus.domain.pay.presentation.dto.res.kakao.KakaoPayOrderResponse;
+import blaybus.domain.pay.presentation.dto.res.kakao.KakaoPayReadyResponse;
 import lombok.RequiredArgsConstructor;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/pay")
@@ -37,9 +29,7 @@ public class BlaybusPayController {
             @RequestBody ReadyRequestDTO readyRequestDTO,
             @AuthenticationPrincipal String userId
     ) {
-        String orderId = blaybusPayService.randomOrderId();
-        KakaoPayReadyResponse response = blaybusPayService.payReady(userId, orderId, readyRequestDTO.getAmount());
-        blaybusPayService.save(response, orderId);
+        KakaoPayReadyResponse response = blaybusPayService.payLogic(userId, readyRequestDTO);
         return ResponseEntity.ok(response);
     }
 

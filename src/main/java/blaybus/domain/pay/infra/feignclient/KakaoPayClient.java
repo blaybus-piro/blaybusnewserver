@@ -1,8 +1,8 @@
 package blaybus.domain.pay.infra.feignclient;
 
-import blaybus.domain.pay.presentation.dto.kakao.KakaoPayApproveResponse;
-import blaybus.domain.pay.presentation.dto.kakao.KakaoPayOrderResponse;
-import blaybus.domain.pay.presentation.dto.kakao.KakaoPayReadyResponse;
+import blaybus.domain.pay.presentation.dto.res.kakao.KakaoPayApproveResponse;
+import blaybus.domain.pay.presentation.dto.res.kakao.KakaoPayOrderResponse;
+import blaybus.domain.pay.presentation.dto.res.kakao.KakaoPayReadyResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

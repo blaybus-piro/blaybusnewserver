@@ -6,13 +6,13 @@ import blaybus.domain.pay.domain.repository.BlaybusPayRepository;
 import blaybus.domain.pay.infra.exception.BlaybusPayException;
 import blaybus.domain.pay.infra.exception.BlaybusPayTidException;
 import blaybus.domain.pay.infra.feignclient.KakaoPayClient;
-import blaybus.domain.pay.presentation.dto.kakao.KakaoPayApproveResponse;
-import blaybus.domain.pay.presentation.dto.kakao.KakaoPayOrderResponse;
-import blaybus.domain.pay.presentation.dto.kakao.KakaoPayReadyResponse;
+import blaybus.domain.pay.presentation.dto.req.ReadyRequest.ReadyRequestDTO;
+import blaybus.domain.pay.presentation.dto.res.kakao.KakaoPayApproveResponse;
+import blaybus.domain.pay.presentation.dto.res.kakao.KakaoPayOrderResponse;
+import blaybus.domain.pay.presentation.dto.res.kakao.KakaoPayReadyResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -35,17 +35,31 @@ public class BlaybusPayServiceImpl implements BlaybusPayService {
     @Value("${server.url}")
     private String serverUrl;
 
+
+    /**
+     * 0) 결제 준비 전
+     * -
+     */
+
+    public KakaoPayReadyResponse payLogic(String userId, ReadyRequestDTO reqDto) {
+        String orderId = randomOrderId();
+        KakaoPayReadyResponse response = payReady(orderId, userId, reqDto.amount());
+        // tid 값 임시 저장
+        BlaybusPayTid blaybusPayTid = BlaybusPayTid.builder()
+                .id(orderId)
+                .tid(response.tid())
+                .build();
+        blaybusPayRepository.save(blaybusPayTid);
+
+        return response;
+    }
+
     /**
      * 1) 결제 준비
      * - 결제 요청에 필요한 파라미터를 세팅하고, KakaoPayClient.ready() 호출
      */
     @Override
     public KakaoPayReadyResponse payReady(String orderId, String userId, int amount) {
-
-        if (userId == null) {
-            throw new IllegalStateException("유저 아이디가 존재하지 않습니다.");
-        }
-
 
         String authorization = "KakaoAK " + adminKey;
         String contentType = "application/x-www-form-urlencoded;charset=utf-8";
@@ -141,18 +155,6 @@ public class BlaybusPayServiceImpl implements BlaybusPayService {
         return UUID.randomUUID().toString();
     }
 
-    /**
-     * 5) tid 값 임시 저장
-     * - 성능이슈 없음
-     */
-    @Override
-    public void save(KakaoPayReadyResponse response, String orderId) {
-        BlaybusPayTid blaybusPayTid = BlaybusPayTid.builder()
-                .id(orderId)
-                .tid(response.getTid())
-                .build();
-        blaybusPayRepository.save(blaybusPayTid);
-    }
 
 
 }

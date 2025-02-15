@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.beans.factory.annotation.Value;
 import lombok.extern.slf4j.Slf4j;
 
-//@Configuration
+//@Configuration 사용하지 않음
 @Slf4j
 public class FeignConfig {
 
