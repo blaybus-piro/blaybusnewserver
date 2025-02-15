@@ -20,4 +20,15 @@ public interface GoogleOAuth2URLFeignClient {
             @RequestParam("grant_type") String grantType
     );
 
+    @PostMapping(value = "/token", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    OAuth2TokenResponse refreshToken(
+            @RequestParam("grant_type") String grantType,
+            @RequestParam("refresh_token") String refreshToken,
+            @RequestParam("client_id") String clientId,
+            @RequestParam("client_secret") String clientSecret
+    );
+
+
+
+
 }

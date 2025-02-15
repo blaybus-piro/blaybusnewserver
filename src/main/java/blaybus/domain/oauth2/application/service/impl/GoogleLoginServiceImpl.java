@@ -4,6 +4,8 @@ import blaybus.domain.oauth2.application.service.*;
 import blaybus.domain.oauth2.presentation.dto.response.OAuth2TokenResponse;
 import blaybus.domain.oauth2.presentation.dto.response.OAuth2UserResponse;
 import blaybus.domain.user.domain.entity.Role;
+import blaybus.global.jwt.domain.entity.GoogleJsonWebToken;
+import blaybus.global.jwt.domain.repository.GoogleJsonWebTokenRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,7 @@ public class GoogleLoginServiceImpl implements GoogleLoginService {
     private final GoogleUserService googleUserService;
     private final CreateAccessTokenAndRefreshTokenService createAccessTokenAndRefreshTokenService;
     private final GoogleUserCreateService googleUserCreateService;
+    private final GoogleJsonWebTokenRepository googleTokenRepository;
 
     @Override
     public void login(String code, HttpServletResponse response) throws IOException {
@@ -36,6 +39,14 @@ public class GoogleLoginServiceImpl implements GoogleLoginService {
         String userId = values.get("id");
         Role role = Role.valueOf(values.get("role"));
         String userEmail = values.get("email");
+
+        // Google 토큰 저장
+        GoogleJsonWebToken googleToken = GoogleJsonWebToken.builder()
+                .userId(userId)
+                .accessToken(oAuth2TokenResponse.accessToken())
+                .refreshToken(oAuth2TokenResponse.refreshToken())
+                .build();
+        googleTokenRepository.save(googleToken);
 
         Map<String, String> tokens = createAccessTokenAndRefreshTokenService.createAccessTokenAndRefreshToken(userId, role, userEmail);
 

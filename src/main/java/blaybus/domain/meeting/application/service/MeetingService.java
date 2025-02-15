@@ -4,5 +4,5 @@ import blaybus.domain.meeting.presentation.dto.request.MeetingCreateRequest;
 import blaybus.domain.meeting.presentation.dto.response.MeetingResponse;
 
 public interface MeetingService {
-    MeetingResponse createMeeting(MeetingCreateRequest request);
+    MeetingResponse createMeeting(String userId, MeetingCreateRequest request);
 }
