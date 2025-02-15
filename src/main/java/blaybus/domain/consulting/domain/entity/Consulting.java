@@ -1,6 +1,7 @@
 package blaybus.domain.consulting.domain.entity;
 
 import blaybus.domain.designer.domain.entity.Designer;
+import blaybus.domain.meeting.entity.Meeting;
 import blaybus.domain.position.domain.entity.Position;
 import blaybus.domain.user.domain.entity.User;
 
@@ -34,17 +35,10 @@ public class Consulting {
     @JoinColumn(name = "address_id", nullable = false)
     private Position position;
 
-    /*
-
     // Meeting 테이블을 참조하는 FK (nullable 가능)
-    // 아직 meeting의 경우 생성 안되므로 주석처리
     @ManyToOne
     @JoinColumn(name = "meet_id")
     private Meeting meeting;
-
-    */
-    @Column(name = "meet_url")
-    private String meetUrl;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false, length = 20)
@@ -70,11 +64,7 @@ public class Consulting {
         FREE, SCHEDULED, CANCELED, COMPLETE
     }
 
-    /*
-
     public String getMeetUrl() {
         return (meeting != null) ? meeting.getMeetUrl() : null;
     }
-
-    */
 }

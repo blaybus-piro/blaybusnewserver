@@ -7,8 +7,7 @@ public record ConsultingDTO(
         String userId,
         String designerId,
         int addressId,
-        // meeting 관련은 테이블 추가 후 구현
-        // int meetId,
+        long meetId,
         Consulting.ConsultingType type,
         Consulting.ConsultingStatus status
 ) {
@@ -18,7 +17,7 @@ public record ConsultingDTO(
                 consulting.getUser().getId(),
                 consulting.getDesigner().getId(),
                 consulting.getPosition().getId(),
-                // consulting.getMeetId(),
+                consulting.getMeeting().getId(),
                 consulting.getType(),
                 consulting.getStatus()
         );
