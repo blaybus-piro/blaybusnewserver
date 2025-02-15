@@ -1,7 +1,11 @@
 package blaybus.domain.designer.domain.entity;
 
+import blaybus.domain.position.domain.entity.Position;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.EnumSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -20,8 +24,9 @@ public class Designer {
     @Column(nullable = false, length = 50)
     private String profile;
 
-    @Column(nullable = false, length = 50)
-    private String address;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 30)
+    private Area area;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
@@ -31,24 +36,43 @@ public class Designer {
     private String introduce;
 
     // Position 테이블을 참조하는 FK
-    // position의 id에 맞게 저장하고 필요시에 id를 정수로 탐색하게 하는 편이 빠를 거 같아서 이렇게 진행
-    // 이후 필요하면 Join 형태로 변경
-
-    /*
+    // 필요시 DTO에서 addressId를 생성할때 getId() 사용하도록 생성
     @ManyToOne
     @JoinColumn(name = "address_id", nullable = false)
     private Position position;
-    */
-
-    // 그런데 왜 consulting에 addressId가 필요하지?
-
-    @Column(name = "address_id", nullable = false)
-    private int addressId; // Position 테이블의 ID를 참조하는 FK
 
     @Column(nullable = false, length = 50)
     private String portfolio;
 
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "designer_types", joinColumns = @JoinColumn(name = "designer_id"))
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type", nullable = false)
+    private Set<Type> types = EnumSet.noneOf(Type.class); // 기본값을 EnumSet으로 설정
+
+    @Column(nullable = false)
+    private int offlinePrice;
+
+    @Column(nullable = false)
+    private int onlinePrice;
+
     public enum ExpertField {
         CUT, PERM, DYE, BLEACH
+    }
+
+    public enum Area {
+        SEOUL_ALL, GANGNAM_CHEONGDAM_APGUJEONG, SEONGSU_KONDAE, HONGDAE_YEONNAM_HAPJEONG
+    }
+
+    public enum Type {
+        ONLINE, OFFLINE
+    }
+
+    public void addType(Type type) {
+        this.types.add(type);
+    }
+
+    public void removeType(Type type) {
+        this.types.remove(type);
     }
 }
