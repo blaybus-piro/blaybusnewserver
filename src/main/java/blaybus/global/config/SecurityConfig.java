@@ -35,7 +35,8 @@ public class SecurityConfig {
     private final JWTUtil jwtUtil;
     private final ObjectMapper objectMapper;
     private final JsonWebTokenRepository jsonWebTokenRepository;
-    private final List<String> excludedUrls = Arrays.asList("/api/reissue", "favicon.ico", "/api/healthcheck");
+    private final List<String> excludedUrls = Arrays.asList("" +
+            "/api/reissue", "favicon.ico", "/api/healthcheck","/**");
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -52,6 +53,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((url) -> url
                         .requestMatchers("/api/healthcheck").permitAll()
                         .requestMatchers("/api/reissue").permitAll()
+                        .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement((session) ->  session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
