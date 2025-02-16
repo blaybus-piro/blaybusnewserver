@@ -1,7 +1,7 @@
 package blaybus.domain.consulting.domain.entity;
 
 import blaybus.domain.designer.domain.entity.Designer;
-import blaybus.domain.position.domain.entity.Position;
+import blaybus.domain.map.domain.entity.Position;
 import blaybus.domain.user.domain.entity.User;
 
 import jakarta.persistence.*;

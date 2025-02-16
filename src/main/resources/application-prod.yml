@@ -67,5 +67,9 @@ oauth2:
     - profile
     - email
 
+google:
+  map:
+    api-key: ${MAP_API_KEY}
+
 server:
   url: ${SERVER_URL}
