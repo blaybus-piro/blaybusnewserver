@@ -6,6 +6,7 @@ import blaybus.domain.meeting.infra.config.GoogleMeetFeignConfig;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 @FeignClient(
         name = "googleMeetClient",
@@ -13,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
         configuration = GoogleMeetFeignConfig.class
 )
 public interface GoogleMeetClient {
-    @PostMapping("/calendars/primary/events")
+    @PostMapping("/calendars/primary/events?conferenceDataVersion=1")
     ConferenceResponse createMeeting(
+            @RequestHeader("Authorization") String accessToken,
             @RequestBody ConferenceRequest request);
 }

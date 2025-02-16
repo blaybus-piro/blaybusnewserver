@@ -6,7 +6,7 @@ import blaybus.domain.time.presentation.dto.res.listtime.TimeResponse;
 
 import java.util.List;
 
-public interface BlaybusTimeService {
+public interface TimeService {
 
     List<TimeResponse> findTime(String userId);
 

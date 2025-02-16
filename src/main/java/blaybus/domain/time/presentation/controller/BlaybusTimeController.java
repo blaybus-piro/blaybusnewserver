@@ -1,6 +1,6 @@
 package blaybus.domain.time.presentation.controller;
 
-import blaybus.domain.time.application.service.BlaybusTimeService;
+import blaybus.domain.time.application.service.TimeService;
 import blaybus.domain.time.presentation.dto.req.DetailRequestDTO;
 import blaybus.domain.time.presentation.dto.res.detailtime.DetailTimeResponse;
 import blaybus.domain.time.presentation.dto.res.listtime.TimeResponse;
@@ -22,7 +22,7 @@ import java.util.List;
 public class BlaybusTimeController {
 
 
-    private final BlaybusTimeService blaybusTimeService;
+    private final TimeService blaybusTimeService;
 
     // 예약 조회
     @PostMapping

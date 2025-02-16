@@ -7,6 +7,7 @@ import blaybus.global.jwt.domain.repository.GoogleJsonWebTokenRepository;
 import blaybus.global.jwt.domain.repository.JsonWebTokenRepository;
 import blaybus.global.jwt.util.JWTUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -43,7 +44,7 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .cors((cors) -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOriginPatterns(Collections.singletonList("https://blaybus-haertz.netlify.app/"));
+                    config.setAllowedOriginPatterns(List.of("https://blaybus-haertz.netlify.app/", "http://localhost:5173"));
                     config.setAllowedMethods(Collections.singletonList("*"));
                     config.setAllowCredentials(true);
                     config.setAllowedHeaders(Collections.singletonList("*"));
@@ -62,6 +63,10 @@ public class SecurityConfig {
                         .anyRequest().authenticated())
                 .sessionManagement((session) ->  session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .exceptionHandling(except -> except
+                        .authenticationEntryPoint((request, response, authException) ->
+                                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized")
+                        ))
                 .addFilterAfter(new BlaybusAuthExceptionFilter(objectMapper), CorsFilter.class)
                 .addFilterAfter(new BlaybusJWTFilter(jwtUtil, excludedUrls), UsernamePasswordAuthenticationFilter.class)
                 .addFilterAt(new BlaybusLogoutFilter(jwtUtil, jsonWebTokenRepository, googleJsonWebTokenRepository), LogoutFilter.class);

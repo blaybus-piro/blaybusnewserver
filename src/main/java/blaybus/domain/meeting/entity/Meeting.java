@@ -1,5 +1,7 @@
 package blaybus.domain.meeting.entity;
 
+import blaybus.domain.consulting.domain.entity.Consulting;
+import blaybus.domain.time.domain.entity.Time;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,6 +22,9 @@ public class Meeting {
     private String meetUrl;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+
+    @OneToOne(mappedBy = "meeting")
+    private Consulting consulting;
 
     @Builder
     public Meeting(Long id, String title, String meetUrl, LocalDateTime startTime, LocalDateTime endTime) {

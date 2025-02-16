@@ -3,7 +3,7 @@ package blaybus.domain.time.application.service.impl;
 import blaybus.domain.consulting.domain.entity.Consulting;
 import blaybus.domain.consulting.domain.repository.ConsultingRepository;
 import blaybus.domain.designer.domain.entity.Designer;
-import blaybus.domain.time.application.service.BlaybusTimeService;
+import blaybus.domain.time.application.service.TimeService;
 import blaybus.domain.time.domain.entity.Time;
 import blaybus.domain.time.domain.repository.BlaybusTimeRepository;
 import blaybus.domain.time.presentation.dto.req.DetailRequestDTO;
@@ -17,6 +17,7 @@ import blaybus.domain.time.presentation.dto.res.listtime.timeconsulting.TimeCons
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,8 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class TimeServiceImpl implements BlaybusTimeService {
+@Transactional
+public class TimeServiceImpl implements TimeService {
 
     private final BlaybusTimeRepository blaybusTimeRepository;
 
@@ -39,7 +41,7 @@ public class TimeServiceImpl implements BlaybusTimeService {
         List<Time> times = blaybusTimeRepository.findByUserId(userId);
 
         for (Time time : times) {
-            String googleLink = time.getConsulting().getMeetUrl();
+            String googleLink = time.getConsulting().getMeeting().getMeetUrl();
 
             Designer designer = time.getDesigner();
             DesignerView designerView = new DesignerView();
@@ -84,7 +86,7 @@ public class TimeServiceImpl implements BlaybusTimeService {
         userDetail.setEmail(consulting.getUser().getMail());
 
 
-        DetailTimeResponse detailTimeResponse = DetailTimeResponse.of(userDetail, designerDetail, consultingDetail, consulting.getMeetUrl());
+        DetailTimeResponse detailTimeResponse = DetailTimeResponse.of(userDetail, designerDetail, consultingDetail, consulting.getMeeting().getMeetUrl());
         return detailTimeResponse;
     }
 }
