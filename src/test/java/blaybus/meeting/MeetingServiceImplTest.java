@@ -79,7 +79,8 @@ public class MeetingServiceImplTest {
 
         LocalDateTime startTime = LocalDateTime.now().plusMinutes(5);
         LocalDateTime endTime = startTime.plusHours(1);
-        MeetingCreateRequest request = new MeetingCreateRequest(title, startTime, endTime);
+        String designerName = "이초 디자이너";
+        MeetingCreateRequest request = new MeetingCreateRequest(title, startTime, endTime, designerName);
 
         // when
         MeetingResponse response = meetingService.createMeeting(userId, request);

@@ -91,9 +91,10 @@ public class MeetingControllerTest {
         // given
         String token = createTestToken();
         String title = "test-title";
+        String designerName = "이초 디자이너";
         LocalDateTime startTime = LocalDateTime.now().plusMinutes(30);
         LocalDateTime endTime = startTime.plusHours(1);
-        MeetingCreateRequest request = new MeetingCreateRequest(title, startTime, endTime);
+        MeetingCreateRequest request = new MeetingCreateRequest(title, startTime, endTime, designerName);
 
         // when & then
         mockMvc.perform(post("/api/meetings")
@@ -109,7 +110,8 @@ public class MeetingControllerTest {
         String title = "test-title";
         LocalDateTime startTime = LocalDateTime.now().plusMinutes(5);
         LocalDateTime endTime = LocalDateTime.now().plusHours(1);
-        MeetingCreateRequest request = new MeetingCreateRequest(title, startTime, endTime);
+        String designerName = "이초 디자이너";
+        MeetingCreateRequest request = new MeetingCreateRequest(title, startTime, endTime, designerName);
 
         // when & then
         mockMvc.perform(post("/api/meetings")

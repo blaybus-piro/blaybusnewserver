@@ -63,7 +63,7 @@ public class MeetingServiceImpl implements MeetingService {
             throw new BlaybusException(HttpStatus.BAD_REQUEST, "종료 시간은 시작 시간보다 뒤여야 합니다.");
         }
         String accessToken = getValidAccessToken(userId);
-        String meetingTitle = generateMeetingTitle(request.startTime());
+        String meetingTitle = generateMeetingTitle(request.designerName(), request.startTime());
 
         try {
             ConferenceResponse response = googleMeetClient.createMeeting(
@@ -81,8 +81,9 @@ public class MeetingServiceImpl implements MeetingService {
         }
     }
 
-    private String generateMeetingTitle(LocalDateTime startTime) {
-        return String.format("상담 예약 - %s",
+    public String generateMeetingTitle(String designerName, LocalDateTime startTime) {
+        return String.format("%s님과의 상담 예약 - %s",
+                designerName,
                 startTime.format(DateTimeFormatter.ofPattern("M월 d일 a h시 mm분")));
     }
 
