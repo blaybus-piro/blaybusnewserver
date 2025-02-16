@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/designers/offline")
+@RequestMapping("/api/designers/offline")
 @RequiredArgsConstructor
 public class GetOfflineConsultingDesignersController {
 
