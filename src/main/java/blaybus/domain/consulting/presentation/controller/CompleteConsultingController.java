@@ -24,3 +24,4 @@ public class CompleteConsultingController {
         return ResponseEntity.ok().build(); // 200 OK 반환
     }
 }
+
