@@ -11,12 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class UpdateConsultingStatusServiceImpl implements UpdateConsultingStatusService {
 
     private final ConsultingRepository consultingRepository;
 
     @Override
-    @Transactional
+
     public void updateConsultingStatus(long id, ConsultingStatus newStatus) {
         Consulting consulting = consultingRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Consulting with ID " + id + " not found"));
