@@ -32,4 +32,15 @@ public class GoogleAccessTokenAndRefreshTokenServiceImpl implements GoogleAccess
                 "authorization_code"
         );
     }
+
+    @Override
+    public OAuth2TokenResponse refreshAccessToken(String refreshToken) {
+        // refresh token을 사용해 새로운 access token을 발급받는 로직
+        return googleOAuth2URLFeignClient.refreshToken(
+                "refresh_token",
+                refreshToken,
+                clientId,
+                clientSecret
+        );
+    }
 }

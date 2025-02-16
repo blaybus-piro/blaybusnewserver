@@ -4,4 +4,5 @@ import blaybus.domain.oauth2.presentation.dto.response.OAuth2TokenResponse;
 
 public interface GoogleAccessTokenAndRefreshTokenService {
     OAuth2TokenResponse getAccessTokenAndRefreshToken(String code);
+    OAuth2TokenResponse refreshAccessToken(String refreshToken);
 }

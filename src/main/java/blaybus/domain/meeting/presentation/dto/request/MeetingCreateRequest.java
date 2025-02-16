@@ -12,5 +12,8 @@ public record MeetingCreateRequest(
         LocalDateTime startTime,
 
         @NotNull
-        LocalDateTime endTime
+        LocalDateTime endTime,
+
+        @NotNull
+        String designerName
 ) {}
