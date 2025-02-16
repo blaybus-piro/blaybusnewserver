@@ -1,20 +1,17 @@
 package blaybus.domain.meeting.application.service.impl;
 
 import blaybus.domain.meeting.application.service.MeetingService;
-import blaybus.domain.meeting.entity.Meeting;
+import blaybus.domain.meeting.domain.entity.Meeting;
 import blaybus.domain.meeting.infra.feignclient.GoogleMeetClient;
 import blaybus.domain.meeting.infra.feignclient.dto.request.ConferenceRequest;
 import blaybus.domain.meeting.infra.feignclient.dto.response.ConferenceResponse;
 import blaybus.domain.meeting.presentation.dto.request.MeetingCreateRequest;
 import blaybus.domain.meeting.presentation.dto.response.MeetingResponse;
-import blaybus.domain.meeting.repository.MeetingRepository;
+import blaybus.domain.meeting.domain.repository.MeetingRepository;
 import blaybus.domain.oauth2.application.service.GoogleAccessTokenAndRefreshTokenService;
 import blaybus.domain.oauth2.application.service.GoogleTokenService;
-import blaybus.domain.oauth2.presentation.dto.response.OAuth2TokenResponse;
 import blaybus.global.infra.exception.BlaybusException;
-import blaybus.global.jwt.domain.entity.GoogleJsonWebToken;
 import blaybus.global.jwt.domain.repository.GoogleJsonWebTokenRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

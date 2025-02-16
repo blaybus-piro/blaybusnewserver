@@ -1,6 +1,6 @@
-package blaybus.domain.meeting.repository;
+package blaybus.domain.meeting.domain.repository;
 
-import blaybus.domain.meeting.entity.Meeting;
+import blaybus.domain.meeting.domain.entity.Meeting;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package blaybus.domain.meeting.entity;
+package blaybus.domain.meeting.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Builder;
