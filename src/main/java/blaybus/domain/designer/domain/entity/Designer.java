@@ -3,7 +3,6 @@ package blaybus.domain.designer.domain.entity;
 import blaybus.domain.designer.domain.entity.ExpertField;
 import blaybus.domain.designer.domain.entity.Type;
 import blaybus.domain.designer.domain.entity.Area;
-import blaybus.domain.map.domain.entity.Position;
 import jakarta.persistence.*;
 import lombok.*;
 
