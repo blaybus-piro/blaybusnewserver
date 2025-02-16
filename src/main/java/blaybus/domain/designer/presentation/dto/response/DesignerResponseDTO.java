@@ -1,6 +1,5 @@
-package blaybus.domain.designer.presentation.dto.Reponse;
+package blaybus.domain.designer.presentation.dto.response;
 
-import blaybus.domain.designer.domain.entity.Designer;
 import blaybus.domain.designer.domain.entity.Area;
 import blaybus.domain.designer.domain.entity.ExpertField;
 import blaybus.domain.designer.domain.entity.Type;

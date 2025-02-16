@@ -1,4 +1,4 @@
-package blaybus.domain.consulting.presentation.Controller;
+package blaybus.domain.consulting.presentation.controller;
 
 import blaybus.domain.consulting.application.service.UpdateConsultingStatusService;
 import blaybus.domain.consulting.domain.entity.Consulting;

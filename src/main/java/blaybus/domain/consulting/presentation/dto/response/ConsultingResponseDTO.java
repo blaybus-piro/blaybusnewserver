@@ -1,4 +1,4 @@
-package blaybus.domain.consulting.presentation.dto.Response;
+package blaybus.domain.consulting.presentation.dto.response;
 
 
 import blaybus.domain.consulting.domain.entity.ConsultingType;

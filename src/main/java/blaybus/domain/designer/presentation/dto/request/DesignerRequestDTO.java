@@ -1,4 +1,4 @@
-package blaybus.domain.designer.presentation.dto.Request;
+package blaybus.domain.designer.presentation.dto.request;
 
 import blaybus.domain.designer.domain.entity.Area;
 import blaybus.domain.designer.domain.entity.ExpertField;

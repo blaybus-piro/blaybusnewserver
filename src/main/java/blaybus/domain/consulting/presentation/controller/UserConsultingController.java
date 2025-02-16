@@ -1,4 +1,4 @@
-package blaybus.domain.consulting.presentation.Controller;
+package blaybus.domain.consulting.presentation.controller;
 
 import blaybus.domain.consulting.domain.entity.Consulting;
 import blaybus.domain.consulting.domain.repository.ConsultingRepository;

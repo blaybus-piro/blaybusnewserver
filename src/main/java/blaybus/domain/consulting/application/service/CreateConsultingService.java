@@ -2,8 +2,8 @@ package blaybus.domain.consulting.application.service;
 
 import blaybus.domain.consulting.domain.entity.Consulting;
 import blaybus.domain.consulting.domain.repository.ConsultingRepository;
-import blaybus.domain.consulting.presentation.dto.Request.ConsultingRequestDTO;
-import blaybus.domain.consulting.presentation.dto.Response.ConsultingResponseDTO;
+import blaybus.domain.consulting.presentation.dto.request.ConsultingRequestDTO;
+import blaybus.domain.consulting.presentation.dto.response.ConsultingResponseDTO;
 import blaybus.domain.user.domain.entity.User;
 import blaybus.domain.user.domain.repository.UserRepository;
 import blaybus.domain.designer.domain.entity.Designer;

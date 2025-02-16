@@ -1,7 +1,6 @@
 package blaybus.domain.designer.presentation.controller;
 
-import blaybus.domain.designer.domain.entity.Designer;
-import blaybus.domain.designer.presentation.dto.Reponse.DesignerResponseDTO;
+import blaybus.domain.designer.presentation.dto.response.DesignerResponseDTO;
 import blaybus.domain.designer.application.service.GetDesignerByIdService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

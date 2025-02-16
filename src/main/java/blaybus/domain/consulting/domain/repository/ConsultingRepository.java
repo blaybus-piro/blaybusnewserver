@@ -13,6 +13,4 @@ public interface ConsultingRepository extends JpaRepository<Consulting, String> 
 
     // 특정 유저의 상담 목록 조회
     List<Consulting> findByUserId(String userId);
-
-    Optional<Object> findById(@NotNull long id);
 }
