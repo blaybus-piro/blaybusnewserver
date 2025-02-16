@@ -1,10 +1,8 @@
 package blaybus.domain.designer.domain.entity;
 
-import blaybus.domain.designer.domain.entity.ExpertField;
-import blaybus.domain.designer.domain.entity.Type;
-import blaybus.domain.designer.domain.entity.Area;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Getter
