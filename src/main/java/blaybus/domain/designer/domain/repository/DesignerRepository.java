@@ -19,7 +19,7 @@ public interface DesignerRepository extends JpaRepository<Designer, String> {
             CASE WHEN :sortOrder = 'ASC' THEN d.onlinePrice END ASC,
             CASE WHEN :sortOrder = 'DESC' THEN d.onlinePrice END DESC
     """)
-    List<Designer> findOnlineConsultingDesigners(@Param("consultingType") ConsultingType consultingType,
+    List<Designer> findOnlineConsultingDesigners(@Param("consultingType") Type consultingType,
                                                  @Param("sortOrder") String sortOrder);
 
     @Query("""

@@ -2,7 +2,7 @@ package blaybus.domain.designer.application.service;
 
 import blaybus.domain.designer.domain.entity.Designer;
 import blaybus.domain.designer.domain.repository.DesignerRepository;
-import blaybus.domain.designer.presentation.DTO.DesignerDTO;
+import blaybus.domain.designer.presentation.dto.DesignerDTO;
 import blaybus.domain.consulting.domain.entity.Consulting.ConsultingType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
