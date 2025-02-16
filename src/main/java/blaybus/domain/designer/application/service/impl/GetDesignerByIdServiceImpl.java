@@ -31,3 +31,4 @@ public class GetDesignerByIdServiceImpl implements GetDesignerByIdService {
                 .orElseThrow(() -> new EntityNotFoundException("디자이너를 찾을 수 없습니다: " + id));
     }
 }
+

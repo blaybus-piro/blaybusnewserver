@@ -19,3 +19,4 @@ public class GetConsultingByIdServiceImpl implements GetConsultingByIdService {
                 .orElseThrow(() -> new EntityNotFoundException("Consulting with ID " + id + " not found"));
     }
 }
+
