@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/designers/online")
+@RequestMapping("/api/designers/online")
 @RequiredArgsConstructor
 public class GetOnlineConsultingDesignersController {
 

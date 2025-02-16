@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/designers")
+@RequestMapping("/api/designers")
 @RequiredArgsConstructor
 public class GetDesignerByIdController {
 
