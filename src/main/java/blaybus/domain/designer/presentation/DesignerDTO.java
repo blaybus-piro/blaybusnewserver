@@ -12,7 +12,7 @@ public record DesignerDTO(
         Designer.Area area,
         Designer.ExpertField expertField,
         String introduce,
-        int addressId,
+        String addressId,
         String portfolio,
         List<Designer.Type> types, // Set -> List 변환 (가독성 향상)
         int offlinePrice,
@@ -27,7 +27,7 @@ public record DesignerDTO(
                 designer.getArea(),
                 designer.getExpertField(),
                 designer.getIntroduce(),
-                designer.getPosition().getId(),
+                designer.getPosition().getName(),
                 designer.getPortfolio(),
                 List.copyOf(designer.getTypes()), // Set -> List 변환
                 designer.getOfflinePrice(),
