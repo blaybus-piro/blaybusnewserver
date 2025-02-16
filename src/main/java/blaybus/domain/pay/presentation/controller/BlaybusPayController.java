@@ -5,12 +5,16 @@ import blaybus.domain.pay.presentation.dto.req.ReadyRequest.ReadyRequestDTO;
 import blaybus.domain.pay.presentation.dto.res.kakao.KakaoPayApproveResponse;
 import blaybus.domain.pay.presentation.dto.res.kakao.KakaoPayOrderResponse;
 import blaybus.domain.pay.presentation.dto.res.kakao.KakaoPayReadyResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.net.http.HttpResponse;
 
 @RestController
 @RequestMapping("/api/pay")
@@ -39,13 +43,15 @@ public class BlaybusPayController {
      * - 실제로는 approval_url로 리다이렉트되며 pg_token이 넘어올 때 서버가 받는 로직이 필요
      */
     @GetMapping("/approve")
-    public ResponseEntity<?> payApprove(
+    public void payApprove(
             @RequestParam String orderId,
             @RequestParam("pg_token") String pgToken,
-            @AuthenticationPrincipal String userId
-    ) {
-        KakaoPayApproveResponse response = blaybusPayService.payApprove(orderId, userId, pgToken);
-        return ResponseEntity.ok(response);
+            @AuthenticationPrincipal String userId,
+            HttpServletResponse httpResponse
+    ) throws IOException {
+        KakaoPayApproveResponse kakaoResponse = blaybusPayService.payApprove(orderId, userId, pgToken);
+        // 필요한 추가 처리(예: DB 업데이트 등)를 수행한 후 리다이렉트
+        httpResponse.sendRedirect("http://localhost:5173/reservationcomplete");
     }
 
     /**
