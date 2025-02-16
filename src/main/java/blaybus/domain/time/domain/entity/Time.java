@@ -4,21 +4,18 @@ import blaybus.domain.consulting.domain.entity.Consulting;
 import blaybus.domain.designer.domain.entity.Designer;
 import blaybus.domain.user.domain.entity.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
+import lombok.*;
 
 @Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name = "time")
 public class Time {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @OneToOne
     @JoinColumn(name = "consulting_id", nullable = false)
@@ -32,7 +29,16 @@ public class Time {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    LocalDateTime start;
+    // 예약 날짜 및 시간
+    private String startTime;
 
-
+    // 🔹 빌더 메서드 추가
+    public static Time createTime(Consulting consulting, Designer designer, User user, String startTime) {
+        return Time.builder()
+                .consulting(consulting)
+                .designer(designer)
+                .user(user)
+                .startTime(startTime)
+                .build();
+    }
 }

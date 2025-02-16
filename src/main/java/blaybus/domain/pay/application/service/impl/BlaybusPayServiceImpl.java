@@ -1,7 +1,7 @@
 package blaybus.domain.pay.application.service.impl;
 
 import blaybus.domain.pay.application.service.BlaybusPayService;
-import blaybus.domain.pay.domain.entity.BlaybusPayTid;
+import blaybus.domain.pay.domain.entity.PayTid;
 import blaybus.domain.pay.domain.repository.BlaybusPayRepository;
 import blaybus.domain.pay.infra.exception.BlaybusPayException;
 import blaybus.domain.pay.infra.exception.BlaybusPayTidException;
@@ -45,7 +45,7 @@ public class BlaybusPayServiceImpl implements BlaybusPayService {
         String orderId = UUID.randomUUID().toString();
         KakaoPayReadyResponse response = payReady(orderId, userId, reqDto.amount());
         // tid 값 임시 저장
-        BlaybusPayTid blaybusPayTid = BlaybusPayTid.builder()
+        PayTid blaybusPayTid = PayTid.builder()
                 .id(orderId)
                 .tid(response.tid())
                 .build();
@@ -102,9 +102,9 @@ public class BlaybusPayServiceImpl implements BlaybusPayService {
         String authorization = "KakaoAK " + adminKey;
         String contentType = "application/x-www-form-urlencoded;charset=utf-8";
 
-        Optional<BlaybusPayTid> findTid = blaybusPayRepository.findById(orderId);
+        Optional<PayTid> findTid = blaybusPayRepository.findById(orderId);
 
-        BlaybusPayTid blaybusPayTid = findTid.get();
+        PayTid blaybusPayTid = findTid.get();
 
         String tid = blaybusPayTid.getTid();
         if (tid == null) {

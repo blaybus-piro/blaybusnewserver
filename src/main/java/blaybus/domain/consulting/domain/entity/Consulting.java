@@ -1,7 +1,6 @@
 package blaybus.domain.consulting.domain.entity;
 
 import blaybus.domain.designer.domain.entity.Designer;
-
 import blaybus.domain.meeting.entity.Meeting;
 import blaybus.domain.time.domain.entity.Time;
 import blaybus.domain.user.domain.entity.User;
@@ -38,33 +37,27 @@ public class Consulting {
     @OneToOne(mappedBy = "consulting")
     private Time time;
 
-
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false, length = 20)
     private ConsultingType type;
-
-    /*
-
-    // time 관련은 일단 유기
-    @Column(name = "time", nullable = false)
-    private LocalTime time;  // 30분 단위 시간 저장
-
-    */
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 20)
     private ConsultingStatus status;
 
-    // 🔹 상태 변경을 위한 메서드 추가
+    // 🔹 상태 변경 메서드
     public void updateStatus(ConsultingStatus newStatus) {
         this.status = newStatus;
     }
 
-    /*
-
-    public String getMeetUrl() {
-        return (meeting != null) ? meeting.getMeetUrl() : null;
+    // 빌더 패턴을 활용한 생성 메서드
+    public static Consulting createConsulting(User user, Designer designer, Meeting meeting, ConsultingType type, ConsultingStatus status) {
+        return Consulting.builder()
+                .user(user)
+                .designer(designer)
+                .meeting(meeting)
+                .type(type)
+                .status(status)
+                .build();
     }
-
-    */
 }

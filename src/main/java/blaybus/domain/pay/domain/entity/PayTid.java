@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BlaybusPayTid {
+public class PayTid {
 
     @Id
     private String id; // 주문 ID

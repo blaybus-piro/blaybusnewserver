@@ -6,19 +6,18 @@ import blaybus.domain.meeting.entity.Meeting;
 import jakarta.validation.constraints.NotNull;
 
 public record ConsultingRequestDTO(
-        @NotNull long id,
-        @NotNull String userId,
-        @NotNull String designerId,
-        Meeting meeting,
-        @NotNull ConsultingType type,
-        ConsultingStatus status
-)
-{
-    public ConsultingRequestDTO {
-        // 기본값 설정 (null 방지)
-        if (status == null) {
-            status = ConsultingStatus.FREE;
-        }
-    }
+
+        // 리액트에서 임의의값 해서 보내주면 될듯
+        String designerId,
+        //대면 비대면
+        String meet,
+
+        // 4가지 상태
+        String status,
+
+        // 사용자가 예약한 시간
+        String startTime
+) {
+
 }
 

@@ -7,12 +7,15 @@ import blaybus.domain.meeting.entity.Meeting;
 import jakarta.validation.constraints.NotNull;
 
 public record ConsultingResponseDTO(
-        @NotNull long id,
-        @NotNull String userId,
-        @NotNull String designerId,
+        Long id,
+        String userId,
+        String designerId,
         Meeting meeting,
-        @NotNull ConsultingType type,
-        ConsultingStatus status
-)
-{ }
+        //대면 비대면
+        String meet,
+
+        // 4가지 상태
+        String status
+) {
+}
 
