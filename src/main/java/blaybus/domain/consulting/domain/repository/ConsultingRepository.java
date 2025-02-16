@@ -10,5 +10,5 @@ import java.util.List;
 public interface ConsultingRepository extends JpaRepository<Consulting, Long> {
 
     // 특정 유저의 상담 목록 조회
-    List<Consulting> findByUserId(String userId);
+    List<Consulting> findAllByUserId(String userId);
 }

@@ -16,7 +16,7 @@ public class GetConsultingsByUserServiceImpl implements GetConsultingsByUserServ
 
     @Override
     public List<ConsultingResponseDTO> execute(String userId) {
-        return consultingRepository.findByUserId(userId)
+        return consultingRepository.findAllByUserId(userId)
                 .stream()
                 .map(consulting -> new ConsultingResponseDTO(
                         consulting.getId(),
