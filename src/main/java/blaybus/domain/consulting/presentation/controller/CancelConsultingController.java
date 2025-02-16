@@ -17,9 +17,10 @@ public class CancelConsultingController {
 
     private final UpdateConsultingStatusService consultingService;
 
-    @PatchMapping("/{id}/cancel")
-    public ResponseEntity<Void> cancelConsulting(@PathVariable long id) {
+    @PatchMapping("/{id}/canceled")
+    public ResponseEntity<Void> completeConsulting(@PathVariable long id) {
         consultingService.updateConsultingStatus(id, ConsultingStatus.CANCELED);
         return ResponseEntity.ok().build(); // 200 OK 반환
     }
+
 }

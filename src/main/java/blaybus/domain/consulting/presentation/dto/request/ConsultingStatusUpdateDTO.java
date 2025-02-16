@@ -4,6 +4,6 @@ import blaybus.domain.consulting.domain.entity.ConsultingStatus;
 import jakarta.validation.constraints.NotNull;
 
 public record ConsultingStatusUpdateDTO(
-        @NotNull long Id,
+        @NotNull long id,
         @NotNull ConsultingStatus consultingStatus
 ) {}

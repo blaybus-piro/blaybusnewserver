@@ -9,6 +9,7 @@ import lombok.*;
 
 import java.time.LocalTime;
 
+@Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,7 +19,7 @@ public class Consulting {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -60,14 +61,6 @@ public class Consulting {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 20)
     private ConsultingStatus status;
-
-    public enum ConsultingType {
-        ONLINE, OFFLINE
-    }
-
-    public enum ConsultingStatus {
-        FREE, SCHEDULED, CANCELED, COMPLETE
-    }
 
     /*
 
