@@ -6,6 +6,7 @@ import blaybus.domain.map.domain.entity.Position;
 import blaybus.domain.user.domain.entity.User;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalTime;
@@ -72,5 +73,10 @@ public class Consulting {
         this.meeting = meeting;
         this.type = type;
         this.status = status;
+    }
+
+    // 🔹 상태 변경을 위한 메서드 추가
+    public void updateStatus(ConsultingStatus newStatus) {
+        this.status = newStatus;
     }
 }
