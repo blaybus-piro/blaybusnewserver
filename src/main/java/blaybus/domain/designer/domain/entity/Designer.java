@@ -1,6 +1,6 @@
 package blaybus.domain.designer.domain.entity;
 
-import blaybus.domain.position.domain.entity.Position;
+import blaybus.domain.map.domain.entity.Position;
 import jakarta.persistence.*;
 import lombok.*;
 
