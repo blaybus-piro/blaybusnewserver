@@ -20,7 +20,7 @@ public class CompleteConsultingController {
     // 상담 상태를 Scheduled에서 Complete로 변경
     @PatchMapping("/{id}/complete")
     public ResponseEntity<Consulting> completeConsulting(@PathVariable long id) {
-        Consulting updatedConsulting = consultingService.updateConsultingStatus(id, ConsultingStatus.COMPLETE);
-        return ResponseEntity.ok(updatedConsulting);
+        consultingService.updateConsultingStatus(id, ConsultingStatus.COMPLETE);
+        return ResponseEntity.ok().build(); // 200 OK 반환
     }
 }
