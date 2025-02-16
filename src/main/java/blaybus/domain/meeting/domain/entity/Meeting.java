@@ -1,4 +1,4 @@
-package blaybus.domain.meeting.entity;
+package blaybus.domain.meeting.domain.entity;
 
 import blaybus.domain.consulting.domain.entity.Consulting;
 import blaybus.domain.time.domain.entity.Time;
@@ -27,7 +27,7 @@ public class Meeting {
     private Consulting consulting;
 
     @Builder
-    public Meeting(Long id, String title, String meetUrl, LocalDateTime startTime, LocalDateTime endTime) {
+    public Meeting(String title, String meetUrl, LocalDateTime startTime, LocalDateTime endTime) {
         this.id = id;
         this.title = title;
         this.meetUrl = meetUrl;

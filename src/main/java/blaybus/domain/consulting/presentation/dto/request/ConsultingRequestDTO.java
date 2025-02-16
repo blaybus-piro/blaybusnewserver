@@ -2,7 +2,7 @@ package blaybus.domain.consulting.presentation.dto.request;
 
 import blaybus.domain.consulting.domain.entity.ConsultingType;
 import blaybus.domain.consulting.domain.entity.ConsultingStatus;
-import blaybus.domain.meeting.entity.Meeting;
+import blaybus.domain.meeting.domain.entity.Meeting;
 import jakarta.validation.constraints.NotNull;
 
 public record ConsultingRequestDTO(

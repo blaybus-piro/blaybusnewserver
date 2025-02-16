@@ -2,9 +2,15 @@ package blaybus.domain.consulting.application.service.impl;
 
 import blaybus.domain.consulting.application.service.CreateConsultingService;
 import blaybus.domain.consulting.domain.entity.Consulting;
+import blaybus.domain.consulting.domain.entity.ConsultingStatus;
+import blaybus.domain.consulting.domain.entity.ConsultingType;
 import blaybus.domain.consulting.domain.repository.ConsultingRepository;
 import blaybus.domain.consulting.presentation.dto.request.ConsultingRequestDTO;
 import blaybus.domain.consulting.presentation.dto.response.ConsultingResponseDTO;
+import blaybus.domain.meeting.application.service.impl.MeetingServiceImpl;
+import blaybus.domain.meeting.domain.entity.Meeting;
+import blaybus.domain.meeting.domain.repository.MeetingRepository;
+import blaybus.domain.meeting.presentation.dto.response.MeetingResponse;
 import blaybus.domain.time.application.service.impl.TimeServiceImpl;
 import blaybus.domain.time.domain.entity.Time;
 import blaybus.domain.time.domain.repository.BlaybusTimeRepository;
@@ -17,6 +23,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -26,6 +34,8 @@ public class CreateConsultingServiceImpl implements CreateConsultingService {
     private final UserRepository userRepository;
     private final DesignerRepository designerRepository;
     private final BlaybusTimeRepository timeRepository;
+    private final MeetingServiceImpl meetingService;
+    private final MeetingRepository meetingRepository;
 
     @Override
     public ConsultingResponseDTO execute(ConsultingRequestDTO req, String userId) {
@@ -36,16 +46,18 @@ public class CreateConsultingServiceImpl implements CreateConsultingService {
                 .orElseThrow(() -> new EntityNotFoundException("Designer not found: " + req.designerId()));
 
 
-        // 구글 미트
+        // 구글 미트 생성
+        MeetingResponse meeting = meetingService.createMeeting(userId, req.startTime(), "마지막 시간", designer);
+        Optional<Meeting> findMeeting = meetingRepository.findById(meeting.id());
 
 
-        // 생성
+        // 컨설팅 생성
         Consulting consulting = Consulting.builder()
                 .user(user)
                 .designer(designer)
-                .meeting(meeting)
-                .type(req.meet())  // 적절한 타입으로 변경
-                .status(req.status()) // 초기 상태 지정
+                .meeting(findMeeting.get())
+                .type(ConsultingType.valueOf(req.meet()))  // 적절한 타입으로 변경
+                .status(ConsultingStatus.valueOf(req.status())) // 초기 상태 지정
                 .build();
 
         consultingRepository.save(consulting);
@@ -59,8 +71,8 @@ public class CreateConsultingServiceImpl implements CreateConsultingService {
                 consulting.getUser().getId(),
                 consulting.getDesigner().getId(),
                 consulting.getMeeting(),
-                consulting.getType(),
-                consulting.getStatus()
+                req.meet(),
+                req.status()
         );
     }
 }
