@@ -1,7 +1,7 @@
 package blaybus.domain.designer.application.service;
 
 import blaybus.domain.designer.domain.repository.DesignerRepository;
-import blaybus.domain.designer.presentation.dto.Reponse.DesignerResponseDTO;
+import blaybus.domain.designer.presentation.dto.response.DesignerResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

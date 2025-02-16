@@ -1,7 +1,7 @@
 package blaybus.domain.designer.presentation.controller;
 
 import blaybus.domain.designer.application.service.GetConsultingDesignersService;
-import blaybus.domain.designer.presentation.dto.Reponse.DesignerResponseDTO;
+import blaybus.domain.designer.presentation.dto.response.DesignerResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

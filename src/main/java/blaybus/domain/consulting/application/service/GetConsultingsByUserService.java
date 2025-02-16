@@ -1,7 +1,7 @@
 package blaybus.domain.consulting.application.service;
 
 import blaybus.domain.consulting.domain.repository.ConsultingRepository;
-import blaybus.domain.consulting.presentation.dto.Response.ConsultingResponseDTO;
+import blaybus.domain.consulting.presentation.dto.response.ConsultingResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
