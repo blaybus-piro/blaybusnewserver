@@ -1,7 +1,8 @@
 package blaybus.domain.consulting.domain.entity;
 
 import blaybus.domain.designer.domain.entity.Designer;
-import blaybus.domain.position.domain.entity.Position;
+
+import blaybus.domain.meeting.entity.Meeting;
 import blaybus.domain.user.domain.entity.User;
 
 import jakarta.persistence.*;
@@ -19,7 +20,7 @@ public class Consulting {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -29,20 +30,11 @@ public class Consulting {
     @JoinColumn(name = "designer_id", nullable = false)
     private Designer designer;
 
-    // Position 테이블을 참조하는 FK
-    @ManyToOne
-    @JoinColumn(name = "address_id", nullable = false)
-    private Position position;
-
-    /*
-
-    // Meeting 테이블을 참조하는 FK (nullable 가능)
-    // 아직 meeting의 경우 생성 안되므로 주석처리
     @ManyToOne
     @JoinColumn(name = "meet_id")
     private Meeting meeting;
 
-    */
+
     @Column(name = "meet_url")
     private String meetUrl;
 
@@ -62,12 +54,9 @@ public class Consulting {
     @Column(name = "status", nullable = false, length = 20)
     private ConsultingStatus status;
 
-    public enum ConsultingType {
-        ONLINE, OFFLINE
-    }
-
-    public enum ConsultingStatus {
-        FREE, SCHEDULED, CANCELED, COMPLETE
+    // 🔹 상태 변경을 위한 메서드 추가
+    public void updateStatus(ConsultingStatus newStatus) {
+        this.status = newStatus;
     }
 
     /*

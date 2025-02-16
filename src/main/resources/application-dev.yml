@@ -66,11 +66,16 @@ oauth2:
   client-authentication-method: ${OAUTH2_AUTH_METHOD}
   redirect-uri: ${OAUTH2_REDIRECT_URL}
   scope:
+    - https://www.googleapis.com/auth/calendar
     - profile
     - email
     - https://www.googleapis.com/auth/calendar
     - https://www.googleapis.com/auth/calendar.events
 
+
+google:
+  map:
+    api-key: ${MAP_API_KEY}
 
 server:
   url: ${SERVER_URL}

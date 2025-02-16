@@ -1,21 +1,29 @@
 package blaybus.domain.pay.application.service.impl;
 
 import blaybus.domain.pay.application.service.BlaybusPayService;
+import blaybus.domain.pay.domain.entity.BlaybusPayTid;
+import blaybus.domain.pay.domain.repository.BlaybusPayRepository;
 import blaybus.domain.pay.infra.exception.BlaybusPayException;
+import blaybus.domain.pay.infra.exception.BlaybusPayTidException;
 import blaybus.domain.pay.infra.feignclient.KakaoPayClient;
-import blaybus.domain.pay.presentation.dto.KakaoPayApproveResponse;
-import blaybus.domain.pay.presentation.dto.KakaoPayOrderResponse;
-import blaybus.domain.pay.presentation.dto.KakaoPayReadyResponse;
+import blaybus.domain.pay.presentation.dto.req.ReadyRequest.ReadyRequestDTO;
+import blaybus.domain.pay.presentation.dto.res.kakao.KakaoPayApproveResponse;
+import blaybus.domain.pay.presentation.dto.res.kakao.KakaoPayOrderResponse;
+import blaybus.domain.pay.presentation.dto.res.kakao.KakaoPayReadyResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class BlaybusPayServiceImpl implements BlaybusPayService {
 
+    private final BlaybusPayRepository blaybusPayRepository;
     private final KakaoPayClient kakaoPayClient;
 
     @Value("${kakao.pay.admin-key}")
@@ -27,16 +35,36 @@ public class BlaybusPayServiceImpl implements BlaybusPayService {
     @Value("${server.url}")
     private String serverUrl;
 
+
+    /**
+     * 0) 결제 준비 전
+     * -
+     */
+
+    public KakaoPayReadyResponse payLogic(String userId, ReadyRequestDTO reqDto) {
+        String orderId = UUID.randomUUID().toString();
+        KakaoPayReadyResponse response = payReady(orderId, userId, reqDto.amount());
+        // tid 값 임시 저장
+        BlaybusPayTid blaybusPayTid = BlaybusPayTid.builder()
+                .id(orderId)
+                .tid(response.tid())
+                .build();
+        blaybusPayRepository.save(blaybusPayTid);
+
+        return response;
+    }
+
     /**
      * 1) 결제 준비
      * - 결제 요청에 필요한 파라미터를 세팅하고, KakaoPayClient.ready() 호출
      */
     @Override
     public KakaoPayReadyResponse payReady(String orderId, String userId, int amount) {
+
         String authorization = "KakaoAK " + adminKey;
         String contentType = "application/x-www-form-urlencoded;charset=utf-8";
 
-        // 테스트용 파라미터 (실제 구현 시 조정이 필요함.... 이건 예시)
+        // 파라미터
         String itemName = "디자이너와의 컨설팅";
         int quantity = 1;
         int vatAmount = 0;
@@ -46,7 +74,6 @@ public class BlaybusPayServiceImpl implements BlaybusPayService {
         String approvalUrl = serverUrl + "/api/pay/approve?orderId=" + orderId;
         String cancelUrl = serverUrl + "/api/pay/approve?orderId=" + orderId;
         String failUrl = serverUrl + "/api/pay/approve?orderId=" + orderId;
-
 
         // FeignClient 호출
         return kakaoPayClient.ready(
@@ -71,9 +98,18 @@ public class BlaybusPayServiceImpl implements BlaybusPayService {
      * - 사용자 결제 완료 후 pg_token을 받아 최종 승인
      */
     @Override
-    public KakaoPayApproveResponse payApprove(String orderId, String userId, String tid, String pgToken) {
+    public KakaoPayApproveResponse payApprove(String orderId, String userId, String pgToken) {
         String authorization = "KakaoAK " + adminKey;
         String contentType = "application/x-www-form-urlencoded;charset=utf-8";
+
+        Optional<BlaybusPayTid> findTid = blaybusPayRepository.findById(orderId);
+
+        BlaybusPayTid blaybusPayTid = findTid.get();
+
+        String tid = blaybusPayTid.getTid();
+        if (tid == null) {
+            throw new BlaybusPayTidException();
+        }
 
         KakaoPayApproveResponse approve;
         try {
@@ -91,9 +127,10 @@ public class BlaybusPayServiceImpl implements BlaybusPayService {
         } catch (BlaybusPayException e) {
             approve = new KakaoPayApproveResponse();
             approve.setStatus("FAIL");
-            log.info("결제 승인 실패: {}", e.getMessage());
         }
 
+        // tid 삭제
+        blaybusPayRepository.delete(blaybusPayTid);
         return approve;
 
     }
@@ -107,4 +144,8 @@ public class BlaybusPayServiceImpl implements BlaybusPayService {
         String authorization = "KakaoAK " + adminKey;
         return kakaoPayClient.getOrder(authorization, cid, tid);
     }
+
+
+
+
 }
