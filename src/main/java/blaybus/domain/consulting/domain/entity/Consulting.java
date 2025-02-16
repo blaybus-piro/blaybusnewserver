@@ -1,6 +1,7 @@
 package blaybus.domain.consulting.domain.entity;
 
 import blaybus.domain.designer.domain.entity.Designer;
+
 import blaybus.domain.meeting.entity.Meeting;
 import blaybus.domain.user.domain.entity.User;
 
@@ -9,6 +10,7 @@ import lombok.*;
 
 import java.time.LocalTime;
 
+@Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,7 +20,7 @@ public class Consulting {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -28,15 +30,6 @@ public class Consulting {
     @JoinColumn(name = "designer_id", nullable = false)
     private Designer designer;
 
-    /*
-    // Position 테이블을 참조하는 FK
-    @ManyToOne
-    @JoinColumn(name = "address_id", nullable = false)
-    private Position position;
-    */
-
-    // Meeting 테이블을 참조하는 FK (nullable 가능)
-    // 아직 meeting의 경우 생성 안되므로 주석처리
     @ManyToOne
     @JoinColumn(name = "meet_id")
     private Meeting meeting;
@@ -76,18 +69,4 @@ public class Consulting {
     }
 
     */
-
-    @Builder
-    public Consulting(User user, Designer designer, Meeting meeting, ConsultingType type, ConsultingStatus status) {
-        this.user = user;
-        this.designer = designer;
-        this.meeting = meeting;
-        this.type = type;
-        this.status = status;
-    }
-
-    // 🔹 상태 변경을 위한 메서드 추가
-    public void updateStatus(ConsultingStatus newStatus) {
-        this.status = newStatus;
-    }
 }
