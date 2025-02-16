@@ -1,10 +1,14 @@
 package blaybus.domain.user.domain.entity;
 
+import blaybus.domain.time.domain.entity.Time;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
@@ -29,6 +33,8 @@ public class User {
     @Column(name = "role", nullable = false)
     private Role role;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Time> times = new ArrayList<>();
     @Builder
     public User(String id, String mail, String name, String profile, Role role) {
         this.id = id;
