@@ -17,10 +17,9 @@ public class CancelConsultingController {
 
     private final UpdateConsultingStatusService consultingService;
 
-    // 상담 상태를 Scheduled에서 Canceled로 변경
     @PatchMapping("/{id}/cancel")
-    public ResponseEntity<Consulting> cancelConsulting(@PathVariable long id) {
-        Consulting updatedConsulting = consultingService.updateConsultingStatus(id, ConsultingStatus.CANCELED);
-        return ResponseEntity.ok(updatedConsulting);
+    public ResponseEntity<Void> cancelConsulting(@PathVariable long id) {
+        consultingService.updateConsultingStatus(id, ConsultingStatus.CANCELED);
+        return ResponseEntity.ok().build(); // 200 OK 반환
     }
 }

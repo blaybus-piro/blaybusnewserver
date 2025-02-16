@@ -9,8 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class UpdateConsultingStatusServiceImpl implements UpdateConsultingStatusService {
@@ -19,15 +17,11 @@ public class UpdateConsultingStatusServiceImpl implements UpdateConsultingStatus
 
     @Override
     @Transactional
-    public Consulting updateConsultingStatus(long id, ConsultingStatus newStatus) {
-        Optional<Consulting> consultingOptional = consultingRepository.findById(id);
-        if (consultingOptional.isEmpty()) {
-            throw new EntityNotFoundException("Consulting with ID " + id + " not found");
-        }
-        Consulting consulting = consultingOptional.get();
+    public void updateConsultingStatus(long id, ConsultingStatus newStatus) {
+        Consulting consulting = consultingRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Consulting with ID " + id + " not found"));
 
         consulting.updateStatus(newStatus);
-
-        return consultingRepository.save(consulting);
+        consultingRepository.save(consulting); // 변경 사항 저장
     }
 }
