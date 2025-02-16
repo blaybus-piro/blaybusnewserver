@@ -31,13 +31,7 @@ public class CreateConsultingServiceImpl implements CreateConsultingService {
         Designer designer = designerRepository.findById(requestDTO.designerId())
                 .orElseThrow(() -> new EntityNotFoundException("Designer not found: " + requestDTO.designerId()));
 
-        Consulting consulting = new Consulting(
-                user,
-                designer,
-                requestDTO.meeting(),
-                requestDTO.type(),
-                requestDTO.status()
-        );
+        Consulting consulting = new Consulting();
 
         consultingRepository.save(consulting);
 

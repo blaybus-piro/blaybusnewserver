@@ -54,6 +54,11 @@ public class Consulting {
     @Column(name = "status", nullable = false, length = 20)
     private ConsultingStatus status;
 
+    // 🔹 상태 변경을 위한 메서드 추가
+    public void updateStatus(ConsultingStatus newStatus) {
+        this.status = newStatus;
+    }
+
     /*
 
     public String getMeetUrl() {
