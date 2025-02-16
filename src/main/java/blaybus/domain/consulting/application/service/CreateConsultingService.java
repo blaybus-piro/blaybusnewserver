@@ -6,3 +6,4 @@ import blaybus.domain.consulting.presentation.dto.response.ConsultingResponseDTO
 public interface CreateConsultingService {
     ConsultingResponseDTO execute(ConsultingRequestDTO requestDTO);
 }
+

@@ -6,3 +6,4 @@ public interface GetConsultingByIdService {
     Consulting getConsultingDetails(long id);
 }
 
+

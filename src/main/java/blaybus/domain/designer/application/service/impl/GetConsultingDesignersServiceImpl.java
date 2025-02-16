@@ -35,3 +35,4 @@ public class GetConsultingDesignersServiceImpl implements GetConsultingDesigners
                 .toList();
     }
 }
+

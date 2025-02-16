@@ -7,3 +7,4 @@ import java.util.List;
 public interface GetConsultingDesignersService {
     List<DesignerResponseDTO> execute(String sortOrder);
 }
+
