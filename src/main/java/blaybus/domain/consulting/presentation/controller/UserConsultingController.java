@@ -18,7 +18,7 @@ public class UserConsultingController {
     // 특정 유저의 상담 목록 조회
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<Consulting>> getUserConsultings(@PathVariable String userId) {
-        List<Consulting> consultings = consultingRepository.findAllByUserId(userId);
+        List<Consulting> consultings = consultingRepository.findAllByUser_Id(userId);
         return ResponseEntity.ok(consultings);
     }
 }

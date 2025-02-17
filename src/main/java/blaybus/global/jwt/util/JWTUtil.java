@@ -95,15 +95,6 @@ public class JWTUtil {
                 .build();
     }
 
-    public ResponseCookie createAccessCookie(String value) {
-        return ResponseCookie.from("access", value)
-                .maxAge(accessExpiration)
-                .path("/")
-                .secure(true)
-                .sameSite("None")
-                .build();
-    }
-
     public String getAccessTokenFromHeaders(HttpServletRequest request) {
         if(request.getHeader(HttpHeaders.AUTHORIZATION) != null) {
             return request.getHeader("Authorization").replace("Bearer ", "");
