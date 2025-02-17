@@ -6,6 +6,8 @@ import blaybus.domain.user.domain.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -30,10 +32,10 @@ public class Time {
     private User user;
 
     // 예약 날짜 및 시간
-    private String startTime;
+    private LocalDateTime startTime;
 
     // 🔹 빌더 메서드 추가
-    public static Time createTime(Consulting consulting, Designer designer, User user, String startTime) {
+    public static Time createTime(Consulting consulting, Designer designer, User user, LocalDateTime startTime) {
         return Time.builder()
                 .consulting(consulting)
                 .designer(designer)

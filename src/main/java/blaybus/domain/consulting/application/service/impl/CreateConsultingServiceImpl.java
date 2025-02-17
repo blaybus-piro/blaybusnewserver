@@ -47,7 +47,7 @@ public class CreateConsultingServiceImpl implements CreateConsultingService {
 
 
         // 구글 미트 생성
-        MeetingResponse meeting = meetingService.createMeeting(userId, req.startTime(), "마지막 시간", designer);
+        MeetingResponse meeting = meetingService.createMeeting(userId, req.startTime(), designer);
         Optional<Meeting> findMeeting = meetingRepository.findById(meeting.id());
 
 
@@ -55,9 +55,9 @@ public class CreateConsultingServiceImpl implements CreateConsultingService {
         Consulting consulting = Consulting.builder()
                 .user(user)
                 .designer(designer)
-                .meeting(findMeeting.get())
-                .type(ConsultingType.valueOf(req.meet()))  // 적절한 타입으로 변경
-                .status(ConsultingStatus.valueOf(req.status())) // 초기 상태 지정
+                .meeting(findMeeting.orElseThrow(() -> new EntityNotFoundException("Meeting not found: " + meeting.id())))
+                .type(ConsultingType.fromString(req.meet()))  // 적절한 타입으로 변경
+                .status(ConsultingStatus.fromString(req.status())) // 초기 상태 지정
                 .build();
 
         consultingRepository.save(consulting);

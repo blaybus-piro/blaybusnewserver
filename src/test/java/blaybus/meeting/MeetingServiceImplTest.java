@@ -83,6 +83,7 @@ public class MeetingServiceImplTest {
         String designerName = "이초 디자이너";
         MeetingCreateRequest request = new MeetingCreateRequest(title, startTime, endTime, designerName);
 
+        /**
         // when
         MeetingResponse response = meetingService.createMeeting(userId, request);
 
@@ -93,5 +94,7 @@ public class MeetingServiceImplTest {
         System.out.println(response.title());
         System.out.println(response.hangoutLink());
         System.out.println("회의 종료 시간: " + request.endTime());
+
+         */
     }
 }

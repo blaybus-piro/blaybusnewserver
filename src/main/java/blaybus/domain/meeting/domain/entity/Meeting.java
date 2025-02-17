@@ -28,7 +28,6 @@ public class Meeting {
 
     @Builder
     public Meeting(String title, String meetUrl, LocalDateTime startTime, LocalDateTime endTime) {
-        this.id = id;
         this.title = title;
         this.meetUrl = meetUrl;
         this.startTime = startTime;

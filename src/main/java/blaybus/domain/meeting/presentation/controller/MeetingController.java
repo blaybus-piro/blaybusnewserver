@@ -19,13 +19,13 @@ public class MeetingController {
     private final MeetingService meetingService;
 
 
-    @PostMapping
-    public ResponseEntity<MeetingResponse> createMeeting(
-            @AuthenticationPrincipal String userId,
-            @Valid @RequestBody MeetingCreateRequest request) {
-        // 링크 생성 및 title 받기
-        MeetingResponse meetingResponse = meetingService.createMeeting(userId, request);
-
-        return ResponseEntity.status(201).body(meetingResponse);
-    }
+//    @PostMapping
+//    public ResponseEntity<MeetingResponse> createMeeting(
+//            @AuthenticationPrincipal String userId,
+//            @Valid @RequestBody MeetingCreateRequest request) {
+//        // 링크 생성 및 title 받기
+//        MeetingResponse meetingResponse = meetingService.createMeeting(userId, request);
+//
+//        return ResponseEntity.status(201).body(meetingResponse);
+//    }
 }
