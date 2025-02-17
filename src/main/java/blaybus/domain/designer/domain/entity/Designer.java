@@ -1,8 +1,6 @@
 package blaybus.domain.designer.domain.entity;
 
-import blaybus.domain.designer.domain.entity.ExpertField;
-import blaybus.domain.designer.domain.entity.Type;
-import blaybus.domain.designer.domain.entity.Area;
+import blaybus.domain.map.domain.entity.Position;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -33,20 +31,17 @@ public class Designer {
     @Column(nullable = false, length = 100)
     private String introduce;
 
-    /*
-    // Position 테이블을 참조하는 FK
-    // 필요시 DTO에서 addressId를 생성할때 getId() 사용하도록 생성
+    // Position 테이블의 name을 참조하는 FK 설정
     @ManyToOne
-    @JoinColumn(name = "address_id", nullable = false)
+    @JoinColumn(name = "position_name", referencedColumnName = "name", nullable = false)
     private Position position;
-    */
 
     @Column(nullable = false, length = 50)
     private String portfolio;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false, length = 10)
-    private Type type; // EnumSet 대신 단일 Enum 필드로 변경
+    private Type type;
 
     @Column(nullable = false)
     private int offlinePrice;

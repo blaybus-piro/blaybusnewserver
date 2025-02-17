@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import blaybus.domain.designer.domain.entity.Type;
+
 import java.util.List;
 
 public interface DesignerRepository extends JpaRepository<Designer, String> {
@@ -26,4 +28,15 @@ public interface DesignerRepository extends JpaRepository<Designer, String> {
             CASE WHEN :sortOrder = 'DESC' THEN d.offlinePrice END DESC
     """)
     List<Designer> findOfflineConsultingDesigners(@Param("sortOrder") String sortOrder);
+
+    @Query("""
+    SELECT d FROM Designer d 
+    WHERE d.position.name IN :names 
+    AND (d.type = :type OR d.type = 'BOTH') 
+    ORDER BY FIELD(d.position.name, :names), d.name ASC
+""")
+    List<Designer> findAllByPositionNameAndTypeInOrderByCustomOrder(
+            @Param("names") List<String> names,
+            @Param("type") Type type);
+
 }
