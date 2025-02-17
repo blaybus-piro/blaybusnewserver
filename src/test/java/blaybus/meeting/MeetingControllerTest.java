@@ -2,6 +2,7 @@ package blaybus.meeting;
 
 import blaybus.domain.meeting.infra.feignclient.GoogleMeetClient;
 import blaybus.domain.meeting.infra.feignclient.dto.request.ConferenceRequest;
+import blaybus.domain.meeting.infra.feignclient.dto.response.ConferenceData;
 import blaybus.domain.meeting.infra.feignclient.dto.response.ConferenceResponse;
 import blaybus.domain.meeting.presentation.dto.request.MeetingCreateRequest;
 import blaybus.domain.oauth2.application.service.GoogleAccessTokenAndRefreshTokenService;
@@ -54,8 +55,16 @@ public class MeetingControllerTest {
     @BeforeEach
     void setup() {
         // GoogleMeetClient의 응답을 Mock
-        ConferenceResponse mockResponse = new ConferenceResponse();
-        mockResponse.setHangoutLink("https://meet.google.com/test-link");
+        ConferenceResponse mockResponse = new ConferenceResponse(
+                "test-id",                         // id
+                "https://meet.google.com/test-link", // hangoutLink
+                new ConferenceData(                // conferenceData
+                        "test-conf-id",
+                        null,     // conferenceSolution
+                        null,     // createRequest
+                        null      // entryPoints
+                )
+        );
 
         when(googleMeetClient.createMeeting(
                 anyString(),  // 아무 문자열
