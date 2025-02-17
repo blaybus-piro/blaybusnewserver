@@ -12,10 +12,10 @@ public record ConsultingResponseDTO(
         String designerId,
         Meeting meeting,
         //대면 비대면
-        String meet,
+        ConsultingType meet,
 
         // 4가지 상태
-        String status
+        ConsultingStatus status
 ) {
 }
 

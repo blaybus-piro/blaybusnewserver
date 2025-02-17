@@ -3,6 +3,8 @@ package blaybus.domain.time.presentation.dto.res.listtime.timeconsulting;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 public class TimeConsulting {
@@ -11,7 +13,7 @@ public class TimeConsulting {
     Long id;
 
     // 예약 시간
-    String date;
+    LocalDateTime startTime;
 
     // 대면 비대면
     String meet;

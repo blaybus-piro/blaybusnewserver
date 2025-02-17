@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +33,6 @@ public class TimeServiceImpl implements TimeService {
     private final BlaybusTimeRepository blaybusTimeRepository;
 
     private final ConsultingRepository consultingRepository;
-
 
 
     @Override
@@ -53,7 +53,7 @@ public class TimeServiceImpl implements TimeService {
             Consulting consulting = time.getConsulting();
             TimeConsulting timeConsulting = new TimeConsulting();
             // 시간 나중에 해야됌
-            timeConsulting.setDate(time.getStartTime());
+            timeConsulting.setStartTime(time.getStartTime());
             timeConsulting.setId(consulting.getId());
             timeConsulting.setMeet(consulting.getType().toString());
             timeConsulting.setStatus(consulting.getStatus().toString());
@@ -79,7 +79,7 @@ public class TimeServiceImpl implements TimeService {
 
         // 시간도 줘야됨
         Optional<Time> findTime = blaybusTimeRepository.findById(req.timeId());
-        String startTime= findTime.get().getStartTime();
+        LocalDateTime startTime = findTime.get().getStartTime();
 
         consultingDetail.setMeet(String.valueOf(consulting.getType()));
         consultingDetail.setStatus(String.valueOf(consulting.getStatus()));
@@ -93,7 +93,7 @@ public class TimeServiceImpl implements TimeService {
         userDetail.setEmail(consulting.getUser().getMail());
 
 
-        DetailTimeResponse detailTimeResponse = DetailTimeResponse.of(userDetail, designerDetail, consultingDetail, consulting.getMeeting().getMeetUrl(),startTime);
+        DetailTimeResponse detailTimeResponse = DetailTimeResponse.of(userDetail, designerDetail, consultingDetail, consulting.getMeeting().getMeetUrl(), startTime);
         return detailTimeResponse;
     }
 }

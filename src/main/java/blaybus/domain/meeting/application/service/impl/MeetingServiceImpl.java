@@ -52,7 +52,7 @@ public class MeetingServiceImpl implements MeetingService {
                     createConferenceRequest(meetingTitle, startTime, startTime.plusHours(1))
             );
 
-            Meeting meeting = createMeeting(startTime, startTime.plus(1), meetingTitle, response.getHangoutLink());
+            Meeting meeting = createMeeting(startTime, meetingTitle, response.getHangoutLink());
             meetingRepository.save(meeting);
 
             return new MeetingResponse(meetingTitle, response.getHangoutLink(), meeting.getId());
@@ -68,7 +68,7 @@ public class MeetingServiceImpl implements MeetingService {
                 startTime.format(DateTimeFormatter.ofPattern("M월 d일 a h시 mm분")));
     }
 
-    private Meeting createMeeting(LocalDateTime startTime, String endTime, String title, String meetUrl) {
+    private Meeting createMeeting(LocalDateTime startTime, String title, String meetUrl) {
         return Meeting.builder()
                 .title(title)
                 .meetUrl(meetUrl)

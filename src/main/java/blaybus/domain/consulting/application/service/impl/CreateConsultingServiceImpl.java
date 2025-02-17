@@ -71,8 +71,8 @@ public class CreateConsultingServiceImpl implements CreateConsultingService {
                 consulting.getUser().getId(),
                 consulting.getDesigner().getId(),
                 consulting.getMeeting(),
-                req.meet(),
-                req.status()
+                ConsultingType.fromString(req.meet()),
+                ConsultingStatus.fromString(req.status())
         );
     }
 }

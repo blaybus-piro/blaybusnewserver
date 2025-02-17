@@ -7,6 +7,9 @@ import blaybus.domain.time.presentation.dto.res.detailtime.detail.UserDetail;
 import blaybus.domain.time.presentation.dto.res.listtime.TimeResponse;
 import blaybus.domain.time.presentation.dto.res.listtime.timeconsulting.DesignerView;
 import blaybus.domain.time.presentation.dto.res.listtime.timeconsulting.TimeConsulting;
+import org.hibernate.validator.internal.util.privilegedactions.LoadClass;
+
+import java.time.LocalDateTime;
 
 public record DetailTimeResponse (
         UserDetail userDetail,
@@ -17,9 +20,9 @@ public record DetailTimeResponse (
 
         String meetLink,
 
-        String startTime
+        LocalDateTime startTime
 ){
-    public static DetailTimeResponse of(UserDetail userDetail, DesignerDetail designerDetail, ConsultingDetail consultingDetail, String meetLink, String startTime) {
+    public static DetailTimeResponse of(UserDetail userDetail, DesignerDetail designerDetail, ConsultingDetail consultingDetail, String meetLink, LocalDateTime startTime) {
         return new DetailTimeResponse(userDetail, designerDetail, consultingDetail, meetLink, startTime);
     }
 }
