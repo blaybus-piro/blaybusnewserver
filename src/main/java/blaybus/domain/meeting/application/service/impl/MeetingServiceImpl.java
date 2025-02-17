@@ -4,15 +4,13 @@ import blaybus.domain.designer.domain.entity.Designer;
 import blaybus.domain.meeting.application.service.MeetingService;
 import blaybus.domain.meeting.domain.entity.Meeting;
 import blaybus.domain.meeting.infra.feignclient.GoogleMeetClient;
-import blaybus.domain.meeting.infra.feignclient.dto.request.ConferenceRequest;
+import blaybus.domain.meeting.infra.feignclient.dto.request.*;
 import blaybus.domain.meeting.infra.feignclient.dto.response.ConferenceResponse;
 import blaybus.domain.meeting.presentation.dto.request.MeetingCreateRequest;
 import blaybus.domain.meeting.presentation.dto.response.MeetingResponse;
 import blaybus.domain.meeting.domain.repository.MeetingRepository;
-import blaybus.domain.oauth2.application.service.GoogleAccessTokenAndRefreshTokenService;
 import blaybus.domain.oauth2.application.service.GoogleTokenService;
 import blaybus.global.infra.exception.BlaybusException;
-import blaybus.global.jwt.domain.repository.GoogleJsonWebTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -20,19 +18,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class MeetingServiceImpl implements MeetingService {
     private final GoogleMeetClient googleMeetClient;
-    private final GoogleJsonWebTokenRepository googleTokenRepository;
-    private final GoogleAccessTokenAndRefreshTokenService tokenService;
     private final MeetingRepository meetingRepository;
     private final GoogleTokenService googleTokenService;
 
     @Override
-    public MeetingResponse createMeeting(String userId, LocalDateTime startTime, Designer designer) {
+    public MeetingResponse createMeeting(String userId, LocalDateTime startTime, Designer designer)  {
         /** 시간 유효성 검사  --- 만수 열심히 했는데 ㅈㅅㅈㅅ
          if (request.startTime().isBefore(LocalDateTime.now())) {
          throw new BlaybusException(HttpStatus.BAD_REQUEST, "시작 시간은 현재보다 미래여야 합니다.");
@@ -46,16 +43,16 @@ public class MeetingServiceImpl implements MeetingService {
         String accessToken = googleTokenService.getValidAccessToken(userId);
         String meetingTitle = generateMeetingTitle(designer.getName(), startTime);
 
+
         try {
             ConferenceResponse response = googleMeetClient.createMeeting(
                     accessToken,
                     createConferenceRequest(meetingTitle, startTime, startTime.plusHours(1))
             );
-
-            Meeting meeting = createMeeting(startTime, meetingTitle, response.getHangoutLink());
+            Meeting meeting = createMeeting2(startTime, meetingTitle, response.hangoutLink());
             meetingRepository.save(meeting);
 
-            return new MeetingResponse(meetingTitle, response.getHangoutLink(), meeting.getId());
+            return new MeetingResponse(meetingTitle, response.hangoutLink(), meeting.getId());
 
         } catch (Exception e) {
             throw new RuntimeException("Google Meet 링크 생성에 실패했습니다.", e);
@@ -68,7 +65,7 @@ public class MeetingServiceImpl implements MeetingService {
                 startTime.format(DateTimeFormatter.ofPattern("M월 d일 a h시 mm분")));
     }
 
-    private Meeting createMeeting(LocalDateTime startTime, String title, String meetUrl) {
+    private Meeting createMeeting2(LocalDateTime startTime, String title, String meetUrl) {
         return Meeting.builder()
                 .title(title)
                 .meetUrl(meetUrl)
@@ -78,22 +75,28 @@ public class MeetingServiceImpl implements MeetingService {
     }
 
     private ConferenceRequest createConferenceRequest(String title, LocalDateTime startTime, LocalDateTime endTime) {
-        ConferenceRequest conferenceRequest = new ConferenceRequest();
-        conferenceRequest.setSummary(title);
+        // 시작, 종료 시간 EventDateTime 생성
+        EventDateTime start = new EventDateTime(startTime.toString());
 
-        // 시작 시간 설정
-        ConferenceRequest.EventDateTime start = new ConferenceRequest.EventDateTime();
-        start.setDateTime(startTime.toString());
-        conferenceRequest.setStart(start);
+        // 구글밋 기본 1시간 통화 반영
+        endTime = startTime.plusHours(1);
+        EventDateTime end = new EventDateTime(endTime.toString());
 
-        // 종료 시간 설정 -> api 통신상 필수
-        endTime = startTime.plusHours(1); // 구글밋 기본 1시간 통화 반영
+        // Meet 링크 생성에 필요한 데이터 설정
+        ConferenceSolutionKey solutionKey = new ConferenceSolutionKey();
+        CreateConferenceRequest createRequest = new CreateConferenceRequest(
+                UUID.randomUUID().toString(),
+                solutionKey
+        );
+        ConferenceData conferenceData = new ConferenceData(createRequest);
 
-        ConferenceRequest.EventDateTime end = new ConferenceRequest.EventDateTime();
-        end.setDateTime(endTime.toString());
-        conferenceRequest.setEnd(end);
-
-        return conferenceRequest;
+        // 최종 ConferenceRequest 생성
+        return new ConferenceRequest(
+                title,          // summary
+                start,          // start time
+                end,           // end time
+                conferenceData, // conference data
+                1              // version
+        );
     }
 }
-

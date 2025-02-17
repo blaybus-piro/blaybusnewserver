@@ -3,6 +3,7 @@ package blaybus.meeting;
 import blaybus.domain.meeting.application.service.MeetingService;
 import blaybus.domain.meeting.infra.feignclient.GoogleMeetClient;
 import blaybus.domain.meeting.infra.feignclient.dto.request.ConferenceRequest;
+import blaybus.domain.meeting.infra.feignclient.dto.response.ConferenceData;
 import blaybus.domain.meeting.infra.feignclient.dto.response.ConferenceResponse;
 import blaybus.domain.meeting.presentation.dto.request.MeetingCreateRequest;
 import blaybus.domain.meeting.presentation.dto.response.MeetingResponse;
@@ -54,8 +55,16 @@ public class MeetingServiceImplTest {
         tokenRepository.save(testToken);
 
         // GoogleMeetClient 응답 모킹
-        ConferenceResponse mockResponse = new ConferenceResponse();
-        mockResponse.setHangoutLink("https://meet.google.com/test-link");
+        ConferenceResponse mockResponse = new ConferenceResponse(
+                "test-id",                         // id
+                "https://meet.google.com/test-link", // hangoutLink
+                new ConferenceData(                // conferenceData
+                        "test-conf-id",
+                        null,     // conferenceSolution
+                        null,     // createRequest
+                        null      // entryPoints
+                )
+        );
 
         when(googleMeetClient.createMeeting(
                 anyString(),

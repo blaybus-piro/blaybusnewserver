@@ -35,7 +35,7 @@ public class BlaybusTimeController {
 
 
     // 예약 상세 조회
-    @PostMapping
+    @PostMapping("/detail")
     public ResponseEntity<DetailTimeResponse> detailTime(
             @RequestBody DetailRequestDTO req
     ) {
