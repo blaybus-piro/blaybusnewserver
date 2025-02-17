@@ -14,8 +14,8 @@ public record ConsultingRequestDTO(
         //대면 비대면
         String meet,
 
-        // 4가지 상태
-        String status,
+        // 결제 방식
+        String pay,
 
         // 사용자가 예약한 시간
         LocalDateTime startTime

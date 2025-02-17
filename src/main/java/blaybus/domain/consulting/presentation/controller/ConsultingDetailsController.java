@@ -18,7 +18,7 @@ public class ConsultingDetailsController {
 
     // ID를 통해 상담 세부사항 조회
     @GetMapping("/{id}")
-    public ResponseEntity<Consulting> getConsultingDetails(@PathVariable long id) {
+    public ResponseEntity<Consulting> getConsultingDetails(@PathVariable Long id) {
         Consulting consulting = getConsultingByIdService.getConsultingDetails(id);
         return ResponseEntity.ok(consulting);
     }

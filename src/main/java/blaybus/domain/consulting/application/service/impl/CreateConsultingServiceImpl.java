@@ -46,23 +46,32 @@ public class CreateConsultingServiceImpl implements CreateConsultingService {
                 .orElseThrow(() -> new EntityNotFoundException("Designer not found: " + req.designerId()));
 
 
-        // 구글 미트 생성
-        MeetingResponse meeting = meetingService.createMeeting(userId, req.startTime(), designer);
-        Optional<Meeting> findMeeting = meetingRepository.findById(meeting.id());
+        Meeting findMeeting = null;
+        if (req.meet().equals("비대면")) {
+            // 구글 미트 생성
+            MeetingResponse meeting = meetingService.createMeeting(userId, req.startTime(), designer);
+            findMeeting = meetingRepository.findById(meeting.id()).orElse(null);
+        }
 
+        String status="";
+        if(req.pay().equals("카카오페이")){
+            status = "예약 완료";
+        }else{
+            status = "예약 대기";
+        }
 
         // 컨설팅 생성
         Consulting consulting = Consulting.builder()
                 .user(user)
                 .designer(designer)
-                .meeting(findMeeting.orElseThrow(() -> new EntityNotFoundException("Meeting not found: " + meeting.id())))
+                .meeting(findMeeting)
                 .type(ConsultingType.fromString(req.meet()))  // 적절한 타입으로 변경
-                .status(ConsultingStatus.fromString(req.status())) // 초기 상태 지정
+                .status(ConsultingStatus.fromString(status)) // 초기 상태 지정
                 .build();
 
         consultingRepository.save(consulting);
 
-        // 예약 테이블 생성
+        // 예약 테이블 생성 그냥 erd 에 있어서 짯는데 이게 굳이 필요하나.....
         Time time = Time.createTime(consulting, designer, user, req.startTime());
         timeRepository.save(time);
 
@@ -72,7 +81,7 @@ public class CreateConsultingServiceImpl implements CreateConsultingService {
                 consulting.getDesigner().getId(),
                 consulting.getMeeting(),
                 ConsultingType.fromString(req.meet()),
-                ConsultingStatus.fromString(req.status())
+                ConsultingStatus.fromString(status)
         );
     }
 }

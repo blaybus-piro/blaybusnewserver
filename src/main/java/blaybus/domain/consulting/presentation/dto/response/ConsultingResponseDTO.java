@@ -7,7 +7,7 @@ import blaybus.domain.meeting.domain.entity.Meeting;
 import jakarta.validation.constraints.NotNull;
 
 public record ConsultingResponseDTO(
-        Long id,
+        Long consultingId,
         String userId,
         String designerId,
         Meeting meeting,

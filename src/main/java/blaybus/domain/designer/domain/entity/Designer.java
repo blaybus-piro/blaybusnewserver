@@ -61,4 +61,8 @@ public class Designer {
 
     @OneToMany(mappedBy = "designer")
     private List<Time> times = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "designer")
+    private List<Designer> designers = new ArrayList<>();
 }

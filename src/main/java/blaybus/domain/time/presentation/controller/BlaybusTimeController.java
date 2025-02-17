@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/time")
+//@RequestMapping("/api/time") 안쓰는 API 입니다.
 @RequiredArgsConstructor
 @Slf4j
 public class BlaybusTimeController {
@@ -25,7 +25,7 @@ public class BlaybusTimeController {
     private final TimeService blaybusTimeService;
 
     // 예약 조회
-    @PostMapping
+    //@PostMapping
     public ResponseEntity<List<TimeResponse>> getTime(
             @AuthenticationPrincipal String userId
     ) {
@@ -35,7 +35,7 @@ public class BlaybusTimeController {
 
 
     // 예약 상세 조회
-    @PostMapping("/detail")
+    //@PostMapping("/detail")
     public ResponseEntity<DetailTimeResponse> detailTime(
             @RequestBody DetailRequestDTO req
     ) {

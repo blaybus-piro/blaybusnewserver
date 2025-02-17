@@ -37,6 +37,10 @@ public class Consulting {
     @OneToOne(mappedBy = "consulting")
     private Time time;
 
+    // 결제 방식
+    @Column(name = "pay", nullable = false, length = 5)
+    private String pay;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false, length = 20)
     private ConsultingType type;
