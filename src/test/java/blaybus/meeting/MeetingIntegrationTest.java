@@ -1,13 +1,9 @@
 package blaybus.meeting;
 
-import blaybus.domain.meeting.application.service.MeetingService;
 import blaybus.domain.meeting.application.service.impl.MeetingServiceImpl;
 import blaybus.domain.meeting.infra.feignclient.GoogleMeetClient;
 import blaybus.domain.meeting.infra.feignclient.dto.request.ConferenceRequest;
 import blaybus.domain.meeting.infra.feignclient.dto.response.ConferenceResponse;
-import blaybus.domain.meeting.presentation.dto.request.MeetingCreateRequest;
-import blaybus.domain.meeting.presentation.dto.response.MeetingResponse;
-import blaybus.global.jwt.util.JWTUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,8 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT) // 실제 서버 포트로 테스트

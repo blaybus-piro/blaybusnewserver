@@ -2,13 +2,11 @@ package blaybus.domain.consulting.domain.entity;
 
 import blaybus.domain.designer.domain.entity.Designer;
 
-import blaybus.domain.meeting.entity.Meeting;
+import blaybus.domain.meeting.domain.entity.Meeting;
 import blaybus.domain.user.domain.entity.User;
 
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.time.LocalTime;
 
 @Entity
 @Getter
