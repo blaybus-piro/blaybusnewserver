@@ -1,6 +1,5 @@
 package blaybus.domain.designer.presentation.dto.response;
 
-import blaybus.domain.designer.domain.entity.Area;
 import blaybus.domain.designer.domain.entity.ExpertField;
 import blaybus.domain.designer.domain.entity.Type;
 
@@ -8,7 +7,7 @@ public record DesignerResponseDTO(
         String id,
         String name,
         String profile,
-        Area area,
+        String address,
         ExpertField expertField,
         String introduce,
         String portfolio,

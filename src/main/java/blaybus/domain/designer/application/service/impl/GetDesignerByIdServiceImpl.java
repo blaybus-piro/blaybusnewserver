@@ -16,12 +16,15 @@ public class GetDesignerByIdServiceImpl implements GetDesignerByIdService {
 
     @Override
     public DesignerResponseDTO execute(String id) {
+        designerRepository.findAll().forEach(designer -> {
+            System.out.println(designer.getId() + " " + designer.getName());
+        });
         Designer designer = designerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("디자이너를 찾을 수 없습니다: " + id));
         return new DesignerResponseDTO(
                 designer.getId(),
                 designer.getName(),
                 designer.getProfile(),
-                designer.getArea(),
+                designer.getPosition().getAddress(),
                 designer.getExpertField(),
                 designer.getIntroduce(),
                 designer.getPortfolio(),

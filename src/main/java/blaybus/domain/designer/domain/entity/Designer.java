@@ -20,9 +20,8 @@ public class Designer {
     @Column(nullable = false, length = 50)
     private String profile;
 
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
-    private Area area;
+    private String address;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)

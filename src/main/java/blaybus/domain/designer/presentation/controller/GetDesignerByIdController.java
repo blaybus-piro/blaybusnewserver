@@ -15,6 +15,7 @@ public class GetDesignerByIdController {
 
     @GetMapping("/{id}")
     public ResponseEntity<DesignerResponseDTO> getDesignerById(@PathVariable String id) {
+        System.out.println(id);
         return ResponseEntity.ok(getDesignerByIdService.execute(id));
     }
 }
