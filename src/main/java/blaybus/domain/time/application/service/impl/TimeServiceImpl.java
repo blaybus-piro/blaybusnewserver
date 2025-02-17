@@ -53,13 +53,14 @@ public class TimeServiceImpl implements TimeService {
             Consulting consulting = time.getConsulting();
             TimeConsulting timeConsulting = new TimeConsulting();
             // 시간 나중에 해야됌
-            // ???
+            timeConsulting.setDate(time.getStartTime());
             timeConsulting.setId(consulting.getId());
             timeConsulting.setMeet(consulting.getType().toString());
             timeConsulting.setStatus(consulting.getStatus().toString());
 
+
             TimeResponse timeResponse =
-                    TimeResponse.of(timeConsulting, googleLink, designerView);
+                    TimeResponse.of(timeConsulting, googleLink, designerView, time.getId(), time.getConsulting().getId());
 
             timeResponses.add(timeResponse);
         }
@@ -72,10 +73,14 @@ public class TimeServiceImpl implements TimeService {
     public DetailTimeResponse findDetail(DetailRequestDTO req) {
 
         ConsultingDetail consultingDetail = new ConsultingDetail();
-        Long consultingId = req.id();
+        Long consultingId = req.consultingId();
         Optional<Consulting> findConsulting = consultingRepository.findById(consultingId);
         Consulting consulting = findConsulting.get();
+
         // 시간도 줘야됨
+        Optional<Time> findTime = blaybusTimeRepository.findById(req.timeId());
+        String startTime= findTime.get().getStartTime();
+
         consultingDetail.setMeet(String.valueOf(consulting.getType()));
         consultingDetail.setStatus(String.valueOf(consulting.getStatus()));
 
@@ -88,7 +93,7 @@ public class TimeServiceImpl implements TimeService {
         userDetail.setEmail(consulting.getUser().getMail());
 
 
-        DetailTimeResponse detailTimeResponse = DetailTimeResponse.of(userDetail, designerDetail, consultingDetail, consulting.getMeeting().getMeetUrl());
+        DetailTimeResponse detailTimeResponse = DetailTimeResponse.of(userDetail, designerDetail, consultingDetail, consulting.getMeeting().getMeetUrl(),startTime);
         return detailTimeResponse;
     }
 }

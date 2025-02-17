@@ -15,9 +15,11 @@ public record DetailTimeResponse (
 
         ConsultingDetail consultingDetail,
 
-        String meetLink
+        String meetLink,
+
+        String startTime
 ){
-    public static DetailTimeResponse of(UserDetail userDetail, DesignerDetail designerDetail, ConsultingDetail consultingDetail, String meetLink) {
-        return new DetailTimeResponse(userDetail, designerDetail, consultingDetail, meetLink);
+    public static DetailTimeResponse of(UserDetail userDetail, DesignerDetail designerDetail, ConsultingDetail consultingDetail, String meetLink, String startTime) {
+        return new DetailTimeResponse(userDetail, designerDetail, consultingDetail, meetLink, startTime);
     }
 }

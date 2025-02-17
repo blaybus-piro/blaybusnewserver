@@ -12,11 +12,15 @@ public record TimeResponse(
         String googleLink,
 
         // 디자이너 이름 및 사진
-        DesignerView designerView
+        DesignerView designerView,
+
+        Long timeId,
+
+        Long consultingId
 
 ) {
-    public static TimeResponse of(TimeConsulting timeConsulting, String googleLink, DesignerView designerView) {
-        return new TimeResponse(timeConsulting, googleLink, designerView);
+    public static TimeResponse of(TimeConsulting timeConsulting, String googleLink, DesignerView designerView, Long timeId, Long consultingId) {
+        return new TimeResponse(timeConsulting, googleLink, designerView, timeId, consultingId);
     }
 
 }
