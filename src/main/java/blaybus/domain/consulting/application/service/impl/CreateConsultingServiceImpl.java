@@ -48,10 +48,13 @@ public class CreateConsultingServiceImpl implements CreateConsultingService {
 
 
         Meeting findMeeting = null;
+
         if (req.meet().equals("비대면")) {
             // 구글 미트 생성
             MeetingResponse meeting = meetingService.createMeeting(userId, req.startTime(), designer);
             findMeeting = meetingRepository.findById(meeting.id()).orElse(null);
+        }else{
+            meetingService.save();
         }
 
         String status = "";

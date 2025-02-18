@@ -59,6 +59,18 @@ public class MeetingServiceImpl implements MeetingService {
         }
     }
 
+    @Override
+    public void save() {
+        Meeting meeting = Meeting.builder()
+                .title("대면")
+                .meetUrl("대면임!! 받지마삼")
+                .startTime(LocalDateTime.parse("2024-02-16T10:00:00"))
+                .endTime(LocalDateTime.parse("2024-02-16T10:00:00"))
+                .build();
+
+        meetingRepository.save(meeting);
+    }
+
     public String generateMeetingTitle(String designerName, LocalDateTime startTime) {
         return String.format("%s님과의 상담 예약 - %s",
                 designerName,
