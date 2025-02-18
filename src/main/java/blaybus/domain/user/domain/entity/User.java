@@ -2,6 +2,7 @@ package blaybus.domain.user.domain.entity;
 
 import blaybus.domain.consulting.domain.entity.Consulting;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -36,6 +37,7 @@ public class User {
 
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Consulting> consultings = new ArrayList<>();
     @Builder
     public User(String id, String mail, String name, String profile, Role role) {

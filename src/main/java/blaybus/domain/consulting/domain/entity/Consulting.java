@@ -4,6 +4,7 @@ import blaybus.domain.designer.domain.entity.Designer;
 import blaybus.domain.meeting.domain.entity.Meeting;
 import blaybus.domain.user.domain.entity.User;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,6 +24,7 @@ public class Consulting {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private User user;
 
     @ManyToOne
