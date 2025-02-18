@@ -1,5 +1,6 @@
 package blaybus.domain.designer.domain.entity;
 
+import blaybus.domain.consulting.domain.entity.Consulting;
 import blaybus.domain.designer.domain.entity.ExpertField;
 import blaybus.domain.designer.domain.entity.Type;
 import blaybus.domain.designer.domain.entity.Area;
@@ -64,5 +65,5 @@ public class Designer {
 
 
     @OneToMany(mappedBy = "designer")
-    private List<Designer> designers = new ArrayList<>();
+    private List<Consulting> consultings = new ArrayList<>();
 }
