@@ -53,7 +53,7 @@ public class CreateConsultingServiceImpl implements CreateConsultingService {
             // 구글 미트 생성
             MeetingResponse meeting = meetingService.createMeeting(userId, req.startTime(), designer);
             findMeeting = meetingRepository.findById(meeting.id()).orElse(null);
-        }else{
+        } else {
             meetingService.save();
         }
 
@@ -97,7 +97,7 @@ public class CreateConsultingServiceImpl implements CreateConsultingService {
         for (Consulting consulting : consultings) {
 
             responses.add(ConsultingUserResponse.of(
-                    consulting.getId(), consulting.getPay(), consulting.getType().toString(),
+                    consulting.getId(), consulting.getDesigner().getId(), consulting.getDesigner().getName(), consulting.getDesigner().getProfile(), consulting.getPay(), consulting.getType().toString(),
                     consulting.getStatus().toString()
                     , consulting.getMeeting().getMeetUrl(), consulting.getStartTime())
             );
