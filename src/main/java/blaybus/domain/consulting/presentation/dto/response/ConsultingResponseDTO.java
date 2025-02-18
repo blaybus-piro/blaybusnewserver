@@ -4,7 +4,8 @@ package blaybus.domain.consulting.presentation.dto.response;
 import blaybus.domain.consulting.domain.entity.ConsultingType;
 import blaybus.domain.consulting.domain.entity.ConsultingStatus;
 import blaybus.domain.meeting.domain.entity.Meeting;
-import jakarta.validation.constraints.NotNull;
+
+import java.time.LocalDateTime;
 
 public record ConsultingResponseDTO(
         Long consultingId,
@@ -15,7 +16,8 @@ public record ConsultingResponseDTO(
         ConsultingType meet,
 
         // 4가지 상태
-        ConsultingStatus status
+        ConsultingStatus status,
+        LocalDateTime time
 ) {
 }
 
