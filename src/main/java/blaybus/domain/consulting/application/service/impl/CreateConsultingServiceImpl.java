@@ -7,6 +7,7 @@ import blaybus.domain.consulting.domain.entity.ConsultingType;
 import blaybus.domain.consulting.domain.repository.ConsultingRepository;
 import blaybus.domain.consulting.presentation.dto.request.ConsultingRequestDTO;
 import blaybus.domain.consulting.presentation.dto.response.ConsultingResponseDTO;
+import blaybus.domain.consulting.presentation.dto.response.ConsultingUserResponse;
 import blaybus.domain.meeting.application.service.impl.MeetingServiceImpl;
 import blaybus.domain.meeting.domain.entity.Meeting;
 import blaybus.domain.meeting.domain.repository.MeetingRepository;
@@ -21,6 +22,9 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -50,10 +54,10 @@ public class CreateConsultingServiceImpl implements CreateConsultingService {
             findMeeting = meetingRepository.findById(meeting.id()).orElse(null);
         }
 
-        String status="";
-        if(req.pay().equals("카카오페이")){
+        String status = "";
+        if (req.pay().equals("카카오페이")) {
             status = "예약 완료";
-        }else{
+        } else {
             status = "예약 대기";
         }
 
@@ -80,5 +84,22 @@ public class CreateConsultingServiceImpl implements CreateConsultingService {
                 consulting.getPay(),
                 consulting.getStartTime()
         );
+    }
+
+    @Override
+    public List<ConsultingUserResponse> getConsulting(String userId) {
+        List<Consulting> consultings = consultingRepository.findAllByUser_Id(userId);
+
+        List<ConsultingUserResponse> responses = new ArrayList<>();
+        for (Consulting consulting : consultings) {
+
+            responses.add(ConsultingUserResponse.of(
+                    consulting.getId(), consulting.getPay(), consulting.getType().toString(),
+                    consulting.getStatus().toString()
+                    , consulting.getMeeting().getMeetUrl(), consulting.getStartTime())
+            );
+        }
+
+        return responses;
     }
 }
