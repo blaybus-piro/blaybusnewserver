@@ -64,7 +64,7 @@ public class CreateConsultingServiceImpl implements CreateConsultingService {
                 .user(user)
                 .designer(designer)
                 .meeting(findMeeting)
-                .type(ConsultingType.fromString(req.meet()))  // 적절한 타입으로 변경
+                .type(ConsultingType.valueOf(req.meet()))  // 적절한 타입으로 변경
                 .status(ConsultingStatus.fromString(status)) // 초기 상태 지정
                 .build();
 
