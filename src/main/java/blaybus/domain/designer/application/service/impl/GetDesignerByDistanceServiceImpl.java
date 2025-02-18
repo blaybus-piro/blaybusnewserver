@@ -2,7 +2,6 @@ package blaybus.domain.designer.application.service.impl;
 
 import blaybus.domain.designer.application.service.GetDesignerByDistanceService;
 import blaybus.domain.designer.domain.entity.Designer;
-import blaybus.domain.designer.domain.entity.Type;
 import blaybus.domain.designer.domain.repository.DesignerRepository;
 import blaybus.domain.map.application.service.PositionDistanceCalculateService;
 import blaybus.domain.map.presentation.dto.response.PositionResponseDTO;
@@ -21,9 +20,9 @@ public class GetDesignerByDistanceServiceImpl implements GetDesignerByDistanceSe
     private final DesignerRepository designerRepository;
 
     @Override
-    public List<DesignerDistanceResponseDTO> getDesignersByLocation(double lat, double lng, Type type) {
+    public List<DesignerDistanceResponseDTO> getDesignersByLocation(double lat, double lng) {
         List<PositionResponseDTO> positions = positionDistanceCalculateService.orderPositionByDistance(lat, lng);
-        List<Designer> designers = designerRepository.findAllByPositionNameAndTypeInOrderByCustomOrder(positions, type);
+        List<Designer> designers = designerRepository.findAllByPositionNameAndTypeInOrderByCustomOrder(positions);
 
         return designers.stream().map(designer -> {
             double distance = positions.stream()
