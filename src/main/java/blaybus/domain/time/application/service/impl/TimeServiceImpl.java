@@ -7,6 +7,7 @@ import blaybus.domain.designer.domain.entity.Designer;
 import blaybus.domain.time.application.service.TimeService;
 
 
+import blaybus.domain.time.presentation.dto.req.DetailRequestDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,15 +27,16 @@ public class TimeServiceImpl implements TimeService {
     private final ConsultingRepository consultingRepository;
 
     @Override
-    public List<String> getTime(){
-        List<String> time= new ArrayList<>();
+    public List<LocalDateTime> getTime(DetailRequestDTO req) {
+        List<LocalDateTime> time = new ArrayList<>();
         List<Consulting> all = consultingRepository.findAll();
 
         for (Consulting consulting : all) {
-            if (!(consulting.getStatus() == ConsultingStatus.CANCELED)) {
-                time.add(consulting.getStartTime());
+            if (req.designerId().equals(consulting.getDesigner().getId())) {
+                if (!(consulting.getStatus() == ConsultingStatus.CANCELED)) {
+                    time.add(consulting.getStartTime());
+                }
             }
-
         }
 
         return time;

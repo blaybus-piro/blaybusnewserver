@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -22,8 +23,10 @@ public class BlaybusTimeController {
     private final TimeService blaybusTimeService;
 
     // 타임테이블 조회
-    public ResponseEntity<List<String>> getTime() {
-        List<String> time = blaybusTimeService.getTime();
+    public ResponseEntity<List<LocalDateTime>> getTime(
+            @RequestBody DetailRequestDTO detailRequestDTO
+    ) {
+        List<LocalDateTime> time = blaybusTimeService.getTime(detailRequestDTO);
         return ResponseEntity.ok(time);
     }
 

@@ -7,6 +7,7 @@ import blaybus.domain.user.domain.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -34,7 +35,7 @@ public class Consulting {
     private Meeting meeting;
 
     @JoinColumn(name = "start_time")
-    private String startTime;
+    private LocalDateTime startTime;
 
     // 결제 방식
     @Column(name = "pay", nullable = false, length = 5)
