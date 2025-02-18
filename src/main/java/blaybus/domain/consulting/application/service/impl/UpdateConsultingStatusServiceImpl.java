@@ -17,12 +17,10 @@ public class UpdateConsultingStatusServiceImpl implements UpdateConsultingStatus
     private final ConsultingRepository consultingRepository;
 
     @Override
-
     public void updateConsultingStatus(long id, ConsultingStatus newStatus) {
         Consulting consulting = consultingRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Consulting with ID " + id + " not found"));
 
-        consulting.updateStatus(newStatus);
-        consultingRepository.save(consulting); // 변경 사항 저장
+        consulting.updateStatus(newStatus); // 변경 사항 바꿈
     }
 }
