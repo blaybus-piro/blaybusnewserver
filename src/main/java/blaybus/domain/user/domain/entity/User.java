@@ -1,7 +1,7 @@
 package blaybus.domain.user.domain.entity;
 
 import blaybus.domain.consulting.domain.entity.Consulting;
-import blaybus.domain.time.domain.entity.Time;
+
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,8 +34,6 @@ public class User {
     @Column(name = "role", nullable = false)
     private Role role;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Time> times = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Consulting> consultings = new ArrayList<>();

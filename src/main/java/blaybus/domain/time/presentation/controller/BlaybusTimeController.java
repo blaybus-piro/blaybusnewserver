@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-//@RequestMapping("/api/time") 안쓰는 API 입니다.
+@RequestMapping("/api/time")
 @RequiredArgsConstructor
 @Slf4j
 public class BlaybusTimeController {
@@ -21,24 +21,11 @@ public class BlaybusTimeController {
 
     private final TimeService blaybusTimeService;
 
-
-    // 예약 조회
-    //@PostMapping
-    public ResponseEntity<List<TimeResponse>> getTime(
-            @AuthenticationPrincipal String userId
-    ) {
-        List<TimeResponse> response = blaybusTimeService.findTime(userId);
-        return ResponseEntity.ok(response);
+    // 타임테이블 조회
+    public ResponseEntity<List<String>> getTime() {
+        List<String> time = blaybusTimeService.getTime();
+        return ResponseEntity.ok(time);
     }
 
-
-    // 예약 상세 조회
-    //@PostMapping("/detail")
-    public ResponseEntity<DetailTimeResponse> detailTime(
-            @RequestBody DetailRequestDTO req
-    ) {
-        DetailTimeResponse response = blaybusTimeService.findDetail(req);
-        return ResponseEntity.ok(response);
-    }
 }
 

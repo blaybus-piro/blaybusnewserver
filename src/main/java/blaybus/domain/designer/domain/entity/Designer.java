@@ -2,7 +2,6 @@ package blaybus.domain.designer.domain.entity;
 
 import blaybus.domain.consulting.domain.entity.Consulting;
 import blaybus.domain.map.domain.entity.Position;
-import blaybus.domain.time.domain.entity.Time;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -55,9 +54,6 @@ public class Designer {
     @Column(nullable = false)
     private int onlinePrice;
 
-
-    @OneToMany(mappedBy = "designer")
-    private List<Time> times = new ArrayList<>();
 
 
     @OneToMany(mappedBy = "designer")

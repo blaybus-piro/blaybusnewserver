@@ -8,7 +8,5 @@ import java.util.List;
 
 public interface TimeService {
 
-    List<TimeResponse> findTime(String userId);
-
-    DetailTimeResponse findDetail(DetailRequestDTO req);
+    List<String> getTime();
 }

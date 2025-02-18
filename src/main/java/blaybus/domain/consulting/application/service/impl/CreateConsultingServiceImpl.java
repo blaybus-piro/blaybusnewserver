@@ -11,9 +11,8 @@ import blaybus.domain.meeting.application.service.impl.MeetingServiceImpl;
 import blaybus.domain.meeting.domain.entity.Meeting;
 import blaybus.domain.meeting.domain.repository.MeetingRepository;
 import blaybus.domain.meeting.presentation.dto.response.MeetingResponse;
-import blaybus.domain.time.application.service.impl.TimeServiceImpl;
-import blaybus.domain.time.domain.entity.Time;
-import blaybus.domain.time.domain.repository.BlaybusTimeRepository;
+
+
 import blaybus.domain.user.domain.entity.User;
 import blaybus.domain.user.domain.repository.UserRepository;
 import blaybus.domain.designer.domain.entity.Designer;
@@ -33,7 +32,7 @@ public class CreateConsultingServiceImpl implements CreateConsultingService {
     private final ConsultingRepository consultingRepository;
     private final UserRepository userRepository;
     private final DesignerRepository designerRepository;
-    private final BlaybusTimeRepository timeRepository;
+
     private final MeetingServiceImpl meetingService;
     private final MeetingRepository meetingRepository;
 
@@ -70,10 +69,6 @@ public class CreateConsultingServiceImpl implements CreateConsultingService {
                 .build();
 
         consultingRepository.save(consulting);
-
-        // 예약 테이블 생성 그냥 erd 에 있어서 짯는데 이게 굳이 필요하나.....
-        Time time = Time.createTime(consulting, designer, user, req.startTime());
-        timeRepository.save(time);
 
         return new ConsultingResponseDTO(
                 consulting.getId(),

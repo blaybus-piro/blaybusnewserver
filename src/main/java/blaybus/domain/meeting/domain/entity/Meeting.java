@@ -1,7 +1,6 @@
 package blaybus.domain.meeting.domain.entity;
 
 import blaybus.domain.consulting.domain.entity.Consulting;
-import blaybus.domain.time.domain.entity.Time;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
