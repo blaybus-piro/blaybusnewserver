@@ -4,6 +4,8 @@ import blaybus.domain.map.domain.entity.Position;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -35,8 +37,10 @@ public class Designer {
     @JoinColumn(name = "position_name", referencedColumnName = "name", nullable = false)
     private Position position;
 
-    @Column(nullable = false, length = 50)
-    private String portfolio;
+    @ElementCollection
+    @CollectionTable(name = "designer_portfolios", joinColumns = @JoinColumn(name = "designer_id"))
+    @Column(name = "portfolio_url")
+    private List<String> portfolios;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false, length = 10)
