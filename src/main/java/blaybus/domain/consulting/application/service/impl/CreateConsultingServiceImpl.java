@@ -22,8 +22,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -66,6 +64,7 @@ public class CreateConsultingServiceImpl implements CreateConsultingService {
                 .meeting(findMeeting)
                 .type(ConsultingType.valueOf(req.meet()))  // 적절한 타입으로 변경
                 .status(ConsultingStatus.fromString(status)) // 초기 상태 지정
+                .startTime(req.startTime())
                 .build();
 
         consultingRepository.save(consulting);
@@ -76,7 +75,8 @@ public class CreateConsultingServiceImpl implements CreateConsultingService {
                 consulting.getDesigner().getId(),
                 consulting.getMeeting(),
                 ConsultingType.fromString(req.meet()),
-                ConsultingStatus.fromString(status)
+                ConsultingStatus.fromString(status),
+                consulting.getStartTime()
         );
     }
 }
