@@ -23,7 +23,7 @@ public class Designer {
     private String profile;
 
     @Column(nullable = false, length = 30)
-    private String address;
+    private String area;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
