@@ -34,7 +34,7 @@ public class SecurityConfig {
     private final ObjectMapper objectMapper;
     private final JsonWebTokenRepository jsonWebTokenRepository;
     private final GoogleJsonWebTokenRepository googleJsonWebTokenRepository;
-    private final List<String> excludedUrls = Arrays.asList("/api/reissue", "/api/oauth2/login", "/api/healthcheck", "/api/oauth2/callback","/v1/payment/**","/api/pay/**");
+    private final List<String> excludedUrls = Arrays.asList("/api/reissue", "/api/oauth2/login", "/api/healthcheck", "/api/oauth2/callback", "/v1/payment/**", "/api/pay/**");
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -45,7 +45,7 @@ public class SecurityConfig {
                 // CORS 설정 파일로 빼기
                 .cors((cors) -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOriginPatterns(List.of("https://blaybus-haertz.netlify.app", "http://localhost:5173"));
+                    config.setAllowedOriginPatterns(List.of("https://blaybus-haertz.netlify.app/", "http://localhost:5173"));
                     config.setAllowedMethods(Collections.singletonList("*"));
                     config.setAllowCredentials(true);
                     config.setAllowedHeaders(Collections.singletonList("*"));
@@ -62,7 +62,7 @@ public class SecurityConfig {
                         .requestMatchers("/v1/payment/**").permitAll()
                         .requestMatchers("/api/pay/**").permitAll()
                         .anyRequest().authenticated())
-                .sessionManagement((session) ->  session
+                .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(except -> except
                         .authenticationEntryPoint((request, response, authException) ->
