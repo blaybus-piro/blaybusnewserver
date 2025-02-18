@@ -29,10 +29,12 @@ public class Consulting {
 
     @ManyToOne
     @JoinColumn(name = "designer_id", nullable = false)
+    @JsonIgnore
     private Designer designer;
 
     @OneToOne
     @JoinColumn(name = "meet_id")
+    @JsonIgnore
     private Meeting meeting;
 
     @JoinColumn(name = "start_time")

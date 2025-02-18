@@ -23,6 +23,7 @@ public class BlaybusTimeController {
     private final TimeService blaybusTimeService;
 
     // 타임테이블 조회
+    @GetMapping
     public ResponseEntity<List<LocalDateTime>> getTime(
             @RequestBody DetailRequestDTO detailRequestDTO
     ) {

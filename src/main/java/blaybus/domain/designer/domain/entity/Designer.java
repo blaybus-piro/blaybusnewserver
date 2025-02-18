@@ -2,6 +2,7 @@ package blaybus.domain.designer.domain.entity;
 
 import blaybus.domain.consulting.domain.entity.Consulting;
 import blaybus.domain.map.domain.entity.Position;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -37,6 +38,7 @@ public class Designer {
     // Position 테이블의 name을 참조하는 FK 설정
     @ManyToOne
     @JoinColumn(name = "position_name", referencedColumnName = "name", nullable = false)
+    @JsonIgnore
     private Position position;
 
     @ElementCollection
@@ -54,8 +56,7 @@ public class Designer {
     @Column(nullable = false)
     private int onlinePrice;
 
-
-
     @OneToMany(mappedBy = "designer")
+    @JsonIgnore
     private List<Consulting> consultings = new ArrayList<>();
 }
