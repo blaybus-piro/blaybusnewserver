@@ -1,9 +1,10 @@
 package blaybus.domain.consulting.application.service;
 
 import blaybus.domain.consulting.domain.entity.Consulting;
+import blaybus.domain.consulting.presentation.dto.response.DetailConsultingResponse;
 
 public interface GetConsultingByIdService {
-    Consulting getConsultingDetails(long id);
+    DetailConsultingResponse getConsultingDetails(Long id);
 }
 
 

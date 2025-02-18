@@ -2,6 +2,7 @@ package blaybus.domain.consulting.presentation.controller;
 
 import blaybus.domain.consulting.application.service.GetConsultingByIdService;
 import blaybus.domain.consulting.domain.entity.Consulting;
+import blaybus.domain.consulting.presentation.dto.response.DetailConsultingResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +19,8 @@ public class ConsultingDetailsController {
 
     // ID를 통해 상담 세부사항 조회
     @GetMapping("/{id}")
-    public ResponseEntity<Consulting> getConsultingDetails(@PathVariable Long id) {
-        Consulting consulting = getConsultingByIdService.getConsultingDetails(id);
-        return ResponseEntity.ok(consulting);
+    public ResponseEntity<DetailConsultingResponse> getConsultingDetails(@PathVariable Long id) {
+        DetailConsultingResponse response = getConsultingByIdService.getConsultingDetails(id);
+        return ResponseEntity.ok(response);
     }
 }

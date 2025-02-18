@@ -98,8 +98,7 @@ public class CreateConsultingServiceImpl implements CreateConsultingService {
 
             responses.add(ConsultingUserResponse.of(
                     consulting.getId(), consulting.getDesigner().getId(), consulting.getDesigner().getName(), consulting.getDesigner().getProfile(), consulting.getPay(), consulting.getType().toString(),
-                    consulting.getStatus().toString()
-                    , consulting.getMeeting().getMeetUrl(), consulting.getStartTime())
+                    consulting.getStatus().toString(), consulting.getMeeting().getMeetUrl(), consulting.getStartTime())
             );
         }
 
