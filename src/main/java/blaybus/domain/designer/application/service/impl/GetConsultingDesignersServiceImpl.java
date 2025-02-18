@@ -24,10 +24,10 @@ public class GetConsultingDesignersServiceImpl implements GetConsultingDesigners
                         designer.getId(),
                         designer.getName(),
                         designer.getProfile(),
-                        designer.getArea(),
+                        designer.getPosition().getAddress(),
                         designer.getExpertField(),
                         designer.getIntroduce(),
-                        designer.getPortfolio(),
+                        designer.getPortfolios(),
                         designer.getType(),
                         designer.getOfflinePrice(),
                         designer.getOnlinePrice()

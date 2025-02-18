@@ -31,7 +31,7 @@ public class BlaybusJWTFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
         String requestURI = request.getRequestURI();
 
-        if(requestURI.contains("/oauth2/authorization")) {
+        if(requestURI.contains("/api/oauth2/login") || requestURI.contains("/api/oauth2/callback")) {
             String accessToken = jwtUtil.getAccessTokenFromHeaders(request);
             if(jwtUtil.jwtVerify(accessToken, "access")) {
                 throw new DuplicateLoginException();
