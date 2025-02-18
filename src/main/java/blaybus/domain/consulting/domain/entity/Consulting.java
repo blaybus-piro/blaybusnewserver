@@ -54,13 +54,14 @@ public class Consulting {
     }
 
     // 빌더 패턴을 활용한 생성 메서드
-    public static Consulting createConsulting(User user, Designer designer, Meeting meeting, ConsultingType type, ConsultingStatus status, LocalDateTime startTime) {
+    public static Consulting createConsulting(User user, Designer designer, Meeting meeting, String pay, ConsultingType type, ConsultingStatus status, LocalDateTime startTime) {
         return Consulting.builder()
                 .user(user)
                 .designer(designer)
                 .meeting(meeting)
                 .type(type)
                 .status(status)
+                .pay(pay)
                 .startTime(startTime) // 추가
                 .build();
     }

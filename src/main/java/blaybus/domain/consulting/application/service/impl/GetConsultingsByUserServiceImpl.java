@@ -25,6 +25,7 @@ public class GetConsultingsByUserServiceImpl implements GetConsultingsByUserServ
                         consulting.getMeeting(),
                         consulting.getType(),
                         consulting.getStatus(),
+                        consulting.getPay(),
                         consulting.getStartTime() // 🔹 startTime 추가 (오류 수정)
                 ))
                 .toList();

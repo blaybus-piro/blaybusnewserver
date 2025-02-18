@@ -14,9 +14,9 @@ public record ConsultingResponseDTO(
         Meeting meeting,
         //대면 비대면
         ConsultingType meet,
-
         // 4가지 상태
         ConsultingStatus status,
+        String pay,
         LocalDateTime time
 ) {
 }
