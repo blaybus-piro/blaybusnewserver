@@ -1,7 +1,6 @@
 package blaybus.domain.designer.domain.repository;
 
 import blaybus.domain.designer.domain.entity.Designer;
-import blaybus.domain.designer.domain.entity.Type;
 import blaybus.domain.map.presentation.dto.response.PositionResponseDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -34,11 +33,8 @@ public interface DesignerRepository extends JpaRepository<Designer, String> {
     @Query("""
     SELECT d FROM Designer d
     WHERE d.position.name IN :names
-    AND (d.type = :type OR d.type = 'BOTH')
     ORDER BY FIELD(d.position.name, :names), d.name ASC
 """)
     List<Designer> findAllByPositionNameAndTypeInOrderByCustomOrder(
-            @Param("names") List<PositionResponseDTO> names,
-            @Param("type") Type type);
-
+            @Param("names") List<PositionResponseDTO> names);
 }
