@@ -7,6 +7,7 @@ import blaybus.global.jwt.domain.entity.GoogleJsonWebToken;
 import blaybus.global.jwt.domain.repository.GoogleJsonWebTokenRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class GoogleTokenServiceImpl implements GoogleTokenService {
     private final GoogleJsonWebTokenRepository googleTokenRepository;
     private final GoogleAccessTokenAndRefreshTokenService tokenService;
@@ -35,6 +37,8 @@ public class GoogleTokenServiceImpl implements GoogleTokenService {
                     .expiresIn(LocalDateTime.now().plusHours(1))
                     .build();
             googleTokenRepository.save(updatedToken);
+
+            log.info("리프레쉬 토큰 재발급");
 
             return "Bearer " + newToken.accessToken();
         }
