@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.net.http.HttpResponse;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/pay")
@@ -50,7 +51,7 @@ public class BlaybusPayController {
             HttpServletResponse httpResponse
     ) throws IOException {
         blaybusPayService.payApprove(orderId, userId, pgToken);
-        httpResponse.sendRedirect("https://blaybus-haertz.netlify.app/reservationcomplete");
+        httpResponse.sendRedirect("https://blaybus-haertz.netlify.app/reservationcomplete2");
     }
 
     /**
