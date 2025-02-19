@@ -11,16 +11,20 @@ import java.util.List;
 @Repository
 public interface PositionRepository extends JpaRepository<Position, Long> {
     @Query(value = """
-    SELECT p.name, (6371 * 2 * ASIN(
-            SQRT(
-                POWER(SIN(RADIANS(:latitude - p.lat) / 2), 2) +
-                COS(RADIANS(:latitude)) * COS(RADIANS(p.lat)) *
-                POWER(SIN(RADIANS(:longitude - p.lon) / 2), 2)
-            )
-        )) AS distance
-    FROM position p
-    ORDER BY distance ASC
+    SELECT sub.name, sub.distance
+    FROM (
+        SELECT p.name,\s
+               (6371 * 2 * ASIN(
+                    SQRT(
+                        POWER(SIN(RADIANS(:latitude - p.latitude) / 2), 2) +
+                        COS(RADIANS(:latitude)) * COS(RADIANS(p.latitude)) *
+                        POWER(SIN(RADIANS(:longitude - p.longitude) / 2), 2)
+                    )
+                )) AS distance
+        FROM position p
+    ) sub
+    ORDER BY sub.distance ASC;
     """, nativeQuery = true)
     List<Object[]> findAllOrderByDistance(@Param("latitude") double latitude,
-                                                        @Param("longitude") double longitude);
+                                          @Param("longitude") double longitude);
 }

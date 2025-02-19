@@ -1,5 +1,6 @@
 package blaybus.global.infra.exception;
 
+import blaybus.domain.user.domain.exception.UserNotFoundException;
 import blaybus.global.infra.exception.auth.BlaybusAuthException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -57,6 +58,13 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleEntityNotFoundException(EntityNotFoundException e) {
         log.error("EntityNotFoundException: ", e);
         ErrorResponse errorResponse = ErrorResponse.of(404, "리소스를 찾을 수 없습니다.", e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleUserNotFoundException(UserNotFoundException e) {
+        log.error("UserNotFoundException: ", e);
+        ErrorResponse errorResponse = ErrorResponse.of(404, "유저를 찾을 수 없습니다.", e.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 }

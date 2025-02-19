@@ -17,6 +17,6 @@ public class PositionDistanceCalculateServiceImpl implements PositionDistanceCal
     @Override
     public List<PositionResponseDTO> orderPositionByDistance(double lat, double lng) {
         return positionRepository.findAllOrderByDistance(lat, lng).stream()
-                .map(row -> new PositionResponseDTO((String) row[0], (Double) row[1])).toList();
+                .map(row -> new PositionResponseDTO((String) row[0], ((Number) row[1]).doubleValue())).toList();
     }
 }

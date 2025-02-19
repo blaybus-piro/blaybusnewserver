@@ -34,7 +34,7 @@ public class SecurityConfig {
     private final ObjectMapper objectMapper;
     private final JsonWebTokenRepository jsonWebTokenRepository;
     private final GoogleJsonWebTokenRepository googleJsonWebTokenRepository;
-    private final List<String> excludedUrls = Arrays.asList("/api/reissue", "/api/oauth2/login", "/api/healthcheck", "/api/oauth2/callback", "/v1/payment/**", "/api/pay/**");
+    private final List<String> excludedUrls = Arrays.asList("/api/designers/**", "/api/reissue", "/api/oauth2/login", "/api/healthcheck", "/api/oauth2/callback", "/v1/payment/**", "/api/pay/**");
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -55,6 +55,7 @@ public class SecurityConfig {
                     return config;
                 }))
                 .authorizeHttpRequests((url) -> url
+                        .requestMatchers("/api/designers/**").permitAll()
                         .requestMatchers("/api/healthcheck").permitAll()
                         .requestMatchers("/api/oauth2/login").permitAll()
                         .requestMatchers("/api/oauth2/callback").permitAll()

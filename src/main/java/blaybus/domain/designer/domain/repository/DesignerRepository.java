@@ -1,7 +1,6 @@
 package blaybus.domain.designer.domain.repository;
 
 import blaybus.domain.designer.domain.entity.Designer;
-import blaybus.domain.map.presentation.dto.response.PositionResponseDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -30,11 +29,12 @@ public interface DesignerRepository extends JpaRepository<Designer, String> {
     """)
     List<Designer> findOfflineConsultingDesigners(@Param("sortOrder") String sortOrder);
 
-    @Query("""
-    SELECT d FROM Designer d
-    WHERE d.position.name IN :names
-    ORDER BY FIELD(d.position.name, :names), d.name ASC
-""")
-    List<Designer> findAllByPositionNameAndTypeInOrderByCustomOrder(
-            @Param("names") List<PositionResponseDTO> names);
+    @Query(value = """
+        SELECT * FROM designer d
+        WHERE d.position_name IN (:names)
+        ORDER BY FIELD(d.position_name, :orderedNames) , d.name ASC
+    """, nativeQuery = true)
+    List<Designer> findAllByPositionNameOrderByCustomOrder(
+            @Param("names") List<String> names,
+            @Param("orderedNames") String orderedNames);
 }
