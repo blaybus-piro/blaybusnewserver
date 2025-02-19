@@ -13,9 +13,9 @@ public interface PositionRepository extends JpaRepository<Position, Long> {
     @Query(value = """
     SELECT p.name, (6371 * 2 * ASIN(
             SQRT(
-                POWER(SIN(RADIANS(:latitude - p.lat) / 2), 2) +
-                COS(RADIANS(:latitude)) * COS(RADIANS(p.lat)) *
-                POWER(SIN(RADIANS(:longitude - p.lon) / 2), 2)
+                POWER(SIN(RADIANS(:latitude - p.latitude) / 2), 2) +
+                COS(RADIANS(:latitude)) * COS(RADIANS(p.latitude)) *
+                POWER(SIN(RADIANS(:longitude - p.longitude) / 2), 2)
             )
         )) AS distance
     FROM position p
