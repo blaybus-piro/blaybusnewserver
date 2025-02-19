@@ -24,7 +24,7 @@ public class GoogleTokenServiceImpl implements GoogleTokenService {
         GoogleJsonWebToken token = googleTokenRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("Google 토큰을 찾을 수 없습니다."));
 
-        if (token.getExpiresIn().minusMinutes(10).isBefore(LocalDateTime.now())) {
+        if (token.getExpiresIn() == null || token.getExpiresIn().minusMinutes(10).isBefore(LocalDateTime.now())) {
             OAuth2TokenResponse newToken = tokenService.refreshAccessToken(token.getRefreshToken());
 
             // 새 토큰 저장
