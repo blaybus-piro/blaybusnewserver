@@ -20,6 +20,7 @@ public class CreateConsultingController {
     public ResponseEntity<ConsultingResponseDTO> createConsulting(@AuthenticationPrincipal String userId,
                                                                       @RequestBody ConsultingRequestDTO requestDTO) {
       log.info("컨트롤러!!!!");
+      userId="107411868784382312202";
         ConsultingResponseDTO responseDTO = createConsultingService.execute(requestDTO, userId);
         return ResponseEntity.ok(responseDTO);
     }

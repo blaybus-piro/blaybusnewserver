@@ -9,5 +9,5 @@ import java.time.LocalDateTime;
 public interface MeetingService {
     MeetingResponse createMeeting(String userId, LocalDateTime startTime, Designer designer);
 
-    void save();
+    Long save();
 }

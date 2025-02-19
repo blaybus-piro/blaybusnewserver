@@ -60,7 +60,7 @@ public class MeetingServiceImpl implements MeetingService {
     }
 
     @Override
-    public void save() {
+    public Long save() {
         Meeting meeting = Meeting.builder()
                 .title("대면")
                 .meetUrl("대면임!! 받지마삼")
@@ -69,6 +69,7 @@ public class MeetingServiceImpl implements MeetingService {
                 .build();
 
         meetingRepository.save(meeting);
+        return meeting.getId();
     }
 
     public String generateMeetingTitle(String designerName, LocalDateTime startTime) {

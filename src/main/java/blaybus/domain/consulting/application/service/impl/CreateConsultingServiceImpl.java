@@ -51,14 +51,15 @@ public class CreateConsultingServiceImpl implements CreateConsultingService {
 
         log.info(userId);
 
-        Meeting findMeeting = null;
+        Meeting findMeeting;
 
-        if (req.meet().equals("비대면")) {
+        if (ConsultingType.OFFLINE.equals(ConsultingType.valueOf(req.meet().toUpperCase()))) {
             // 구글 미트 생성
             MeetingResponse meeting = meetingService.createMeeting(userId, req.startTime(), designer);
             findMeeting = meetingRepository.findById(meeting.id()).orElse(null);
         } else {
-            meetingService.save();
+            Long offlineId = meetingService.save();
+            findMeeting = meetingRepository.findById(offlineId).orElse(null);
         }
 
         String status = "";
@@ -89,7 +90,7 @@ public class CreateConsultingServiceImpl implements CreateConsultingService {
                 consulting.getUser().getId(),
                 consulting.getDesigner().getId(),
                 consulting.getMeeting(),
-                ConsultingType.ONLINE,
+                type,
                 ConsultingStatus.fromString(status),
                 consulting.getPay(),
                 consulting.getStartTime()
@@ -102,11 +103,11 @@ public class CreateConsultingServiceImpl implements CreateConsultingService {
 
         List<ConsultingUserResponse> responses = new ArrayList<>();
         for (Consulting consulting : consultings) {
-            String money ="";
-            if(consulting.getType() == ConsultingType.ONLINE){
-                money= String.valueOf(consulting.getDesigner().getOnlinePrice());
-            }else{
-                money= String.valueOf(consulting.getDesigner().getOfflinePrice());
+            String money = "";
+            if (consulting.getType() == ConsultingType.ONLINE) {
+                money = String.valueOf(consulting.getDesigner().getOnlinePrice());
+            } else {
+                money = String.valueOf(consulting.getDesigner().getOfflinePrice());
             }
             responses.add(ConsultingUserResponse.of(
                     consulting.getId(), consulting.getDesigner().getId(), consulting.getDesigner().getName(), consulting.getDesigner().getProfile(), consulting.getPay(), consulting.getType().toString(),
