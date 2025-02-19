@@ -22,7 +22,14 @@ public class GetDesignerByDistanceServiceImpl implements GetDesignerByDistanceSe
     @Override
     public List<DesignerDistanceResponseDTO> getDesignersByLocation(double lat, double lng) {
         List<PositionResponseDTO> positions = positionDistanceCalculateService.orderPositionByDistance(lat, lng);
-        List<Designer> designers = designerRepository.findAllByPositionNameAndTypeInOrderByCustomOrder(positions);
+
+        // ✅ DTO에서 position.name 값만 추출하여 String 리스트로 변환
+        List<String> positionNames = positions.stream()
+                .map(PositionResponseDTO::name) // DTO에서 name 필드만 가져오기
+                .collect(Collectors.toList());
+
+        // ✅ String 리스트로 변환하여 Repository 호출
+        List<Designer> designers = designerRepository.findAllByPositionNameAndTypeInOrderByCustomOrder(positionNames);
 
         return designers.stream().map(designer -> {
             double distance = positions.stream()
