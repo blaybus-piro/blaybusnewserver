@@ -53,7 +53,7 @@ public class CreateConsultingServiceImpl implements CreateConsultingService {
 
         Meeting findMeeting;
 
-        if (ConsultingType.OFFLINE.equals(ConsultingType.valueOf(req.meet().toUpperCase()))) {
+        if (ConsultingType.ONLINE.equals(ConsultingType.valueOf(req.meet().toUpperCase()))) {
             // 구글 미트 생성
             MeetingResponse meeting = meetingService.createMeeting(userId, req.startTime(), designer);
             findMeeting = meetingRepository.findById(meeting.id()).orElse(null);
