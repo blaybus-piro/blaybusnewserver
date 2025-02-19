@@ -1,8 +1,5 @@
 package blaybus.domain.designer.presentation.dto.response;
 
-import blaybus.domain.designer.domain.entity.ExpertField;
-import blaybus.domain.designer.domain.entity.Type;
-
 import java.util.List;
 
 public record DesignerDistanceResponseDTO(
@@ -11,10 +8,10 @@ public record DesignerDistanceResponseDTO(
         String profile,
         String address,
         double distance, // 추가된 거리 정보
-        ExpertField expertField,
+        String expertField,
         String introduce,
         List<String> portfolios,
-        Type type,
+        String type,
         int offlinePrice,
         int onlinePrice
 ) {}

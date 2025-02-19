@@ -25,10 +25,10 @@ public class GetDesignerByIdServiceImpl implements GetDesignerByIdService {
                 designer.getName(),
                 designer.getProfile(),
                 designer.getPosition().getAddress(),
-                designer.getExpertField(),
+                designer.getExpertField().toString(),
                 designer.getIntroduce(),
                 designer.getPortfolios(),
-                designer.getType(),
+                designer.getType().toString(),
                 designer.getOfflinePrice(),
                 designer.getOnlinePrice()
         );
