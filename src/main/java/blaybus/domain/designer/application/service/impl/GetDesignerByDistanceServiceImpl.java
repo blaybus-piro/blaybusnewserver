@@ -43,10 +43,10 @@ public class GetDesignerByDistanceServiceImpl implements GetDesignerByDistanceSe
                     designer.getProfile(),
                     designer.getPosition().getName(),
                     distance,
-                    designer.getExpertField(),
+                    designer.getExpertField().toString(),
                     designer.getIntroduce(),
                     designer.getPortfolios(),
-                    designer.getType(),
+                    designer.getType().toString(),
                     designer.getOfflinePrice(),
                     designer.getOnlinePrice()
             );

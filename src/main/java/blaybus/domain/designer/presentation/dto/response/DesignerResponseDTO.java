@@ -1,8 +1,5 @@
 package blaybus.domain.designer.presentation.dto.response;
 
-import blaybus.domain.designer.domain.entity.ExpertField;
-import blaybus.domain.designer.domain.entity.Type;
-
 import java.util.List;
 
 public record DesignerResponseDTO(
@@ -10,10 +7,10 @@ public record DesignerResponseDTO(
         String name,
         String profile,
         String address,
-        ExpertField expertField,
+        String expertField,
         String introduce,
         List<String> portfolios,
-        Type type,
+        String type,
         int offlinePrice,
         int onlinePrice
 ) {}
