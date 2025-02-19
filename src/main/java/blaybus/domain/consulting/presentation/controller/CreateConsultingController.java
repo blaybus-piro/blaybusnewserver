@@ -19,7 +19,7 @@ public class CreateConsultingController {
     @PostMapping
     public ResponseEntity<ConsultingResponseDTO> createConsulting(@AuthenticationPrincipal String userId,
                                                                       @RequestBody ConsultingRequestDTO requestDTO) {
-      log.info("컨트롤러!!!!");
+
         ConsultingResponseDTO responseDTO = createConsultingService.execute(requestDTO, userId);
         return ResponseEntity.ok(responseDTO);
     }

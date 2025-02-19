@@ -12,6 +12,7 @@ import blaybus.domain.meeting.domain.repository.MeetingRepository;
 import blaybus.domain.oauth2.application.service.GoogleTokenService;
 import blaybus.global.infra.exception.BlaybusException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,7 @@ import java.util.UUID;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class MeetingServiceImpl implements MeetingService {
     private final GoogleMeetClient googleMeetClient;
     private final MeetingRepository meetingRepository;
@@ -43,12 +45,17 @@ public class MeetingServiceImpl implements MeetingService {
         String accessToken = googleTokenService.getValidAccessToken(userId);
         String meetingTitle = generateMeetingTitle(designer.getName(), startTime);
 
-
+        log.info("==================================================================={}",accessToken);
         try {
+            log.info("=================================================22222222==================");
+
+
             ConferenceResponse response = googleMeetClient.createMeeting(
                     accessToken,
                     createConferenceRequest(meetingTitle, startTime, startTime.plusHours(1))
             );
+            log.info("===================================================================");
+            log.info(response.hangoutLink());
             Meeting meeting = createMeeting2(startTime, meetingTitle, response.hangoutLink());
             meetingRepository.save(meeting);
 
