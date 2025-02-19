@@ -42,20 +42,19 @@ public class MeetingServiceImpl implements MeetingService {
          }
 
          */
+        log.info("==============================sdadfasdfasdf===================");
+        log.info(userId);
         String accessToken = googleTokenService.getValidAccessToken(userId);
         String meetingTitle = generateMeetingTitle(designer.getName(), startTime);
 
-        log.info("==================================================================={}",accessToken);
+        log.info("================================={}",accessToken);
+
         try {
-            log.info("=================================================22222222==================");
-
-
             ConferenceResponse response = googleMeetClient.createMeeting(
                     accessToken,
                     createConferenceRequest(meetingTitle, startTime, startTime.plusHours(1))
             );
-            log.info("===================================================================");
-            log.info(response.hangoutLink());
+            log.info("sadfasdfasdf{}",response.hangoutLink());
             Meeting meeting = createMeeting2(startTime, meetingTitle, response.hangoutLink());
             meetingRepository.save(meeting);
 
