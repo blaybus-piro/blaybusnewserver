@@ -27,12 +27,12 @@ public class TimeServiceImpl implements TimeService {
     private final ConsultingRepository consultingRepository;
 
     @Override
-    public List<LocalDateTime> getTime(DetailRequestDTO req) {
+    public List<LocalDateTime> getTime(String id) {
         List<LocalDateTime> time = new ArrayList<>();
         List<Consulting> all = consultingRepository.findAll();
 
         for (Consulting consulting : all) {
-            if (req.designerId().equals(consulting.getDesigner().getId())) {
+            if (id.equals(consulting.getDesigner().getId())) {
                 if (!(consulting.getStatus() == ConsultingStatus.CANCELED)) {
                     time.add(consulting.getStartTime());
                 }

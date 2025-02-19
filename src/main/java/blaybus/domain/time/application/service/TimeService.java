@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface TimeService {
 
-    List<LocalDateTime> getTime(DetailRequestDTO req);
+    List<LocalDateTime> getTime(String id);
 }

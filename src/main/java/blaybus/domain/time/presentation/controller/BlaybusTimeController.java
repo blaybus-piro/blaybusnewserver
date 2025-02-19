@@ -23,11 +23,11 @@ public class BlaybusTimeController {
     private final TimeService blaybusTimeService;
 
     // 타임테이블 조회
-    @GetMapping
+    @GetMapping("/{designerid}")
     public ResponseEntity<List<LocalDateTime>> getTime(
-            @RequestBody DetailRequestDTO detailRequestDTO
+            @PathVariable String designerid
     ) {
-        List<LocalDateTime> time = blaybusTimeService.getTime(detailRequestDTO);
+        List<LocalDateTime> time = blaybusTimeService.getTime(designerid);
         return ResponseEntity.ok(time);
     }
 
