@@ -9,6 +9,7 @@ import blaybus.domain.designer.presentation.dto.response.DesignerDistanceRespons
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,6 +56,6 @@ public class GetDesignerByDistanceServiceImpl implements GetDesignerByDistanceSe
                     designer.getOfflinePrice(),
                     designer.getOnlinePrice()
             );
-        }).collect(Collectors.toList());
+        }).sorted(Comparator.comparing(DesignerDistanceResponseDTO::distance)).collect(Collectors.toList());
     }
 }
