@@ -28,8 +28,13 @@ public class GetDesignerByDistanceServiceImpl implements GetDesignerByDistanceSe
                 .map(PositionResponseDTO::name) // DTO에서 name 필드만 가져오기
                 .collect(Collectors.toList());
 
-        // ✅ String 리스트로 변환하여 Repository 호출
-        List<Designer> designers = designerRepository.findAllByPositionNameOrderByCustomOrder(positionNames);
+        // ✅ positionNames를 콤마(,)로 구분된 하나의 문자열로 변환
+        String orderedNames = positionNames.stream()
+                .map(name -> "'" + name + "'") // 각 값에 따옴표 추가
+                .collect(Collectors.joining(",")); // 쉼표로 연결
+
+        // ✅ Repository 호출 시 변환된 orderedNames 사용
+        List<Designer> designers = designerRepository.findAllByPositionNameOrderByCustomOrder(positionNames, orderedNames);
 
         return designers.stream().map(designer -> {
             double distance = positions.stream()
