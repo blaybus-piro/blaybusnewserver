@@ -30,10 +30,9 @@ public interface DesignerRepository extends JpaRepository<Designer, String> {
     List<Designer> findOfflineConsultingDesigners(@Param("sortOrder") String sortOrder);
 
     @Query(value = """
-    SELECT * FROM designer d
-    WHERE d.position_name IN (:names)
-    ORDER BY FIELD(d.position_name, :names), d.name ASC
-""", nativeQuery = true)
-    List<Designer> findAllByPositionNameAndTypeInOrderByCustomOrder(
-            @Param("names") List<String> names);
+        SELECT * FROM designer d
+        WHERE d.position_name IN (:names)
+        ORDER BY FIELD(d.position_name, :#{#names.toArray()}), d.name ASC
+    """, nativeQuery = true)
+    List<Designer> findAllByPositionNameOrderByCustomOrder(@Param("names") List<String> names);
 }
