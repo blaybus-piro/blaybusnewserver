@@ -1,7 +1,6 @@
 package blaybus.domain.designer.domain.repository;
 
 import blaybus.domain.designer.domain.entity.Designer;
-import blaybus.domain.map.presentation.dto.response.PositionResponseDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -36,5 +35,5 @@ public interface DesignerRepository extends JpaRepository<Designer, String> {
     ORDER BY FIELD(d.position.name, :names), d.name ASC
 """)
     List<Designer> findAllByPositionNameAndTypeInOrderByCustomOrder(
-            @Param("names") List<PositionResponseDTO> names);
+            @Param("names") List<String> names); // ✅ DTO 대신 String 리스트 사용
 }

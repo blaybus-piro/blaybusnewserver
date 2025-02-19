@@ -59,4 +59,22 @@ public class Designer {
     @OneToMany(mappedBy = "designer")
     @JsonIgnore
     private List<Consulting> consultings = new ArrayList<>();
+
+    // ✅ 명시적인 생성자 추가 (area 필드 포함)
+    @Builder
+    public Designer(String id, String name, String profile, String area, Position position,
+                    ExpertField expertField, String introduce, List<String> portfolios, Type type,
+                    int offlinePrice, int onlinePrice) {
+        this.id = id;
+        this.name = name;
+        this.profile = profile;
+        this.area = area;
+        this.position = position;
+        this.expertField = expertField;
+        this.introduce = introduce;
+        this.portfolios = portfolios;
+        this.type = type;
+        this.offlinePrice = offlinePrice;
+        this.onlinePrice = onlinePrice;
+    }
 }
