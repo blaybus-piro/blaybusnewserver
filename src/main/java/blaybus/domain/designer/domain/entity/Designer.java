@@ -35,9 +35,9 @@ public class Designer {
     @Column(nullable = false, length = 100)
     private String introduce;
 
-    // Position 테이블의 name을 참조하는 FK 설정
+    // 양방향 관계 설정 (Position 테이블과 다대일)
     @ManyToOne
-    @JoinColumn(name = "position_name", referencedColumnName = "name", nullable = false)
+    @JoinColumn(name = "position_id", nullable = false)
     @JsonIgnore
     private Position position;
 
@@ -59,4 +59,7 @@ public class Designer {
     @OneToMany(mappedBy = "designer")
     @JsonIgnore
     private List<Consulting> consultings = new ArrayList<>();
+
+
 }
+

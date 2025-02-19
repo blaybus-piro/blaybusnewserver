@@ -95,10 +95,15 @@ public class CreateConsultingServiceImpl implements CreateConsultingService {
 
         List<ConsultingUserResponse> responses = new ArrayList<>();
         for (Consulting consulting : consultings) {
-
+            String money ="";
+            if(consulting.getType() == ConsultingType.ONLINE){
+                money= String.valueOf(consulting.getDesigner().getOnlinePrice());
+            }else{
+                money= String.valueOf(consulting.getDesigner().getOfflinePrice());
+            }
             responses.add(ConsultingUserResponse.of(
                     consulting.getId(), consulting.getDesigner().getId(), consulting.getDesigner().getName(), consulting.getDesigner().getProfile(), consulting.getPay(), consulting.getType().toString(),
-                    consulting.getStatus().toString(), consulting.getMeeting().getMeetUrl(), consulting.getStartTime())
+                    consulting.getStatus().toString(), consulting.getMeeting().getMeetUrl(), consulting.getStartTime(), money)
             );
         }
 

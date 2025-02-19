@@ -2,6 +2,7 @@ package blaybus.domain.consulting.application.service.impl;
 
 import blaybus.domain.consulting.application.service.GetConsultingByIdService;
 import blaybus.domain.consulting.domain.entity.Consulting;
+import blaybus.domain.consulting.domain.entity.ConsultingType;
 import blaybus.domain.consulting.domain.repository.ConsultingRepository;
 import blaybus.domain.consulting.presentation.dto.response.DetailConsultingResponse;
 import jakarta.persistence.EntityNotFoundException;
@@ -22,9 +23,16 @@ public class GetConsultingByIdServiceImpl implements GetConsultingByIdService {
 
         Consulting consulting = findConsulting.get();
 
+        String money ="";
+        if(consulting.getType() == ConsultingType.ONLINE){
+            money= String.valueOf(consulting.getDesigner().getOnlinePrice());
+        }else{
+            money= String.valueOf(consulting.getDesigner().getOfflinePrice());
+        }
         DetailConsultingResponse response = DetailConsultingResponse.of(consulting.getId(), consulting.getUser().getName(), consulting.getUser().getMail(),
                 consulting.getDesigner().getId(), consulting.getDesigner().getName(), consulting.getDesigner().getProfile(),
-                consulting.getPay(), consulting.getType().toString(), consulting.getStatus().toString(), consulting.getMeeting().getMeetUrl(), consulting.getStartTime());
+                consulting.getPay(), consulting.getType().toString(), consulting.getStatus().toString(),
+                consulting.getMeeting().getMeetUrl(), consulting.getStartTime(), money);
 
         return response;
 
