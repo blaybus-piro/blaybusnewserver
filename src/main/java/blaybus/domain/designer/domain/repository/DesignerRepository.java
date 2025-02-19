@@ -37,4 +37,7 @@ public interface DesignerRepository extends JpaRepository<Designer, String> {
     List<Designer> findAllByPositionNameOrderByCustomOrder(
             @Param("names") List<String> names,
             @Param("orderedNames") String orderedNames);
+
+    @Query("SELECT d FROM Designer d WHERE d.position.name IN :positionNames ORDER BY d.position.name")
+    List<Designer> findAllByPositionNames(@Param("positionNames") List<String> positionNames);
 }

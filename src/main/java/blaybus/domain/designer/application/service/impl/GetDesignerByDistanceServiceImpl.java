@@ -24,18 +24,13 @@ public class GetDesignerByDistanceServiceImpl implements GetDesignerByDistanceSe
     public List<DesignerDistanceResponseDTO> getDesignersByLocation(double lat, double lng) {
         List<PositionResponseDTO> positions = positionDistanceCalculateService.orderPositionByDistance(lat, lng);
 
-        // ✅ DTO에서 position.name 값만 추출하여 String 리스트로 변환
+        // ✅ DTO에서 Position의 name 값만 추출하여 리스트로 변환
         List<String> positionNames = positions.stream()
-                .map(PositionResponseDTO::name) // DTO에서 name 필드만 가져오기
+                .map(PositionResponseDTO::name)
                 .collect(Collectors.toList());
 
-        // ✅ positionNames를 콤마(,)로 구분된 하나의 문자열로 변환
-        String orderedNames = positionNames.stream()
-                .map(name -> "'" + name + "'") // 각 값에 따옴표 추가
-                .collect(Collectors.joining(",")); // 쉼표로 연결
-
-        // ✅ Repository 호출 시 변환된 orderedNames 사용
-        List<Designer> designers = designerRepository.findAllByPositionNameOrderByCustomOrder(positionNames, orderedNames);
+        // ✅ Repository 호출 시 Position의 name 값을 기준으로 검색
+        List<Designer> designers = designerRepository.findAllByPositionNames(positionNames);
 
         return designers.stream().map(designer -> {
             double distance = positions.stream()
@@ -47,7 +42,7 @@ public class GetDesignerByDistanceServiceImpl implements GetDesignerByDistanceSe
                     designer.getId(),
                     designer.getName(),
                     designer.getProfile(),
-                    designer.getPosition().getName(),
+                    designer.getPosition().getName(), // 🔹 올바른 필드 참조
                     distance,
                     designer.getExpertField().toString(),
                     designer.getIntroduce(),
