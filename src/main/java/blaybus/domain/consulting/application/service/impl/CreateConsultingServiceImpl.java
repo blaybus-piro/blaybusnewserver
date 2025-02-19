@@ -20,6 +20,7 @@ import blaybus.domain.designer.domain.entity.Designer;
 import blaybus.domain.designer.domain.repository.DesignerRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +30,7 @@ import java.util.List;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class CreateConsultingServiceImpl implements CreateConsultingService {
 
     private final ConsultingRepository consultingRepository;
@@ -47,6 +49,8 @@ public class CreateConsultingServiceImpl implements CreateConsultingService {
                 .orElseThrow(() -> new EntityNotFoundException("Designer not found: " + req.designerId()));
 
 
+        log.info(userId);
+
         Meeting findMeeting = null;
 
         if (req.meet().equals("비대면")) {
@@ -64,25 +68,28 @@ public class CreateConsultingServiceImpl implements CreateConsultingService {
             status = "예약 대기";
         }
 
+        log.info("Received meet type: '{}'", req.meet());
+        ConsultingType type = ConsultingType.valueOf(req.meet().trim().toUpperCase());
+
         // 컨설팅 생성
         Consulting consulting = Consulting.builder()
                 .user(user)
                 .designer(designer)
                 .meeting(findMeeting)
                 .pay(req.pay())
-                .type(ConsultingType.valueOf(req.meet()))  // 적절한 타입으로 변경
+                .type(type)  // 적절한 타입으로 변경
                 .status(ConsultingStatus.fromString(status)) // 초기 상태 지정
                 .startTime(req.startTime())
                 .build();
 
         consultingRepository.save(consulting);
-
+        log.info("Received meet type2222: '{}'", req.meet());
         return new ConsultingResponseDTO(
                 consulting.getId(),
                 consulting.getUser().getId(),
                 consulting.getDesigner().getId(),
                 consulting.getMeeting(),
-                ConsultingType.fromString(req.meet()),
+                ConsultingType.ONLINE,
                 ConsultingStatus.fromString(status),
                 consulting.getPay(),
                 consulting.getStartTime()
