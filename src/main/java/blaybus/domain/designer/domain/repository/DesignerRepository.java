@@ -29,11 +29,11 @@ public interface DesignerRepository extends JpaRepository<Designer, String> {
     """)
     List<Designer> findOfflineConsultingDesigners(@Param("sortOrder") String sortOrder);
 
-    @Query("""
-    SELECT d FROM Designer d
-    WHERE d.position.name IN :names
-    ORDER BY FIELD(d.position.name, :names), d.name ASC
-""")
+    @Query(value = """
+    SELECT * FROM designer d
+    WHERE d.position_name IN (:names)
+    ORDER BY FIELD(d.position_name, :names), d.name ASC
+""", nativeQuery = true)
     List<Designer> findAllByPositionNameAndTypeInOrderByCustomOrder(
-            @Param("names") List<String> names); // ✅ DTO 대신 String 리스트 사용
+            @Param("names") List<String> names);
 }
